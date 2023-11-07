@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
+using RecipeRevolution.Persistance.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace RecipeRevolution.Persistance
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.SeedData();
         }
     }
 }
