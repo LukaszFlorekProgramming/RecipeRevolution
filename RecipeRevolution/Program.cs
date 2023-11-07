@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using RecipeRevolution.Persistance;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddDbContext<RecipeRevolutionDbContext>(option =>
+{
+    option.UseSqlServer(builder.Configuration.GetConnectionString("RecipeDatabase"));
+});
+builder.Services.AddPersistance();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
