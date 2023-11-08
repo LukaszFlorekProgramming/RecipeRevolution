@@ -13,6 +13,7 @@ builder.Services.AddDbContext<RecipeRevolutionDbContext>(option =>
 });
 builder.Services.AddApplication();
 builder.Services.AddPersistance();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();

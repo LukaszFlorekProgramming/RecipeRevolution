@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RecipeRevolution.Persistance;
 
@@ -10,9 +11,11 @@ using RecipeRevolution.Persistance;
 namespace RecipeRevolution.Persistance.Migrations
 {
     [DbContext(typeof(RecipeRevolutionDbContext))]
-    partial class RecipeRevolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231108110947_AddConfigurationEntities")]
+    partial class AddConfigurationEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
