@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Application;
 using RecipeRevolution.Application.Interfaces;
+using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Persistance;
 using RecipeRevolution.Services;
 
@@ -18,7 +20,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IRecipeService, RecipeService>();   
-
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -28,7 +28,7 @@ namespace RecipeRevolution.Persistance.Configurations
                 .HasMaxLength(58);
             builder.Property(x => x.PasswordHash)
                 .IsRequired()
-                .HasMaxLength(60);
+                .HasMaxLength(120);
 
 
         }
