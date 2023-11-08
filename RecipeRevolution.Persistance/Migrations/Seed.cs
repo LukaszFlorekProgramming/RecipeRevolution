@@ -134,6 +134,24 @@ namespace RecipeRevolution.Persistance.Migrations
                     RecipeId = 1
                 });
             });
+            modelBuilder.Entity<Role>(r =>
+            {
+                r.HasData(new Role()
+                {
+                    Id = 1,
+                    Name = "User"
+                },
+                new Role()
+                {
+                    Id = 2,
+                    Name = "Manager"
+                },
+                new Role()
+                {
+                    Id= 3,
+                    Name = "Admin"
+                });
+            });
         }
 
     }
