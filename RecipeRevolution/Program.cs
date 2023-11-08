@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Application;
+using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Persistance;
-
+using RecipeRevolution.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddPersistance();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddScoped<IRecipeService, RecipeService>();   
 
 var app = builder.Build();
 

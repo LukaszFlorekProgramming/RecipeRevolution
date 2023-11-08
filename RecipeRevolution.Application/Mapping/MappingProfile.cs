@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RecipeRevolution.Domain.Entities;
+using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Models;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace RecipeRevolution.Application.Mapping
         public MappingProfile()
         {
             CreateMap<Recipe, RecipeDto>();
+            CreateMap<CreateRecipeDto, Recipe>();
         }
     }
 }
