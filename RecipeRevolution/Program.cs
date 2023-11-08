@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RecipeRevolution.Application;
 using RecipeRevolution.Persistance;
 
 
@@ -9,6 +10,7 @@ builder.Services.AddDbContext<RecipeRevolutionDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("RecipeDatabase"));
 });
+builder.Services.AddApplication();
 builder.Services.AddPersistance();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
