@@ -15,11 +15,13 @@ namespace RecipeRevolution.Services
         private readonly RecipeRevolutionDbContext _dbcontext;
         private readonly IMapper _mapper;
         private readonly IAuthorizationService _authorizationService;
-        public RecipeService(RecipeRevolutionDbContext dbContext, IMapper mapper, IAuthorizationService authorizationService)
+        private readonly IUserContextService _userContextService;
+        public RecipeService(RecipeRevolutionDbContext dbContext, IMapper mapper, IAuthorizationService authorizationService, IUserContextService userContextService)
         {
             _dbcontext = dbContext;
             _mapper = mapper;
             _authorizationService = authorizationService;
+            _userContextService = userContextService;
         }
         public RecipeDto GetById(int id)
         {
@@ -39,23 +41,23 @@ namespace RecipeRevolution.Services
 
             return recipesDtos;
         }
-        public int Create(CreateRecipeDto recipeDto, int userId)
+        public int Create(CreateRecipeDto recipeDto)
         {
             var recipe = _mapper.Map<Recipe>(recipeDto);
-            recipe.CreatedById = userId;
+            recipe.CreatedById = _userContextService.GetUserId;
             _dbcontext.Recipes.Add(recipe);
             _dbcontext.SaveChanges();
             return recipe.RecipeId;
         }
 
-        public bool Delete(int id, ClaimsPrincipal user)
+        public bool Delete(int id)
         {
             var recipe = _dbcontext
                 .Recipes
                 .FirstOrDefault(r => r.RecipeId == id);
             if(recipe is null) return false;
 
-            var authorizationResult = _authorizationService.AuthorizeAsync(user, recipe, new ResourceOperationRequirement(ResourseOperation.Update)).Result;
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, recipe, new ResourceOperationRequirement(ResourseOperation.Update)).Result;
 
             if (!authorizationResult.Succeeded)
             {
@@ -66,14 +68,14 @@ namespace RecipeRevolution.Services
             return true;
         }
 
-        public bool Update(UpdateRecipeDto recipeDto, int id, ClaimsPrincipal user)
+        public bool Update(UpdateRecipeDto recipeDto, int id)
         {
             var recipe = _dbcontext
                .Recipes
                .FirstOrDefault(r => r.RecipeId == id);
             if(recipe is null) return false;
 
-            var authorizationResult = _authorizationService.AuthorizeAsync(user, recipe, new ResourceOperationRequirement(ResourseOperation.Update)).Result;
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, recipe, new ResourceOperationRequirement(ResourseOperation.Update)).Result;
 
             if (!authorizationResult.Succeeded)
             { 

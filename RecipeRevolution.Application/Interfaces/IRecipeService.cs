@@ -13,9 +13,9 @@ namespace RecipeRevolution.Application.Interfaces
     {
         RecipeDto GetById(int id);
         IEnumerable<RecipeDto> GetAll();
-        int Create(CreateRecipeDto recipeDto, int userId);
-        bool Delete(int id, ClaimsPrincipal user);
-        bool Update(UpdateRecipeDto recipeDto, int id, ClaimsPrincipal user);
+        int Create(CreateRecipeDto recipeDto);
+        bool Delete(int id);
+        bool Update(UpdateRecipeDto recipeDto, int id);
 
     }
 }

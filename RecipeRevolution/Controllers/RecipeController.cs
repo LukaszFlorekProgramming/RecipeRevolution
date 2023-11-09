@@ -42,14 +42,14 @@ namespace RecipeRevolution.Controllers
         public ActionResult CreateRecipe([FromBody] CreateRecipeDto recipeDto)
         {
             var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var id = _recipeService.Create(recipeDto, userId);
+            var id = _recipeService.Create(recipeDto);
 
             return Created($"/api/recipe/{id}", null);
         }
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
-            var isDeleted = _recipeService.Delete(id, User);
+            var isDeleted = _recipeService.Delete(id);
             if (isDeleted)
             {
                 return NoContent();
@@ -59,7 +59,7 @@ namespace RecipeRevolution.Controllers
         [HttpPut("{id}")]
         public ActionResult Update([FromBody] UpdateRecipeDto updateRecipeDto, [FromRoute]int id)
         {
-            var isUpdated = _recipeService.Update(updateRecipeDto,id,User);
+            var isUpdated = _recipeService.Update(updateRecipeDto,id);
             if(!isUpdated)
             {
                 return NotFound();
