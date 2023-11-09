@@ -20,9 +20,9 @@ namespace RecipeRevolution.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<RecipeDto>> GetAll()
+        public ActionResult<IEnumerable<RecipeDto>> GetAll([FromQuery]string searchPhrase)
         {
-            var recipes = _recipeService.GetAll();
+            var recipes = _recipeService.GetAll(searchPhrase);
             return Ok(recipes);
         }
         [HttpGet("{id}")]

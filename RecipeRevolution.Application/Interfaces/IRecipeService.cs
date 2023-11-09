@@ -12,7 +12,7 @@ namespace RecipeRevolution.Application.Interfaces
     public interface IRecipeService
     {
         RecipeDto GetById(int id);
-        IEnumerable<RecipeDto> GetAll();
+        IEnumerable<RecipeDto> GetAll(string searchPhrase);
         int Create(CreateRecipeDto recipeDto);
         bool Delete(int id);
         bool Update(UpdateRecipeDto recipeDto, int id);

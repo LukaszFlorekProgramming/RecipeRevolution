@@ -32,10 +32,11 @@ namespace RecipeRevolution.Services
             var result = _mapper.Map<RecipeDto>(recipe);
             return result;
         }
-        public IEnumerable<RecipeDto> GetAll()
+        public IEnumerable<RecipeDto> GetAll(string searchPhrase)
         {
             var recipes = _dbcontext
                 .Recipes
+                .Where(r => searchPhrase == null || (r.Name.ToLower().Contains(searchPhrase.ToLower()) || r.Description.ToLower().Contains(searchPhrase.ToLower())))
                 .ToList();
             var recipesDtos = _mapper.Map<List<RecipeDto>>(recipes);
 
