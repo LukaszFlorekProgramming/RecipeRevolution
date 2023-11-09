@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
@@ -7,6 +8,7 @@ using RecipeRevolution.Models;
 namespace RecipeRevolution.Controllers
 {
     [Route("api/recipe")]
+    [Authorize]
     public class RecipeController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
@@ -16,12 +18,14 @@ namespace RecipeRevolution.Controllers
             _recipeService = recipeService;
         }
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<IEnumerable<RecipeDto>> GetAll()
         {
             var recipes = _recipeService.GetAll();
             return Ok(recipes);
         }
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public ActionResult<Recipe> Get([FromRoute] int id)
         {
             var recipe = _recipeService.GetById(id);

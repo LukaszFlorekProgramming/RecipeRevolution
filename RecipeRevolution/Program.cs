@@ -1,7 +1,8 @@
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using RecipeRevolution;
 using RecipeRevolution.Application;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
@@ -9,9 +10,29 @@ using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Persistance;
 using RecipeRevolution.Services;
 using RecipeRevolution.Validator;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var authenticationSettings = new AuthenticationSettings();
+builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
+builder.Services.AddSingleton(authenticationSettings);
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = "Bearer";
+    option.DefaultScheme = "Bearer";
+    option.DefaultChallengeScheme = "Bearer";
+}).AddJwtBearer(cfg =>
+{
+    cfg.RequireHttpsMetadata = false;
+    cfg.SaveToken = true;
+    cfg.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = authenticationSettings.JwtIssuer,
+        ValidAudience = authenticationSettings.JwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey))
+    };
+});
 
 builder.Services.AddDbContext<RecipeRevolutionDbContext>(option =>
 {
@@ -35,6 +56,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseHttpsRedirection();
+app.UseAuthorization();
 app.MapControllers();
 app.Run();

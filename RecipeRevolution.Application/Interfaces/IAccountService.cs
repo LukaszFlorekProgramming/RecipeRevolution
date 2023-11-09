@@ -10,5 +10,6 @@ namespace RecipeRevolution.Application.Interfaces
     public interface IAccountService
     {
         void RegisterUser(RegisterUserDto registerUserDto);
+        string GenerateJwt(LoginDto dto);
     }
 }
