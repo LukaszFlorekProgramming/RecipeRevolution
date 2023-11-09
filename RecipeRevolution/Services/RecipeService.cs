@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using RecipeRevolution.Application.Interfaces;
+using RecipeRevolution.Authorization;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Models;
 using RecipeRevolution.Persistance;
+using System.Security.Claims;
 
 namespace RecipeRevolution.Services
 {
@@ -11,10 +14,12 @@ namespace RecipeRevolution.Services
     {
         private readonly RecipeRevolutionDbContext _dbcontext;
         private readonly IMapper _mapper;
-        public RecipeService(RecipeRevolutionDbContext dbContext, IMapper mapper)
+        private readonly IAuthorizationService _authorizationService;
+        public RecipeService(RecipeRevolutionDbContext dbContext, IMapper mapper, IAuthorizationService authorizationService)
         {
             _dbcontext = dbContext;
             _mapper = mapper;
+            _authorizationService = authorizationService;
         }
         public RecipeDto GetById(int id)
         {
@@ -34,31 +39,47 @@ namespace RecipeRevolution.Services
 
             return recipesDtos;
         }
-        public int Create(CreateRecipeDto recipeDto)
+        public int Create(CreateRecipeDto recipeDto, int userId)
         {
             var recipe = _mapper.Map<Recipe>(recipeDto);
+            recipe.CreatedById = userId;
             _dbcontext.Recipes.Add(recipe);
             _dbcontext.SaveChanges();
             return recipe.RecipeId;
         }
 
-        public bool Delete(int id)
+        public bool Delete(int id, ClaimsPrincipal user)
         {
             var recipe = _dbcontext
                 .Recipes
                 .FirstOrDefault(r => r.RecipeId == id);
             if(recipe is null) return false;
+
+            var authorizationResult = _authorizationService.AuthorizeAsync(user, recipe, new ResourceOperationRequirement(ResourseOperation.Update)).Result;
+
+            if (!authorizationResult.Succeeded)
+            {
+                return false;
+            }
             _dbcontext.Recipes.Remove(recipe);
             _dbcontext.SaveChanges();
             return true;
         }
 
-        public bool Update(UpdateRecipeDto recipeDto, int id)
+        public bool Update(UpdateRecipeDto recipeDto, int id, ClaimsPrincipal user)
         {
             var recipe = _dbcontext
                .Recipes
                .FirstOrDefault(r => r.RecipeId == id);
             if(recipe is null) return false;
+
+            var authorizationResult = _authorizationService.AuthorizeAsync(user, recipe, new ResourceOperationRequirement(ResourseOperation.Update)).Result;
+
+            if (!authorizationResult.Succeeded)
+            { 
+                return false;
+            }
+            
 
             recipe.Name = recipeDto.Name;
             recipe.Description = recipeDto.Description;

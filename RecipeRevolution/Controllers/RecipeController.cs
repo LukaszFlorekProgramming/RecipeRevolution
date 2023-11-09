@@ -4,6 +4,7 @@ using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Models;
+using System.Security.Claims;
 
 namespace RecipeRevolution.Controllers
 {
@@ -40,14 +41,15 @@ namespace RecipeRevolution.Controllers
         [HttpPost]
         public ActionResult CreateRecipe([FromBody] CreateRecipeDto recipeDto)
         {
-            var id = _recipeService.Create(recipeDto);
+            var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var id = _recipeService.Create(recipeDto, userId);
 
             return Created($"/api/recipe/{id}", null);
         }
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
-            var isDeleted = _recipeService.Delete(id);
+            var isDeleted = _recipeService.Delete(id, User);
             if (isDeleted)
             {
                 return NoContent();
@@ -57,7 +59,7 @@ namespace RecipeRevolution.Controllers
         [HttpPut("{id}")]
         public ActionResult Update([FromBody] UpdateRecipeDto updateRecipeDto, [FromRoute]int id)
         {
-            var isUpdated = _recipeService.Update(updateRecipeDto,id);
+            var isUpdated = _recipeService.Update(updateRecipeDto,id,User);
             if(!isUpdated)
             {
                 return NotFound();

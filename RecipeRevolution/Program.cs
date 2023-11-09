@@ -1,10 +1,12 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RecipeRevolution;
 using RecipeRevolution.Application;
 using RecipeRevolution.Application.Interfaces;
+using RecipeRevolution.Authorization;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Persistance;
@@ -33,6 +35,7 @@ builder.Services.AddAuthentication(option =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey))
     };
 });
+builder.Services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandler>();
 
 builder.Services.AddDbContext<RecipeRevolutionDbContext>(option =>
 {

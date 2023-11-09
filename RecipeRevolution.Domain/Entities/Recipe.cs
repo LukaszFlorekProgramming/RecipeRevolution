@@ -15,6 +15,8 @@ namespace RecipeRevolution.Domain.Entities
         public int PreparationTime { get; set; }
         public string DifficultyLevel { get; set; }
         public short Portions { get; set; }
+        public int? CreatedById { get; set; }
+        public virtual User CreatedBy { get; set; }
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }
