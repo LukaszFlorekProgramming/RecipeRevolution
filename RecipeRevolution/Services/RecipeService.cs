@@ -32,15 +32,25 @@ namespace RecipeRevolution.Services
             var result = _mapper.Map<RecipeDto>(recipe);
             return result;
         }
-        public IEnumerable<RecipeDto> GetAll(string searchPhrase)
+        public PagedResult<RecipeDto> GetAll(RecipeQuery query)
         {
-            var recipes = _dbcontext
+            var baseQuery = _dbcontext
                 .Recipes
-                .Where(r => searchPhrase == null || (r.Name.ToLower().Contains(searchPhrase.ToLower()) || r.Description.ToLower().Contains(searchPhrase.ToLower())))
+                .Where(r => query.SearchPhrase == null || (r.Name.ToLower().Contains(query.SearchPhrase.ToLower()) ||
+                r.Description.ToLower().Contains(query.SearchPhrase.ToLower())));
+
+            var recipes = baseQuery
+                .Skip(query.PageSize * (query.PageNumber - 1))
+                .Take(query.PageSize)
                 .ToList();
+
+            var totalItemsCount = baseQuery.Count();
+
             var recipesDtos = _mapper.Map<List<RecipeDto>>(recipes);
 
-            return recipesDtos;
+            var result = new PagedResult<RecipeDto>(recipesDtos, totalItemsCount, query.PageSize, query.PageNumber);
+
+            return result;
         }
         public int Create(CreateRecipeDto recipeDto)
         {

@@ -4,11 +4,13 @@ using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Models;
+using RecipeRevolution.Validator;
 using System.Security.Claims;
 
 namespace RecipeRevolution.Controllers
 {
     [Route("api/recipe")]
+    [ApiController]
     [Authorize]
     public class RecipeController : ControllerBase
     {
@@ -20,9 +22,14 @@ namespace RecipeRevolution.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<RecipeDto>> GetAll([FromQuery]string searchPhrase)
+        public ActionResult<IEnumerable<RecipeDto>> GetAll([FromQuery]RecipeQuery query)
         {
-            var recipes = _recipeService.GetAll(searchPhrase);
+            var validation = new RecipeQueryValidator().Validate(query);
+            if(!validation.IsValid)
+            {
+                return BadRequest(validation.Errors);
+            }
+            var recipes = _recipeService.GetAll(query);
             return Ok(recipes);
         }
         [HttpGet("{id}")]
