@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeRevolution", "RecipeRevolution.csproj", "{ADEEA150-2143-4E6E-80FF-020C4BDA823E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeRevolution", "RecipeRevolution.csproj", "{ADEEA150-2143-4E6E-80FF-020C4BDA823E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{01D2DFEC-D0B0-4837-9687-7C8204860E2A}"
 EndProject
@@ -11,15 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{026EAFDE-0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{A5D1CA51-B613-4D16-AEB4-4ED98E29D8D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeRevolution.Application", "..\RecipeRevolution.Application\RecipeRevolution.Application.csproj", "{FCCAE13E-901E-41A7-B467-CAAE777995C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeRevolution.Application", "..\RecipeRevolution.Application\RecipeRevolution.Application.csproj", "{FCCAE13E-901E-41A7-B467-CAAE777995C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeRevolution.Common", "..\RecipeRevolution.Common\RecipeRevolution.Common.csproj", "{386B1E5C-3BB3-4EB9-9CE5-D9A96188356A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeRevolution.Common", "..\RecipeRevolution.Common\RecipeRevolution.Common.csproj", "{386B1E5C-3BB3-4EB9-9CE5-D9A96188356A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeRevolution.Domain", "..\RecipeRevolution.Domain\RecipeRevolution.Domain.csproj", "{AA019AEA-F9CD-481C-9DBB-F4E873DE9E6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeRevolution.Domain", "..\RecipeRevolution.Domain\RecipeRevolution.Domain.csproj", "{AA019AEA-F9CD-481C-9DBB-F4E873DE9E6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeRevolution.Infrastructure", "..\RecipeRevolution.Infrastructure\RecipeRevolution.Infrastructure.csproj", "{C1BDFD41-63B2-41EA-916E-48931ECD4BB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeRevolution.Infrastructure", "..\RecipeRevolution.Infrastructure\RecipeRevolution.Infrastructure.csproj", "{C1BDFD41-63B2-41EA-916E-48931ECD4BB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeRevolution.Persistance", "..\RecipeRevolution.Persistance\RecipeRevolution.Persistance.csproj", "{FF5907B9-D2A5-48DA-A1A0-940928A22627}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeRevolution.Persistance", "..\RecipeRevolution.Persistance\RecipeRevolution.Persistance.csproj", "{FF5907B9-D2A5-48DA-A1A0-940928A22627}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeRevolutionBlazor", "..\RecipeRevolutionBlazor\RecipeRevolutionBlazor.csproj", "{7D789604-26A7-4887-AAEE-D4B865EE4A2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{FF5907B9-D2A5-48DA-A1A0-940928A22627}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF5907B9-D2A5-48DA-A1A0-940928A22627}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF5907B9-D2A5-48DA-A1A0-940928A22627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D789604-26A7-4887-AAEE-D4B865EE4A2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D789604-26A7-4887-AAEE-D4B865EE4A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D789604-26A7-4887-AAEE-D4B865EE4A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D789604-26A7-4887-AAEE-D4B865EE4A2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -41,12 +41,23 @@ builder.Services.AddDbContext<RecipeRevolutionDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("RecipeDatabase"));
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin", builder =>
+    {
+        builder.WithOrigins("https://localhost:7216", "https://localhost:7165", "https://localhost:7251")
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 builder.Services.AddApplication();
 builder.Services.AddPersistance();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IRecipeService, RecipeService>();   
+builder.Services.AddScoped<IRecipeService, RecipeService>();
+builder.Services.AddScoped<IRecipesService, RecipesService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
@@ -62,6 +73,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowAnyOrigin");
 
 app.UseAuthentication();
 app.UseHttpsRedirection();
