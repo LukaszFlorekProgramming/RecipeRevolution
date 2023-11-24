@@ -92,6 +92,38 @@ namespace RecipeRevolution.Persistance.Migrations
                     DifficultyLevel = "Łatwy",
                     Portions = 4,
                     CategoryId = 11,
+                }, new Recipe()
+                {
+                    RecipeId = 3,
+                    Name = "SERNIK TRADYCYJNY",
+                    Description = "Miękkie masło ubić na puszysto, stopniowo dodawać po jednym żółtku na przemian z łyżką cukru pudru, cały czas dokładnie ubijając składniki.",
+                    Instructions = "Miękkie masło ubić na puszysto, stopniowo dodawać po jednym żółtku na przemian z łyżką cukru pudru, cały czas dokładnie ubijając składniki.",
+                    PreparationTime = 40,
+                    DifficultyLevel = "Łatwy",
+                    Portions = 6,
+                    CategoryId = 6,
+                }
+                , new Recipe()
+                {
+                    RecipeId = 4,
+                    Name = "SAŁATKA MEKSYKAŃSKA Z MANGO I AWOKADO",
+                    Description = "Z czerwoną fasolą, kukurydzą i czerwoną cebulą",
+                    Instructions = "Mango i awokado obrać, pokroić w kosteczkę i włożyć do salaterki lub szklanej miski. Polać sokiem wyciśniętym z całej limonki.\r\nDodać drobno posiekaną czerwoną cebulę, pokrojoną w kosteczkę czerwoną paprykę, odcedzoną na sitku kukurydzę i czerwoną fasolę.\r\nDodać listki kolendry, syrop klonowy, oliwę oraz chili. Wymieszać i podawać.",
+                    PreparationTime = 35,
+                    DifficultyLevel = "Łatwy",
+                    Portions = 4,
+                    CategoryId = 4,
+                }
+                , new Recipe()
+                {
+                    RecipeId = 5,
+                    Name = "SAŁATKA Z BULGUREM",
+                    Description = "Z dodatkiem ogórka, papryki, pomidorków koktajlowych, granatu i sera sałatkowego",
+                    Instructions = "Sałatka z kaszą bulgur, z pomidorkami, ogórkiem, granatem i dużą ilością zieleniny: mięty, natki i szczypiorku. Z dodatkiem sera sałatkowego lub fety.",
+                    PreparationTime = 12,
+                    DifficultyLevel = "Łatwy",
+                    Portions = 5,
+                    CategoryId = 6,
                 });
             });
             modelBuilder.Entity<NutritionalValues>(c =>

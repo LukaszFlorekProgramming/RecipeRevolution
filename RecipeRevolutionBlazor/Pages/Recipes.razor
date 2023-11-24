@@ -1,0 +1,103 @@
+﻿@page "/recipes"
+@using RecipeRevolution.Domain.Models
+@using RecipeRevolutionBlazor.Models
+@using RecipeRevolutionBlazor.Services.Recipes
+@using RecipeRevolutionBlazor.Services.RecipesPagination
+
+@inject IRecipeServicePagination RecipeServicePagination;
+
+<h3>RecipeList with Pagination 2</h3>
+
+<div>
+    <label for="search">Szukaj: </label>
+    <input id="search" @bind="@SearchPhrase" />
+    <button @onclick="Search">Szukaj</button>
+</div>
+
+@if (recipesPagedResult != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Instructions</th>
+                <th>PreparationTime</th>
+                <th>DifficultyLevel</th>
+                <th>Portions</th>
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var recipe in recipesPagedResult.Items)
+                {
+                <tr>
+                    <td>@recipe.Name</td>
+                    <td>@recipe.Description</td>
+                    <td>@recipe.Instructions</td>
+                    <td>@recipe.PreparationTime</td>
+                    <td>@recipe.DifficultyLevel</td>
+                    <td>@recipe.Portions</td>
+                </tr>
+                }
+        </tbody>
+    </table>
+    <div>
+        <input type="button" class="btnk-lg btn" id="prev" @onclick="PreviousPage" value="Previous" />
+        @for(int i = PageNumber - 2; i <= PageNumber + 2; i++)
+        {
+            int j = i;
+            if(i > 0)
+            {
+                if(i == PageNumber)
+                {
+                    <span class="px-2" style="font-weight:bold;cursor:pointer" @onclick="() => ShowPage(j)">@i</span>
+                }
+                else
+                {
+                    <span class="px-2" style="cursor:pointer" @onclick="() => ShowPage(j)">@i</span>
+                }
+            }
+        }
+        <input type="button" class="btnk-lg btn" id="next" @onclick="NextPage" value="Next" />
+    </div>
+}
+else
+{
+    <p>Brak danych recept.</p>
+}
+
+@code {
+    private PagedResult<RecipeDto> recipesPagedResult;
+    public string SearchPhrase { get; set; } = "string";
+    private int PageNumber { get; set; } = 1;
+    private int PageSize { get; set; } = 5;
+
+
+    protected async Task NextPage()
+    {
+        PageNumber++;
+        await Search();
+    }
+
+    protected async Task PreviousPage()
+    {
+        PageNumber--;
+        await Search();
+    }
+    protected async Task ShowPage(int i)
+    {
+        PageNumber = i;
+        await Search();
+    }
+
+    private async Task Search()
+    {
+        RecipeQuery query = new RecipeQuery
+        {
+            SearchPhrase = SearchPhrase,
+            PageNumber = PageNumber,
+            PageSize = PageSize
+        };
+        recipesPagedResult = await RecipeServicePagination.GetAll(query);
+    }
+}
