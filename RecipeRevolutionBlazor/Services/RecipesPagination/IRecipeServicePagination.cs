@@ -1,5 +1,4 @@
-﻿using RecipeRevolution.Domain.Models;
-using RecipeRevolutionBlazor.Models;
+﻿using RecipeRevolutionBlazor.Models;
 
 namespace RecipeRevolutionBlazor.Services.RecipesPagination
 {
