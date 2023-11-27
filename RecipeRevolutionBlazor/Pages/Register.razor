@@ -72,9 +72,10 @@
     private async Task RegisterUser()
     {
         var response = await UserService.RegisterUser(registerUserDto);
-        if(response != null)
+        if(response == true)
         {
             Navigation.NavigateTo("/login");
         }
+        
     }
 }

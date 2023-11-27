@@ -12,26 +12,17 @@ namespace RecipeRevolutionBlazor.Services.Users
         }
         public async Task<bool> RegisterUser(RegisterUserDto registerUserDto)
         {
-            try
-            {
                 var response = await _httpClient.PostAsJsonAsync("api/account/register", registerUserDto);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Możesz dodać logikę obsługi udanej rejestracji tutaj
                     return true;
                 }
                 else
                 {
-                    // Możesz obsłużyć błędy rejestracji tutaj, na przykład wyświetlić komunikat użytkownikowi
                     return false;
                 }
-            }
-            catch (HttpRequestException)
-            {
-                // Obsłuż błędy związane z żądaniem HTTP
-                return false;
-            }
+            
         }
 
         public async Task<string> LoginUser(LoginDto loginDto)
