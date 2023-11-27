@@ -4,7 +4,8 @@
 @using RecipeRevolutionBlazor.Models
 @using RecipeRevolutionBlazor.Services.Users
 @inject IUserService UserService;
-@inject NavigationManager Navitation;
+@inject NavigationManager Navigation;
+@inject AuthTokenService AuthTokenService;
 
 <h3>Login</h3>
 
@@ -37,9 +38,10 @@
         {
             var response = await UserService.LoginUser(loginDto);
 
-            if (response != string.Empty )
+            if (!string.IsNullOrEmpty(response))
             {
-                Navitation.NavigateTo("/allrecipes");
+                AuthTokenService.SetToken(response);
+                Navigation.NavigateTo("/hello");
                 Console.WriteLine($"Token received: {response}");
             }
             else

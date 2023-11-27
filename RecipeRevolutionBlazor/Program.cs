@@ -16,5 +16,6 @@ void ConfigureHttpClient(HttpClient client)
 builder.Services.AddHttpClient<IRecipeService, RecipeService>(ConfigureHttpClient);
 builder.Services.AddHttpClient<IRecipeServicePagination, RecipeServicePagination>(ConfigureHttpClient);
 builder.Services.AddHttpClient<IUserService, UserService>(ConfigureHttpClient);
+builder.Services.AddSingleton<AuthTokenService>();
 
 await builder.Build().RunAsync();
