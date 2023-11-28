@@ -22,10 +22,10 @@ namespace RecipeRevolution.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<RecipeDto>> GetAll([FromQuery]RecipeQuery query)
+        public ActionResult<IEnumerable<RecipeDto>> GetAll([FromQuery] RecipeQuery query)
         {
             var validation = new RecipeQueryValidator().Validate(query);
-            if(!validation.IsValid)
+            if (!validation.IsValid)
             {
                 return BadRequest(validation.Errors);
             }
@@ -44,6 +44,15 @@ namespace RecipeRevolution.Controllers
             }
 
             return Ok(recipe);
+        }
+        [HttpGet("user")]
+        public ActionResult<IEnumerable<MyRecipeDto>> GetUserRecipes()
+        {
+            var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            var recipes = _recipeService.GetUserRecipes(userId);
+
+            return Ok(recipes);
         }
         [HttpPost]
         public ActionResult CreateRecipe([FromBody] CreateRecipeDto recipeDto)
@@ -64,10 +73,10 @@ namespace RecipeRevolution.Controllers
             return NotFound();
         }
         [HttpPut("{id}")]
-        public ActionResult Update([FromBody] UpdateRecipeDto updateRecipeDto, [FromRoute]int id)
+        public ActionResult Update([FromBody] UpdateRecipeDto updateRecipeDto, [FromRoute] int id)
         {
-            var isUpdated = _recipeService.Update(updateRecipeDto,id);
-            if(!isUpdated)
+            var isUpdated = _recipeService.Update(updateRecipeDto, id);
+            if (!isUpdated)
             {
                 return NotFound();
             }

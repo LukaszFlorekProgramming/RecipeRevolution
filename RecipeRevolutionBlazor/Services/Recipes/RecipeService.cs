@@ -17,16 +17,39 @@ namespace RecipeRevolutionBlazor.Services.Recipes
 
         public async Task Create(CreateRecipeDto recipeDto)
         {
+            SetAuthorizationHeader();
             var apiUrl = "api/recipe";
             await _httpClient.PostAsJsonAsync(apiUrl, recipeDto);
         }
 
+        public async Task Delete(int id)
+        {
+            var apiUrl = $"api/recipe/{id}";
+            await _httpClient.DeleteAsync(apiUrl);
+        }
+
+        public async Task<RecipeDto> GetById(int id)
+        {
+            var apiUrl = $"api/recipe/{id}";
+            return await _httpClient.GetFromJsonAsync<RecipeDto>(apiUrl);
+        }
+
         public async Task<List<RecipeDto>> GetRecipes()
         {
-            SetAuthorizationHeader();
-
             var apiUrl = "api/recipes";
             return await _httpClient.GetFromJsonAsync<List<RecipeDto>>(apiUrl);
+        }
+
+        public async Task<IEnumerable<MyRecipeDto>> GetUserRecipes(int id)
+        {
+            var apiUrl = "api/recipe/user";
+            return await _httpClient.GetFromJsonAsync<IEnumerable<MyRecipeDto>>(apiUrl);
+        }
+
+        public async Task Update(UpdateRecipeDto recipeDto, int id)
+        {
+            var apiUrl = $"api/recipe/{id}";
+            await _httpClient.PutAsJsonAsync(apiUrl, recipeDto);
         }
 
         private void SetAuthorizationHeader()
@@ -39,8 +62,7 @@ namespace RecipeRevolutionBlazor.Services.Recipes
             }
             else
             {
-                Console.WriteLine("Brak dostępnego tokenu.");
-                // Tutaj możesz obsłużyć sytuację braku tokenu, np. zgłaszając błąd lub podejmując odpowiednie działania
+                throw new InvalidOperationException("Brak dostępnego tokenu.");
             }
         }
     }

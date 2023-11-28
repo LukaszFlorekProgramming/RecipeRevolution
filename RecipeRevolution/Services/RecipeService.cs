@@ -52,6 +52,15 @@ namespace RecipeRevolution.Services
 
             return result;
         }
+        public IEnumerable<MyRecipeDto> GetUserRecipes(int id)
+        {
+            var recipes = _dbcontext
+                .Recipes.Where(x => x.CreatedById == id)
+                .ToList();
+            var recipesDtos = _mapper.Map<List<MyRecipeDto>>(recipes);
+
+            return recipesDtos;
+        }
         public int Create(CreateRecipeDto recipeDto)
         {
             var recipe = _mapper.Map<Recipe>(recipeDto);
@@ -68,7 +77,7 @@ namespace RecipeRevolution.Services
                 .FirstOrDefault(r => r.RecipeId == id);
             if(recipe is null) return false;
 
-            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, recipe, new ResourceOperationRequirement(ResourseOperation.Update)).Result;
+            var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, recipe, new ResourceOperationRequirement(ResourseOperation.Delete)).Result;
 
             if (!authorizationResult.Succeeded)
             {

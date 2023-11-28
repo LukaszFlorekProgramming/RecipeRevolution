@@ -8,5 +8,6 @@
         public int PreparationTime { get; set; }
         public string DifficultyLevel { get; set; }
         public short Portions { get; set; }
+        public int CategoryId { get; set; }
     }
 }
