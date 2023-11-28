@@ -1,6 +1,6 @@
-﻿namespace RecipeRevolution.Models
+﻿namespace RecipeRevolutionBlazor.Models
 {
-    public class RecipeDto
+    public class UpdateRecipeDto
     {
         public string Name { get; set; }
         public string Description { get; set; }

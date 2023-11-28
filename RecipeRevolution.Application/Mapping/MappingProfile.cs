@@ -16,6 +16,7 @@ namespace RecipeRevolution.Application.Mapping
         {
             CreateMap<Recipe, RecipeDto>();
             CreateMap<CreateRecipeDto, Recipe>();
+            CreateMap<Recipe, MyRecipeDto>();
         }
     }
 }
