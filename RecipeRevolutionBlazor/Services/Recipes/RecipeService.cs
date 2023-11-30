@@ -28,6 +28,22 @@ namespace RecipeRevolutionBlazor.Services.Recipes
             await _httpClient.DeleteAsync(apiUrl);
         }
 
+        public async Task<PagedResult<RecipeDto>> GetAll(RecipeQuery query)
+        {
+            var endpoint = $"api/recipe?PageSize={query.PageSize}&PageNumber={query.PageNumber}";
+
+            if (!string.IsNullOrEmpty(query.SearchPhrase))
+            {
+                endpoint += $"&searchPhrase={query.SearchPhrase}";
+            }
+            else
+            {
+                endpoint += "&searchPhrase=all";
+            }
+
+            return await _httpClient.GetFromJsonAsync<PagedResult<RecipeDto>>(endpoint);
+        }
+
         public async Task<RecipeDto> GetById(int id)
         {
             var apiUrl = $"api/recipe/{id}";

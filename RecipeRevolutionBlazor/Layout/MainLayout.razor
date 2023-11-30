@@ -12,15 +12,16 @@
                 if (!string.IsNullOrEmpty(TokenService.Token))
                 {
                     <span class="nav-link">Welcome, @TokenService.GetUserNameFromToken() !</span>
-                    <button @onclick="Logout">Wyloguj</button>
+                    <button type="button" class="btn btn-warning" @onclick="Logout">Wyloguj</button>
                 }
                 else
                 {
                     <NavLink class="nav-link" href="login">
-                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Sign in
+                        <button type="button" class="btn btn-light">Login</button>
+                        
                     </NavLink>
                     <NavLink class="nav-link" href="register">
-                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Register
+                        <button type="button" class="btn btn-light">Register</button>
                     </NavLink>
                 }
             }

@@ -34,10 +34,19 @@ namespace RecipeRevolution.Services
         }
         public PagedResult<RecipeDto> GetAll(RecipeQuery query)
         {
-            var baseQuery = _dbcontext
-                .Recipes
-                .Where(r => query.SearchPhrase == null || (r.Name.ToLower().Contains(query.SearchPhrase.ToLower()) ||
-                r.Description.ToLower().Contains(query.SearchPhrase.ToLower())));
+            var baseQuery = _dbcontext.Recipes.AsQueryable();
+
+            if (query.SearchPhrase != "all")
+            {
+                baseQuery = baseQuery
+                    .Where(r => r.Name.ToLower().Contains(query.SearchPhrase.ToLower()) ||
+                                r.Description.ToLower().Contains(query.SearchPhrase.ToLower()));
+            }
+            else
+            {
+                // Dodaj warunek, gdy query.SearchPhrase jest puste
+                baseQuery = baseQuery.Where(r => true);
+            }
 
             var recipes = baseQuery
                 .Skip(query.PageSize * (query.PageNumber - 1))
