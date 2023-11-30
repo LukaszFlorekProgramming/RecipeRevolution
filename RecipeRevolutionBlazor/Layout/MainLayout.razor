@@ -1,6 +1,7 @@
 ﻿@using RecipeRevolutionBlazor.Services.Users
 @inherits LayoutComponentBase
 @inject AuthTokenService TokenService
+@inject NavigationManager NavigationManager
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -12,6 +13,9 @@
                 if (!string.IsNullOrEmpty(TokenService.Token))
                 {
                     <span class="nav-link">Welcome, @TokenService.GetUserNameFromToken() !</span>
+                        <NavLink class="nav-link" href="Myrecipes">
+                        <button type="button" class="btn btn-light">My Recipes</button>
+                        </NavLink>
                     <button type="button" class="btn btn-warning" @onclick="Logout">Wyloguj</button>
                 }
                 else
@@ -37,5 +41,6 @@
     private void Logout()
     {
         TokenService.RemoveToken();
+        NavigationManager.NavigateTo("/recipes");
     }
 }

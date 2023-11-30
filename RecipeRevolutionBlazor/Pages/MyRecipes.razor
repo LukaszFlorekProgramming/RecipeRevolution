@@ -8,6 +8,13 @@
 @inject NavigationManager NavigationManager
 @inject AuthTokenService AuthTokenService
 
+
+@if (AuthTokenService.Token == null)
+{
+    <p>Please log in to view your recipes.</p>
+}
+else
+{
 <table class="table table-striped table-bordered bg-light">
     <thead>
         <tr>
@@ -52,14 +59,23 @@
     </tbody>
 </table>
 
+<button type="button" class="btn btn-primary" @onclick="() => NavigateToCreatePage()">Create recipe</button>
+
+}
+
 @code{
     private IEnumerable<MyRecipeDto> recipes;
     private int NameIdentyfiker;
 
     protected override async Task OnInitializedAsync()
     {
-        ReadToken();
-        await LoadUserRecipes();
+        if (AuthTokenService.Token != null)
+        {
+            ReadToken();
+            await LoadUserRecipes();
+        }
+        
+        
     }
 
     private async Task LoadUserRecipes()
@@ -88,6 +104,11 @@
         var jsonToken = handler.ReadToken(AuthTokenService.Token) as JwtSecurityToken;
         var IdClaim = jsonToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
         NameIdentyfiker = int.Parse(IdClaim.Value);
+    }
+
+    private void NavigateToCreatePage()
+    {
+        NavigationManager.NavigateTo($"/createRecipe");
     }
 
 }

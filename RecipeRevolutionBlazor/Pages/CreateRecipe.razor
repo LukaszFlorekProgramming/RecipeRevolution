@@ -65,6 +65,7 @@
 
 
     <button type="submit" class="btn btn-primary">Create</button>
+    <a href="/Myrecipes" class="btn btn-secondary">Anuluj</a>
 </EditForm>
 
 @code {
@@ -75,7 +76,7 @@
         try
         {
             await RecipeService.Create(recipeDto);
-            //NavigationManager.NavigateTo("/allrecipes");
+            NavigationManager.NavigateTo("/Myrecipes");
         }
         catch (Exception ex)
         {

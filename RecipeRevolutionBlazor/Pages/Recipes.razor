@@ -4,6 +4,7 @@
 @using RecipeRevolutionBlazor.Services.RecipesPagination
 
 @inject IRecipeService IRecipeService;
+@inject NavigationManager NavigationManager
 
 <h3>RecipeList</h3>
 
@@ -24,18 +25,20 @@
                 <th>PreparationTime</th>
                 <th>DifficultyLevel</th>
                 <th>Portions</th>
+                <th>RecipeId</th>
             </tr>
         </thead>
         <tbody>
                 @foreach (var recipe in recipesPagedResult.Items)
                 {
-                <tr>
+                <tr @onclick="() => RedirectToDetailsPage(recipe.RecipeId)">
                     <td>@recipe.Name</td>
                     <td>@recipe.Description</td>
                     <td>@recipe.Instructions</td>
                     <td>@recipe.PreparationTime</td>
                     <td>@recipe.DifficultyLevel</td>
                     <td>@recipe.Portions</td>
+                    <td>@recipe.RecipeId</td>
                 </tr>
                 }
         </tbody>
@@ -112,6 +115,10 @@ else
             PageSize = PageSize
         };
         recipesPagedResult = await IRecipeService.GetAll(query);
+    }
+    private void RedirectToDetailsPage(int id)
+    {
+        NavigationManager.NavigateTo($"/recipe/{id}");
     }
 
 }

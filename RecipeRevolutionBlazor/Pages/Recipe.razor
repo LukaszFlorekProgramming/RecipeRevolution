@@ -1,7 +1,32 @@
-﻿@page "/recipe"
+﻿@page "/recipe/{id:int}"
+@using RecipeRevolutionBlazor.Models
+@using RecipeRevolutionBlazor.Services.Recipes
+@inject IRecipeService IRecipeService;
 
-<h3>Recipe</h3>
+<h3>Recipe Details</h3>
+
+@if (recipe != null)
+{
+    <div>
+        <p>Name: @recipe.Name</p>
+        <p>Description: @recipe.Description</p>
+        <p>Instructions: @recipe.Instructions</p>
+        <p>Preparation Time: @recipe.PreparationTime</p>
+        <p>Difficulty Level: @recipe.DifficultyLevel</p>
+        <p>Portions: @recipe.Portions</p>
+    </div>
+}
+else
+{
+    <p>Loading...</p>
+}
 
 @code {
-
+    [Parameter] public int Id { get; set; }
+    private RecipeDto recipe;
+    protected override async Task OnInitializedAsync()
+    {
+        // Pobierz szczegóły receptury na podstawie RecipeName
+        recipe = await IRecipeService.GetById(Id);
+    }
 }
