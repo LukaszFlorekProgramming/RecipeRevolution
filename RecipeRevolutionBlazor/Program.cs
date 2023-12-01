@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RecipeRevolutionBlazor;
+using RecipeRevolutionBlazor.Services.Images;
 using RecipeRevolutionBlazor.Services.Recipes;
 using RecipeRevolutionBlazor.Services.RecipesPagination;
 using RecipeRevolutionBlazor.Services.Users;
@@ -36,6 +37,14 @@ builder.Services.AddScoped<IUserService, UserService>(sp =>
     ConfigureHttpClient(httpClient, authTokenService);
     return new UserService(httpClient);
 });
+builder.Services.AddScoped<IImageService, ImageService>(sp =>
+{
+    var httpClient = sp.GetRequiredService<HttpClient>();
+    var authTokenService = sp.GetRequiredService<AuthTokenService>();
+    ConfigureHttpClient(httpClient, authTokenService);
+    return new ImageService(httpClient, authTokenService);
+});
+
 
 await builder.Build().RunAsync();
 

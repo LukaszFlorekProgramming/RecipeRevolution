@@ -18,6 +18,10 @@ namespace RecipeRevolution.Application.Mapping
             CreateMap<CreateRecipeDto, Recipe>();
             CreateMap<Recipe, MyRecipeDto>();
             CreateMap<Category, CategoryDto>();
+            CreateMap<Image, ImageDto>()
+            .ForMember(dest => dest.RecipeId, opt => opt.MapFrom(src => src.Recipe.RecipeId));
+            CreateMap<ImageDto, Image>()
+                .ForMember(dest => dest.Recipe, opt => opt.Ignore());
         }
     }
 }

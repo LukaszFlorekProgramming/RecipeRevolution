@@ -1,0 +1,46 @@
+﻿@page "/image"
+@inject IImageService ImageService
+@using RecipeRevolutionBlazor.Models
+@using RecipeRevolutionBlazor.Services.Images
+<h3>ImageTest</h3>
+
+<EditForm Model="@imageModel" OnValidSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="fileInput">Wybierz zdjęcie:</label>
+    <InputFile id="fileInput" OnChange="@HandleFileChange" />
+
+    <button type="submit">Prześlij zdjęcie</button>
+</EditForm>
+
+@code {
+    private ImageDto imageModel = new ImageDto();
+
+    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    {
+        var imageFile = e.File;
+
+        using (var stream = imageFile.OpenReadStream())
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await stream.CopyToAsync(memoryStream);
+                imageModel.Data = memoryStream.ToArray();
+            }
+        }
+
+        imageModel.FileName = imageFile.Name;
+        imageModel.ContentType = imageFile.ContentType;
+        imageModel.RecipeId = 5;
+    }
+
+    private async void HandleSubmit()
+    {
+        await ImageService.Create(imageModel);
+        // Obsługa przesyłania obrazu do API
+        // Możesz użyć tutaj HttpClient do wysłania obrazu na swoje API REST
+        // np. poprzez POST request
+        // httpClient.PostAsJsonAsync("api/images", imageModel);
+    }
+}

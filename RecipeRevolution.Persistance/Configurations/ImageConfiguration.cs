@@ -14,10 +14,13 @@ namespace RecipeRevolution.Persistance.Configurations
         public void Configure(EntityTypeBuilder<Image> builder)
         {
             builder.HasKey(x => x.ImageId);
-            builder.Property(x => x.Url)
+            builder.Property(x => x.FileName)
                 .IsRequired()
                 .HasMaxLength(300);
-
+            builder.Property(x => x.Data)
+                .IsRequired();
+            builder.Property(x => x.ContentType)
+                .IsRequired();
         }
     }
 }
