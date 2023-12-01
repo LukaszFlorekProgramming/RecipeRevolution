@@ -14,6 +14,7 @@ namespace RecipeRevolution.Application.Interfaces
         RecipeDto GetById(int id);
         PagedResult<RecipeDto> GetAll(RecipeQuery query);
         IEnumerable<MyRecipeDto> GetUserRecipes(int id);
+        IEnumerable<CategoryDto> GetAllCategory();
         int Create(CreateRecipeDto recipeDto);
         bool Delete(int id);
         bool Update(UpdateRecipeDto recipeDto, int id);

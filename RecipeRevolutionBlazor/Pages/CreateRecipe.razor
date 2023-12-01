@@ -50,26 +50,30 @@
         <InputNumber id="Portions" @bind-Value="@recipeDto.Portions" class="form-control" />
         <ValidationMessage For="@(() => recipeDto.Portions)" />
     </div>
-
-    <div>
-        <label for="numericDropdown">Select a number:</label>
-        <InputSelect id="numericDropdown" @bind-Value="recipeDto.CategoryId">
-            @for (int i = 1; i <= 3; i++)
-            {
-                <option value="@i">@i</option>
-            }
-        </InputSelect>
-        <p>Selected Number: @recipeDto.CategoryId</p>
-    </div>
-
-
-
+    @if (categories != null)
+    {
+        <div>
+            <label for="numericDropdown">Select a category:</label>
+            <InputSelect id="categoryDropdown" @bind-Value="recipeDto.CategoryId">
+                @foreach (var category in categories)
+                {
+                    <option value="@category.CategoryId">@category.Name</option>
+                }
+            </InputSelect>
+        </div>
+    }
     <button type="submit" class="btn btn-primary">Create</button>
     <a href="/Myrecipes" class="btn btn-secondary">Anuluj</a>
 </EditForm>
 
 @code {
     private CreateRecipeDto recipeDto = new CreateRecipeDto();
+    private IEnumerable<CategoryDto> categories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await RecipeService.GetAllCategory();
+    }
 
     private async Task CreateRecipeMetod()
     {

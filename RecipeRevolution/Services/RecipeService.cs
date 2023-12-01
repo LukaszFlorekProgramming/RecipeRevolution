@@ -124,5 +124,12 @@ namespace RecipeRevolution.Services
             return true;
 
         }
+
+        public IEnumerable<CategoryDto> GetAllCategory()
+        {
+            var categories = _dbcontext.Categories.ToList();
+            var categoriesDtos = _mapper.Map<List<CategoryDto>>(categories);
+            return categoriesDtos;
+        }
     }
 }

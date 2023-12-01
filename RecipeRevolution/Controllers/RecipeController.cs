@@ -54,6 +54,14 @@ namespace RecipeRevolution.Controllers
 
             return Ok(recipes);
         }
+        [Route("categories")]
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<RecipeDto>> GetAllCategories()
+        {
+            var categories = _recipeService.GetAllCategory();
+            return Ok(categories);
+        }
         [HttpPost]
         public ActionResult CreateRecipe([FromBody] CreateRecipeDto recipeDto)
         {
