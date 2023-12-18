@@ -93,7 +93,7 @@
             var idCreatedRecipe = await RecipeService.Create(recipeDto);
             imageModel.RecipeId = idCreatedRecipe;
             await ImageService.Create(imageModel);
-            NavigationManager.NavigateTo("/Myrecipes");
+
         }
         catch (Exception ex)
         {
@@ -119,5 +119,4 @@
         imageModel.RecipeId = 5;
     }
 
-    
 }
