@@ -90,9 +90,7 @@
     {
         try
         {
-            var idCreatedRecipe = await RecipeService.Create(recipeDto);
-            imageModel.RecipeId = idCreatedRecipe;
-            await ImageService.Create(imageModel);
+            await RecipeService.Create(recipeDto);
             NavigationManager.NavigateTo("/Myrecipes");
         }
         catch (Exception ex)
@@ -100,24 +98,4 @@
             Console.WriteLine($"Error creating recipe: {ex.Message}");
         }
     }
-
-    private async Task HandleFileChange(InputFileChangeEventArgs e)
-    {
-        var imageFile = e.File;
-
-        using (var stream = imageFile.OpenReadStream())
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                await stream.CopyToAsync(memoryStream);
-                imageModel.Data = memoryStream.ToArray();
-            }
-        }
-
-        imageModel.FileName = imageFile.Name;
-        imageModel.ContentType = imageFile.ContentType;
-        imageModel.RecipeId = 5;
-    }
-
-    
 }
