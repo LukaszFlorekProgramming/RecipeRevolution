@@ -94,6 +94,10 @@
             imageModel.RecipeId = idCreatedRecipe;
             await ImageService.Create(imageModel);
 
+            imageModel.RecipeId = idCreatedRecipe;
+            await ImageService.Create(imageModel);
+>>>>>>>>> Temporary merge branch 2
+            NavigationManager.NavigateTo("/Myrecipes");
         }
         catch (Exception ex)
         {
@@ -101,6 +105,8 @@
         }
     }
 
+<<<<<<<<< Temporary merge branch 1
+=========
     private async Task HandleFileChange(InputFileChangeEventArgs e)
     {
         var imageFile = e.File;
@@ -119,4 +125,6 @@
         imageModel.RecipeId = 5;
     }
 
+>>>>>>>>> Temporary merge branch 2
+    
 }
