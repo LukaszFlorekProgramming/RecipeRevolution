@@ -16,11 +16,16 @@ namespace RecipeRevolutionBlazor.Services.Recipes
             _authTokenService = authTokenService ?? throw new ArgumentNullException(nameof(authTokenService));
         }
 
-        public async Task Create(CreateRecipeDto recipeDto)
+        public async Task<int> Create(CreateRecipeDto recipeDto)
         {
             SetAuthorizationHeader();
             var apiUrl = "api/recipe";
-            await _httpClient.PostAsJsonAsync(apiUrl, recipeDto);
+            var response = await _httpClient.PostAsJsonAsync(apiUrl, recipeDto);
+            response.EnsureSuccessStatusCode();
+
+            var createdRecipeId = await response.Content.ReadFromJsonAsync<int>();
+
+            return createdRecipeId;
         }
 
         public async Task Delete(int id)

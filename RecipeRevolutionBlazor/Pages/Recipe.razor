@@ -1,19 +1,27 @@
 ﻿@page "/recipe/{id:int}"
 @using RecipeRevolutionBlazor.Models
+@using RecipeRevolutionBlazor.Services.Images
 @using RecipeRevolutionBlazor.Services.Recipes
-@inject IRecipeService IRecipeService;
+@inject IRecipeService IRecipeService
+@inject IImageService ImageService
+
 
 <h3>Recipe Details</h3>
 
 @if (recipe != null)
 {
-    <div>
-        <p>Name: @recipe.Name</p>
-        <p>Description: @recipe.Description</p>
-        <p>Instructions: @recipe.Instructions</p>
-        <p>Preparation Time: @recipe.PreparationTime</p>
-        <p>Difficulty Level: @recipe.DifficultyLevel</p>
-        <p>Portions: @recipe.Portions</p>
+    <div class="recipe-container">
+        <div class="recipe-header">
+            <h2>@recipe.Name</h2>
+            <img src="@($"data:image/png;base64,{Convert.ToBase64String(@image.Data)}")" alt="Recipe Image" class="recipe-image" />
+        </div>
+        <div class="recipe-details">
+            <p><strong>Description:</strong> @recipe.Description</p>
+            <p><strong>Instructions:</strong> @recipe.Instructions</p>
+            <p><strong>Preparation Time:</strong> @recipe.PreparationTime</p>
+            <p><strong>Difficulty Level:</strong> @recipe.DifficultyLevel</p>
+            <p><strong>Portions:</strong> @recipe.Portions</p>
+        </div>
     </div>
 }
 else
@@ -24,9 +32,10 @@ else
 @code {
     [Parameter] public int Id { get; set; }
     private RecipeDto recipe;
+    private ImageDto image;
     protected override async Task OnInitializedAsync()
     {
-        // Pobierz szczegóły receptury na podstawie RecipeName
         recipe = await IRecipeService.GetById(Id);
+        image = await ImageService.GetByRecipeId(Id);
     }
 }

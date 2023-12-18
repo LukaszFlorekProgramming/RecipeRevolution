@@ -68,7 +68,7 @@ namespace RecipeRevolution.Controllers
             var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
             var id = _recipeService.Create(recipeDto);
 
-            return Created($"/api/recipe/{id}", null);
+            return Created($"/api/recipe/{id}", id);
         }
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)

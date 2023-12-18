@@ -28,6 +28,12 @@ namespace RecipeRevolutionBlazor.Services.Images
             return await _httpClient.GetFromJsonAsync<ImageDto>(apiUrl);
         }
 
+        public async Task<ImageDto> GetByRecipeId(int id)
+        {
+            var apiUrl = $"api/image/recipeId/{id}";
+            return await _httpClient.GetFromJsonAsync<ImageDto>(apiUrl);
+        }
+
         private void SetAuthorizationHeader()
         {
             var authToken = _authTokenService.Token;
