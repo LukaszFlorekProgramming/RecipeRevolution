@@ -5,7 +5,7 @@ namespace RecipeRevolution.Validator
 {
     public class RecipeQueryValidator : AbstractValidator<RecipeQuery>
     {
-        private int[] allowedPageSizes = new[] { 5, 10, 15 };
+        private int[] allowedPageSizes = new[] { 5, 10, 15,16 };
         public RecipeQueryValidator()
         {
             RuleFor(r => r.PageNumber).GreaterThanOrEqualTo(1);

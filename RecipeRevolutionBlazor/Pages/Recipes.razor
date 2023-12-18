@@ -14,35 +14,28 @@
     <button @onclick="Search">Szukaj</button>
 </div>
 
-@if (recipesPagedResult != null)
+@if (recipesPagedResult != null && recipesPagedResult.Items.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Instructions</th>
-                <th>PreparationTime</th>
-                <th>DifficultyLevel</th>
-                <th>Portions</th>
-                <th>RecipeId</th>
-            </tr>
-        </thead>
-        <tbody>
-                @foreach (var recipe in recipesPagedResult.Items)
-                {
-                <tr @onclick="() => RedirectToDetailsPage(recipe.RecipeId)">
-                    <td>@recipe.Name</td>
-                    <td>@recipe.Description</td>
-                    <td>@recipe.Instructions</td>
-                    <td>@recipe.PreparationTime</td>
-                    <td>@recipe.DifficultyLevel</td>
-                    <td>@recipe.Portions</td>
-                    <td>@recipe.RecipeId</td>
-                </tr>
-                }
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="row">
+            @foreach (var recipe in recipesPagedResult.Items)
+            {
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@recipe.Name</h5>
+                            <p class="card-text">@recipe.Description</p>
+                            <p class="card-text">Czas przygotowania: @recipe.PreparationTime</p>
+                            <p class="card-text">Poziom trudności: @recipe.DifficultyLevel</p>
+                            <p class="card-text">Porcje: @recipe.Portions</p>
+                            <button class="btn btn-primary" @onclick="() => RedirectToDetailsPage(recipe.RecipeId)">Zobacz szczegóły</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
     <div>
         <input type="button" class="btnk-lg btn" id="prev" @onclick="PreviousPage" value="Previous" />
         @for(int i = PageNumber - 2; i <= PageNumber + 2; i++)
@@ -72,7 +65,7 @@ else
     private PagedResult<RecipeDto> recipesPagedResult;
     public string SearchPhrase { get; set; } = "";
     private int PageNumber { get; set; } = 1;
-    private int PageSize { get; set; } = 5;
+    private int PageSize { get; set; } = 16;
 
 
 
