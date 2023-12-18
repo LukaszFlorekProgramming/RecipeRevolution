@@ -4,6 +4,7 @@
 @using RecipeRevolutionBlazor.Services.Recipes
 @inject IRecipeService IRecipeService
 @inject IImageService ImageService
+@inject NavigationManager NavigationManager
 
 
 <h3>Recipe Details</h3>
@@ -21,6 +22,7 @@
             <p><strong>Preparation Time:</strong> @recipe.PreparationTime</p>
             <p><strong>Difficulty Level:</strong> @recipe.DifficultyLevel</p>
             <p><strong>Portions:</strong> @recipe.Portions</p>
+            <button class="btn btn-secondary" @onclick="GoBack">Powrót</button>
         </div>
     </div>
 }
@@ -37,5 +39,9 @@ else
     {
         recipe = await IRecipeService.GetById(Id);
         image = await ImageService.GetByRecipeId(Id);
+    }
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/HomeRecipes");
     }
 }

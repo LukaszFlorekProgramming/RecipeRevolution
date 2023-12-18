@@ -36,7 +36,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -124,7 +124,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("RecipeRevolution.Domain.Entities.Ingredient", b =>
@@ -155,7 +155,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredients", (string)null);
 
                     b.HasData(
                         new
@@ -204,7 +204,7 @@ namespace RecipeRevolution.Persistance.Migrations
                     b.HasIndex("RecipeId")
                         .IsUnique();
 
-                    b.ToTable("NutritionalValues");
+                    b.ToTable("NutritionalValues", (string)null);
 
                     b.HasData(
                         new
@@ -273,7 +273,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
 
                     b.HasData(
                         new
@@ -348,7 +348,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
@@ -410,7 +410,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("RecipeRevolution.Domain.Entities.Image", b =>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using RecipeRevolution.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -126,6 +127,7 @@ namespace RecipeRevolution.Persistance.Migrations
                     CategoryId = 6,
                 });
             });
+            
             modelBuilder.Entity<NutritionalValues>(c =>
             {
                 c.HasData(new NutritionalValues()

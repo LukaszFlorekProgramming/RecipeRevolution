@@ -2,6 +2,8 @@
 @inject IImageService ImageService
 @using RecipeRevolutionBlazor.Models
 @using RecipeRevolutionBlazor.Services.Images
+@using SixLabors.ImageSharp;
+@using SixLabors.ImageSharp.Processing;
 <h3>ImageTest</h3>
 
 <EditForm Model="@imageModel" OnValidSubmit="@HandleSubmit">
@@ -23,10 +25,20 @@
 
         using (var stream = imageFile.OpenReadStream())
         {
-            using (var memoryStream = new MemoryStream())
+            using (var image = await Image.LoadAsync(stream))
             {
-                await stream.CopyToAsync(memoryStream);
-                imageModel.Data = memoryStream.ToArray();
+                // Resize to a 4:3 aspect ratio
+                image.Mutate(x => x.Resize(new ResizeOptions
+                    {
+                        Mode = ResizeMode.Pad,
+                        Size = new Size(4, 3)
+                    }));
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await image.SaveAsJpegAsync(memoryStream);
+                    imageModel.Data = memoryStream.ToArray();
+                }
             }
         }
 

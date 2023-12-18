@@ -41,7 +41,7 @@
             if (!string.IsNullOrEmpty(response))
             {
                 AuthTokenService.SetToken(response);
-                Navigation.NavigateTo("/hello");
+                Navigation.NavigateTo("/Myrecipes");
                 Console.WriteLine($"Token received: {response}");
             }
             else
