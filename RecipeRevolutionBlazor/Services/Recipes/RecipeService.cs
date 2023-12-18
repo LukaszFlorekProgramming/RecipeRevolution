@@ -56,6 +56,22 @@ namespace RecipeRevolutionBlazor.Services.Recipes
             return await _httpClient.GetFromJsonAsync<IEnumerable<CategoryDto>>(apiUrl);
         }
 
+        public async Task<PagedResult<RecipeWithPhotoDto>> GetAllWithPhoto(RecipeQuery query)
+        {
+            var endpoint = $"api/recipe/photo?PageSize={query.PageSize}&PageNumber={query.PageNumber}";
+
+            if (!string.IsNullOrEmpty(query.SearchPhrase))
+            {
+                endpoint += $"&searchPhrase={query.SearchPhrase}";
+            }
+            else
+            {
+                endpoint += "&searchPhrase=all";
+            }
+
+            return await _httpClient.GetFromJsonAsync<PagedResult<RecipeWithPhotoDto>>(endpoint);
+        }
+
         public async Task<RecipeDto> GetById(int id)
         {
             var apiUrl = $"api/recipe/{id}";

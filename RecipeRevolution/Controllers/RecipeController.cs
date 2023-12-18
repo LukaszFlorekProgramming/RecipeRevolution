@@ -32,6 +32,18 @@ namespace RecipeRevolution.Controllers
             var recipes = _recipeService.GetAll(query);
             return Ok(recipes);
         }
+        [HttpGet("photo")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<RecipeWithPhotoDto>> GetAllWithPhoto([FromQuery] RecipeQuery query)
+        {
+            var validation = new RecipeQueryValidator().Validate(query);
+            if (!validation.IsValid)
+            {
+                return BadRequest(validation.Errors);
+            }
+            var recipes = _recipeService.GetAllWithPhoto(query);
+            return Ok(recipes);
+        }
         [HttpGet("{id}")]
         [AllowAnonymous]
         public ActionResult<Recipe> Get([FromRoute] int id)

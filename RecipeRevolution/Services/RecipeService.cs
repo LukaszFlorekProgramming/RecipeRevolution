@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Authorization;
 using RecipeRevolution.Domain.Entities;
@@ -130,6 +131,36 @@ namespace RecipeRevolution.Services
             var categories = _dbcontext.Categories.ToList();
             var categoriesDtos = _mapper.Map<List<CategoryDto>>(categories);
             return categoriesDtos;
+        }
+
+        public PagedResult<RecipeWithPhotoDto> GetAllWithPhoto(RecipeQuery query)
+        {
+            var baseQuery = _dbcontext.Recipes.Include(x => x.Images).AsQueryable();
+
+            if (query.SearchPhrase != "all")
+            {
+                baseQuery = baseQuery
+                    .Where(r => r.Name.ToLower().Contains(query.SearchPhrase.ToLower()) ||
+                                r.Description.ToLower().Contains(query.SearchPhrase.ToLower()));
+            }
+            else
+            {
+                // Dodaj warunek, gdy query.SearchPhrase jest puste
+                baseQuery = baseQuery.Where(r => true);
+            }
+
+            var recipes = baseQuery
+                .Skip(query.PageSize * (query.PageNumber - 1))
+                .Take(query.PageSize)
+                .ToList();
+
+            var totalItemsCount = baseQuery.Count();
+
+            var recipesDtos = _mapper.Map<List<RecipeWithPhotoDto>>(recipes);
+
+            var result = new PagedResult<RecipeWithPhotoDto>(recipesDtos, totalItemsCount, query.PageSize, query.PageNumber);
+
+            return result;
         }
     }
 }

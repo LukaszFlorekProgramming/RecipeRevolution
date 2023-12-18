@@ -12,6 +12,8 @@ namespace RecipeRevolutionBlazor.Services.Recipes
         Task Update(UpdateRecipeDto recipeDto, int id);
         Task Delete(int id);
         Task<PagedResult<RecipeDto>> GetAll(RecipeQuery query);
+        Task<PagedResult<RecipeWithPhotoDto>> GetAllWithPhoto(RecipeQuery query);
+
         Task<IEnumerable<CategoryDto>> GetAllCategory();
 
     }
