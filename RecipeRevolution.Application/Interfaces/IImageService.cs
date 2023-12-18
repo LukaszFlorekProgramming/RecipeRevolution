@@ -11,5 +11,6 @@ namespace RecipeRevolution.Application.Interfaces
     {
         public ImageDto GetById(int id);
         public int Create(ImageDto imageDto);
+        IEnumerable<ImageDto> GetAll();
     }
 }

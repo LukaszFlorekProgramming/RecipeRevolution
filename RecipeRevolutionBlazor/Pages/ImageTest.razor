@@ -38,9 +38,6 @@
     private async void HandleSubmit()
     {
         await ImageService.Create(imageModel);
-        // Obsługa przesyłania obrazu do API
-        // Możesz użyć tutaj HttpClient do wysłania obrazu na swoje API REST
-        // np. poprzez POST request
-        // httpClient.PostAsJsonAsync("api/images", imageModel);
+        
     }
 }

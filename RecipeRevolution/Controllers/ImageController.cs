@@ -8,7 +8,6 @@ namespace RecipeRevolution.Controllers
 {
     [Route("api/image")]
     [ApiController]
-    [Authorize]
     public class ImageController : ControllerBase
     {
         private readonly IImageService _imageService;
@@ -17,6 +16,13 @@ namespace RecipeRevolution.Controllers
         {
             _imageService = imageService;
         }
+        [HttpGet]
+        public ActionResult<IEnumerable<ImageDto>> GetAll()
+        {
+            var images = _imageService.GetAll();
+            return Ok(images);
+        }
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         public ActionResult<Image> Get([FromRoute] int id)

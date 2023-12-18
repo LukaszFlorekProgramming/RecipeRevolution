@@ -35,5 +35,14 @@ namespace RecipeRevolution.Services
             _dbcontext.SaveChanges();
             return image.ImageId;
         }
+
+        public IEnumerable<ImageDto> GetAll()
+        {
+            var images = _dbcontext
+                .Images
+                .ToList();
+            var recipesDtos = _mapper.Map<List<ImageDto>>(images);
+            return recipesDtos;
+        }
     }
 }
