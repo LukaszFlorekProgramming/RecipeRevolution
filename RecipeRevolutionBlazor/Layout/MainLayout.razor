@@ -2,46 +2,77 @@
 @inherits LayoutComponentBase
 @inject AuthTokenService TokenService
 @inject NavigationManager NavigationManager
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
-        <div class="top-row px-4">
-            @{
-                if (!string.IsNullOrEmpty(TokenService.Token))
-                {
-                    <span class="nav-link">Welcome, @TokenService.GetUserNameFromToken() !</span>
-                        <NavLink class="nav-link" href="Myrecipes">
-                        <button type="button" class="btn btn-light">My Recipes</button>
-                        </NavLink>
-                    <button type="button" class="btn btn-warning" @onclick="Logout">Wyloguj</button>
-                }
-                else
-                {
-                    <NavLink class="nav-link" href="login">
-                        <button type="button" class="btn btn-light">Login</button>
-                        
-                    </NavLink>
-                    <NavLink class="nav-link" href="register">
-                        <button type="button" class="btn btn-light">Register</button>
-                    </NavLink>
-                }
-            }
-        </div>
+<body class="container-fluid">
+    <header class="d-flex flex-wrap align-items-center justify-content-md-between py-3 mb-4 border-bottom">
+        
+
+        <ul class="nav col-12 col-md-auto mb-2 mb-md-0">
+            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+            <li><a href="HomeRecipes" class="nav-link px-2 link-dark">Recipes</a></li>
             
-        <article class="content px-4">
+        </ul>
+
+        <form class="d-flex" @onsubmit="HandleSearch">
+            <input class="form-control me-2" type="search" placeholder="Search recipe" aria-label="Search" @bind="@searchQuery">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+        <div class="d-flex justify-content-end">
+        @if (!string.IsNullOrEmpty(TokenService.Token))
+        {
+            <span class="nav-link">Welcome, @TokenService.GetUserNameFromToken() !</span>
+            <ul class="nav col-12 col-md-auto mb-2 mb-md-0">
+                <li><a href="Myrecipes" class="nav-link px-2 link-secondary">My Recipes</a></li>
+                
+            </ul>
+            <button type="button" class="btn btn-warning" @onclick="Logout">Wyloguj</button>
+        }
+        else
+        {
+             <button type="button" class="btn btn-outline-primary me-2" @onclick="() => RedirectToLoginPage()">Login</button>
+             <button type="button" class="btn btn-primary" @onclick="() => RedirectToRegisterPage()">Sign-up</button>
+        }
+        </div>
+
+    </header>
+    <menu>
+        <article class="content px-3">
             @Body
         </article>
-        
-    </main>
-</div>
+    </menu>
+
+</body>
 
 @code {
+    private string searchQuery;
+
+    private void HandleSearch()
+    {
+        NavigationManager.NavigateTo($"/RecipeSearch/{searchQuery}");
+    }
+
+
     private void Logout()
     {
         TokenService.RemoveToken();
         NavigationManager.NavigateTo("/HomeRecipes");
     }
+
+    private void RedirectToLoginPage()
+    {
+        NavigationManager.NavigateTo($"/login");
+    }
+
+    private void RedirectToRegisterPage()
+    {
+        NavigationManager.NavigateTo($"/register");
+    }
+    private void RedirectToSearchPage()
+    {
+        NavigationManager.NavigateTo($"/recipes");
+    }
+
+
+
 }
