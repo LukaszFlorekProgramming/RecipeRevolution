@@ -84,6 +84,12 @@ namespace RecipeRevolutionBlazor.Services.Recipes
             return await _httpClient.GetFromJsonAsync<List<RecipeDto>>(apiUrl);
         }
 
+        public async Task<IEnumerable<RecipeWithPhotoDto>> GetRecipesByCategory(string name)
+        {
+            var apiUrl = $"/api/recipe/category?name={name}";
+            return await _httpClient.GetFromJsonAsync<IEnumerable<RecipeWithPhotoDto>>(apiUrl);
+        }
+
         public async Task<IEnumerable<MyRecipeDto>> GetUserRecipes(int id)
         {
             var apiUrl = "api/recipe/user";

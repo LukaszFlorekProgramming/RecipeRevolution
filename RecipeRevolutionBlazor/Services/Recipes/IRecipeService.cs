@@ -6,6 +6,7 @@ namespace RecipeRevolutionBlazor.Services.Recipes
     {
         Task<List<RecipeDto>> GetRecipes();
         Task <IEnumerable<MyRecipeDto>> GetUserRecipes(int id);
+        Task<IEnumerable<RecipeWithPhotoDto>> GetRecipesByCategory(string name);
         Task<RecipeDto> GetById(int id);
        
         Task<int> Create(CreateRecipeDto recipeDto);

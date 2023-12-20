@@ -68,7 +68,7 @@ namespace RecipeRevolution.Controllers
         }
         [HttpGet("category")]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<MyRecipeDto>> GetRecipesByCategory([FromQuery] string name)
+        public ActionResult<IEnumerable<RecipeWithPhotoDto>> GetRecipesByCategory([FromQuery] string name)
         {
             var recipes = _recipeService.GetRecipesByCategory(name);
 
