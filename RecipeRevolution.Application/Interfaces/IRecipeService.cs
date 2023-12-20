@@ -15,6 +15,7 @@ namespace RecipeRevolution.Application.Interfaces
         PagedResult<RecipeDto> GetAll(RecipeQuery query);
         public PagedResult<RecipeWithPhotoDto> GetAllWithPhoto(RecipeQuery query);
         IEnumerable<MyRecipeDto> GetUserRecipes(int id);
+        IEnumerable<MyRecipeDto> GetRecipesByCategory(string name);
         IEnumerable<CategoryDto> GetAllCategory();
         int Create(CreateRecipeDto recipeDto);
         bool Delete(int id);

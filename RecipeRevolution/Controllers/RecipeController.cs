@@ -66,6 +66,14 @@ namespace RecipeRevolution.Controllers
 
             return Ok(recipes);
         }
+        [HttpGet("category")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<MyRecipeDto>> GetRecipesByCategory([FromQuery] string name)
+        {
+            var recipes = _recipeService.GetRecipesByCategory(name);
+
+            return Ok(recipes);
+        }
         [Route("categories")]
         [HttpGet]
         [AllowAnonymous]

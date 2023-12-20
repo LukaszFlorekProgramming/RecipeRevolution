@@ -70,6 +70,14 @@ namespace RecipeRevolution.Services
 
             return recipesDtos;
         }
+        public IEnumerable<MyRecipeDto> GetRecipesByCategory(string name)
+        {
+            var recipes = _dbcontext.Recipes.Where(x => x.Category.Name == name).ToList();
+
+            var recipesDtos = _mapper.Map<List<MyRecipeDto>>(recipes);
+
+            return recipesDtos;
+        }
         public int Create(CreateRecipeDto recipeDto)
         {
             var recipe = _mapper.Map<Recipe>(recipeDto);
@@ -131,6 +139,7 @@ namespace RecipeRevolution.Services
             var categoriesDtos = _mapper.Map<List<CategoryDto>>(categories);
             return categoriesDtos;
         }
+        
 
         public PagedResult<RecipeWithPhotoDto> GetAllWithPhoto(RecipeQuery query)
         {
