@@ -8,7 +8,9 @@
     <header class="d-flex flex-wrap align-items-center justify-content-md-between py-3 mb-4 border-bottom">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Recipe Revolution</a>
+                <a class="navbar-brand" href="#">
+                    <img src="RecipeRevolutionNav.png" alt="Recipe Revolution" height="60">
+                </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -18,7 +20,24 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
                         <li class="nav-item"><a href="HomeRecipes" class="nav-link px-2 link-dark">Recipes</a></li>
-                        <li class="nav-item"><a href="dropdown" class="nav-link px-2 link-dark">Recipes</a></li>
+                    </ul>
+                </div>
+                <div class="nav-item dropdown">
+                    <a @onclick="ToggleMealsDropdown" class="nav-link dropdown-toggle px-2 link-dark" href="javascript:void(0)" role="button">
+                        Meals
+                    </a>
+                    <ul class="@mealsDropdownClass" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="MealCategory1">Śniadania</a></li>
+                        <li><a class="dropdown-item" href="MealCategory2">Przekąski</a></li>
+                        <li><a class="dropdown-item" href="MealCategory3">Zupy i dania zupowe</a></li>
+                        <li><a class="dropdown-item" href="MealCategory3">Sałatki</a></li>
+                        <li><a class="dropdown-item" href="MealCategory3">Dania główne</a></li>
+                        <li><a class="dropdown-item" href="MealCategory3">Desery</a></li>
+                        <li><a class="dropdown-item" href="MealCategory3">Dania wegetariańskie</a></li>
+                        <li><a class="dropdown-item" href="MealCategory3">Dania wegańskie</a></li>
+                        <li><a class="dropdown-item" href="MealCategory3">Dania kuchni świata</a></li>
+                        <li><a class="dropdown-item" href="MealCategory3">Dania na grillu</a></li>
+                        <li><a class="dropdown-item" href="MealCategory3">Pieczenie i cukiernictwo</a></li>
                     </ul>
                 </div>
             </div>
@@ -127,6 +146,12 @@
     {
         // Clean up the event listener when the component is disposed
         await JSRuntime.InvokeVoidAsync("window.removeEventListener", "click", DotNetObjectReference.Create(this), "CloseDropdown");
+    }
+    private string mealsDropdownClass = "dropdown-menu";
+
+    private void ToggleMealsDropdown()
+    {
+        mealsDropdownClass = mealsDropdownClass.Contains("show") ? "dropdown-menu" : "dropdown-menu show";
     }
 
 
