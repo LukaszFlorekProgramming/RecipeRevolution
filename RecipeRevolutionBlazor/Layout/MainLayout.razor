@@ -1,6 +1,9 @@
-﻿@using RecipeRevolutionBlazor.Services.Users
+﻿@using RecipeRevolutionBlazor.Models
+@using RecipeRevolutionBlazor.Services.Recipes
+@using RecipeRevolutionBlazor.Services.Users
 @inherits LayoutComponentBase
 @inject AuthTokenService TokenService
+@inject IRecipeService IRecipeService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 
@@ -27,17 +30,17 @@
                         Meals
                     </a>
                     <ul class="@mealsDropdownClass" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="MealCategory1">Śniadania</a></li>
-                        <li><a class="dropdown-item" href="MealCategory2">Przekąski</a></li>
-                        <li><a class="dropdown-item" href="MealCategory3">Zupy i dania zupowe</a></li>
-                        <li><a class="dropdown-item" href="MealCategory3">Sałatki</a></li>
-                        <li><a class="dropdown-item" href="MealCategory3">Dania główne</a></li>
-                        <li><a class="dropdown-item" href="MealCategory3">Desery</a></li>
-                        <li><a class="dropdown-item" href="MealCategory3">Dania wegetariańskie</a></li>
-                        <li><a class="dropdown-item" href="MealCategory3">Dania wegańskie</a></li>
-                        <li><a class="dropdown-item" href="MealCategory3">Dania kuchni świata</a></li>
-                        <li><a class="dropdown-item" href="MealCategory3">Dania na grillu</a></li>
-                        <li><a class="dropdown-item" href="MealCategory3">Pieczenie i cukiernictwo</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Śniadania</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Przekąski</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Zupy i dania zupowe</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Sałatki</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Dania główne</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Desery</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Dania wegetariańskie</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Dania wegańskie</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Dania kuchni świata</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Dania na grillu</a></li>
+                        <li><a class="dropdown-item" href="RecipeSearch">Pieczenie i cukiernictwo</a></li>
                     </ul>
                 </div>
             </div>
@@ -89,11 +92,16 @@
 @code {
     private string searchQuery;
 
+    private IEnumerable<CategoryDto> categories;
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await IRecipeService.GetAllCategory();
+    }
+
     private void HandleSearch()
     {
         NavigationManager.NavigateTo($"/RecipeSearch/{searchQuery}");
     }
-
 
     private void Logout()
     {
