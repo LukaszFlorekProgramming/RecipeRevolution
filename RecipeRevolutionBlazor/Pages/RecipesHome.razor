@@ -12,14 +12,11 @@
         <div class="row">
             @foreach (var recipe in recipesPagedResult.Items)
             {
-                <div class="col-md-3 mb-4">
-                    <div class="card" @onclick="() => RedirectToDetailsPage(recipe.RecipeId)">
+                <div class="col-md-3 mb-4 card-no-border">
+                    <div class="card h-100" @onclick="() => RedirectToDetailsPage(recipe.RecipeId)">
+                        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(recipe.Data))" class="card-img-top" alt="@recipe.Name">
                         <div class="card-body">
                             <h5 class="card-title">@recipe.Name</h5>
-                            @if (recipe.Data != null)
-                            {
-                                <img src="data:image/jpeg;base64,@(Convert.ToBase64String(recipe.Data))" class="card-img-top" alt="Image">
-                            }
                         </div>
                     </div>
                 </div>
@@ -27,22 +24,22 @@
         </div>
     </div>
 
-    <div>
-        <input type="button" class="btnk-lg btn" id="prev" @onclick="PreviousPage" value="Previous" />
-        @for (int i = Math.Max(1, PageNumber - 2); i <= Math.Min(PageNumber + 2, TotalPages); i++)
-        {
-            int j = i;
-            if (i == PageNumber)
+    <nav class="d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item @(PageNumber == 1 ? "disabled" : "")">
+                <span class="page-link" @onclick="PreviousPage" style="cursor:pointer;">Previous</span>
+            </li>
+            @for (int i = Math.Max(1, PageNumber - 2); i <= Math.Min(PageNumber + 2, TotalPages); i++)
             {
-                <span class="px-2" style="font-weight:bold;cursor:pointer" @onclick="() => ShowPage(j)">@i</span>
+                <li class="page-item @(i == PageNumber ? "active" : "")">
+                    <span class="page-link" @onclick="() => ShowPage(i)" style="cursor:pointer;">@i</span>
+                </li>
             }
-            else
-            {
-                <span class="px-2" style="cursor:pointer" @onclick="() => ShowPage(j)">@i</span>
-            }
-        }
-        <input type="button" class="btnk-lg btn" id="next" @onclick="NextPage" value="Next" />
-    </div>
+            <li class="page-item @(PageNumber == TotalPages ? "disabled" : "")">
+                <span class="page-link" @onclick="NextPage" style="cursor:pointer;">Next</span>
+            </li>
+        </ul>
+    </nav>
 }
 else
 {
@@ -106,3 +103,14 @@ else
 
 
 }
+<style>
+    .card-no-border .card {
+        border: none;
+        background: none; 
+        box-shadow: none; 
+    }
+
+    .card-no-border .card-img-top {
+        border-radius: 0; 
+    }
+</style>

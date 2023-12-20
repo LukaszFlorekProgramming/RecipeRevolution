@@ -5,13 +5,22 @@
 
 <body class="container-fluid">
     <header class="d-flex flex-wrap align-items-center justify-content-md-between py-3 mb-4 border-bottom">
-        
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Recipe Revolution</a>
 
-        <ul class="nav col-12 col-md-auto mb-2 mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="HomeRecipes" class="nav-link px-2 link-dark">Recipes</a></li>
-            
-        </ul>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+                        <li class="nav-item"><a href="HomeRecipes" class="nav-link px-2 link-dark">Recipes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
         <form class="d-flex" @onsubmit="HandleSearch">
             <input class="form-control me-2" type="search" placeholder="Search recipe" aria-label="Search" @bind="@searchQuery">
@@ -41,6 +50,13 @@
             @Body
         </article>
     </menu>
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+            <li class="nav-item"><a href="HomeRecipes" class="nav-link px-2 text-muted">Recipes</a></li>
+        </ul>
+        <p class="text-center text-muted">© 2023 Łukasz Florek. All rights reserved.</p>
+    </footer>
 
 </body>
 

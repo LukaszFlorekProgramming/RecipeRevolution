@@ -13,14 +13,11 @@
         <div class="row">
             @foreach (var recipe in recipesPagedResult.Items)
             {
-                <div class="col-md-3 mb-4 card-fixed-height">
-                    <div class="card" @onclick="() => RedirectToDetailsPage(recipe.RecipeId)">
+                <div class="col-md-3 mb-4 card-no-border">
+                    <div class="card h-100" @onclick="() => RedirectToDetailsPage(recipe.RecipeId)">
+                        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(recipe.Data))" class="card-img-top" alt="@recipe.Name">
                         <div class="card-body">
                             <h5 class="card-title">@recipe.Name</h5>
-                            @if (recipe.Data != null)
-                            {
-                                <img src="data:image/jpeg;base64,@(Convert.ToBase64String(recipe.Data))" class="card-img-top" alt="Image">
-                            }
                         </div>
                     </div>
                 </div>
@@ -110,7 +107,38 @@ else
         NavigationManager.NavigateTo($"/recipe/{id}");
     }
 
+
 }
 
+<style>
+    .card-no-border .card {
+        border: none;
+        background: none; 
+        box-shadow: none; 
+    }
+
+    .card-no-border .card-img-top {
+        border-radius: 0; 
+    }
+
+    .card-fixed-height .card {
+        height: 100%; 
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-fixed-height .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .card-fixed-height .card-body > img {
+            flex-grow: 0;
+        }
+
+        .card-fixed-height .card-body > h5 {
+            flex-grow: 0;
+        }
+</style>
 
 
