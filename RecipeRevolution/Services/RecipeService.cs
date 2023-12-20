@@ -45,7 +45,6 @@ namespace RecipeRevolution.Services
             }
             else
             {
-                // Dodaj warunek, gdy query.SearchPhrase jest puste
                 baseQuery = baseQuery.Where(r => true);
             }
 
@@ -145,7 +144,6 @@ namespace RecipeRevolution.Services
             }
             else
             {
-                // Dodaj warunek, gdy query.SearchPhrase jest puste
                 baseQuery = baseQuery.Where(r => true);
             }
 

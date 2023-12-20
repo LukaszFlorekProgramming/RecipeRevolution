@@ -2,6 +2,7 @@
 @inherits LayoutComponentBase
 @inject AuthTokenService TokenService
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 <body class="container-fluid">
     <header class="d-flex flex-wrap align-items-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -30,12 +31,17 @@
         <div class="d-flex justify-content-end">
         @if (!string.IsNullOrEmpty(TokenService.Token))
         {
-            <span class="nav-link">Welcome, @TokenService.GetUserNameFromToken() !</span>
-            <ul class="nav col-12 col-md-auto mb-2 mb-md-0">
-                <li><a href="Myrecipes" class="nav-link px-2 link-secondary">My Recipes</a></li>
-                
-            </ul>
-            <button type="button" class="btn btn-warning" @onclick="Logout">Wyloguj</button>
+                <div class="d-flex justify-content-end">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" @onclick="ToggleDropdown">
+                            Welcome, @TokenService.GetUserNameFromToken()
+                        </button>
+                        <div class="@dropdownMenuClass" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="Myrecipes">My Recipes</a>
+                            <button class="dropdown-item" @onclick="Logout">Logout</button>
+                        </div>
+                    </div>
+                </div>
         }
         else
         {
@@ -72,7 +78,7 @@
     private void Logout()
     {
         TokenService.RemoveToken();
-        NavigationManager.NavigateTo("/HomeRecipes");
+        NavigationManager.NavigateTo("/HomeRecipes", forceLoad: true);
     }
 
     private void RedirectToLoginPage()
@@ -87,6 +93,39 @@
     private void RedirectToSearchPage()
     {
         NavigationManager.NavigateTo($"/recipes");
+    }
+
+    private string dropdownMenuClass = "dropdown-menu";
+
+    private void ToggleDropdown()
+    {
+        dropdownMenuClass = dropdownMenuClass.Contains("show") ? "dropdown-menu" : "dropdown-menu show";
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("window.addEventListener", "click", DotNetObjectReference.Create(this), "CloseDropdown");
+        }
+    }
+
+    [JSInvokable("CloseDropdown")]
+    public Task CloseDropdown()
+    {
+        if (dropdownMenuClass.Contains("show"))
+        {
+            dropdownMenuClass = "dropdown-menu";
+            StateHasChanged(); // Notify Blazor the state has changed to re-render
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        // Clean up the event listener when the component is disposed
+        await JSRuntime.InvokeVoidAsync("window.removeEventListener", "click", DotNetObjectReference.Create(this), "CloseDropdown");
     }
 
 

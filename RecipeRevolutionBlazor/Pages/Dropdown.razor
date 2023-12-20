@@ -1,0 +1,60 @@
+﻿@page "/dropdown"
+@inject IJSRuntime JSRuntime
+
+<div class="d-flex justify-content-end">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" @onclick="ToggleDropdown">
+            Dropdown button
+        </button>
+        <div class="@dropdownMenuClass" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+    private string dropdownMenuClass = "dropdown-menu";
+
+    private void ToggleDropdown()
+    {
+        if (dropdownMenuClass.Contains("show"))
+        {
+            dropdownMenuClass = "dropdown-menu";
+        }
+        else
+        {
+            dropdownMenuClass = "dropdown-menu show";
+        }
+    }
+
+    // Optional: if you want to close the dropdown when clicking outside of it
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("window.addEventListener", "click", DotNetObjectReference.Create(this), "CloseDropdown");
+        }
+    }
+
+    [JSInvokable("CloseDropdown")]
+    public Task CloseDropdown()
+    {
+        if (dropdownMenuClass.Contains("show"))
+        {
+            dropdownMenuClass = "dropdown-menu";
+            StateHasChanged(); // Notify Blazor the state has changed to re-render
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        // Clean up the event listener when the component is disposed
+        await JSRuntime.InvokeVoidAsync("window.removeEventListener", "click", DotNetObjectReference.Create(this), "CloseDropdown");
+    }
+}
