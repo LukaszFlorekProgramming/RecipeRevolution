@@ -10,38 +10,43 @@ using System.Net.Http.Headers;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7052/") });
+builder.Services.AddTransient<AuthTokenHandler>();
+builder.Services.AddHttpClient("AuthorizedClient", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7052/");
+})
+    .AddHttpMessageHandler<AuthTokenHandler>();
 
 builder.Services.AddSingleton<AuthTokenService>();
 
 builder.Services.AddScoped<IRecipeService, RecipeService>(sp =>
 {
-    var httpClient = sp.GetRequiredService<HttpClient>();
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("AuthorizedClient");
     var authTokenService = sp.GetRequiredService<AuthTokenService>();
-    ConfigureHttpClient(httpClient, authTokenService);
     return new RecipeService(httpClient, authTokenService);
 });
 
 builder.Services.AddScoped<IRecipeServicePagination, RecipeServicePagination>(sp =>
 {
-    var httpClient = sp.GetRequiredService<HttpClient>();
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("AuthorizedClient");
     var authTokenService = sp.GetRequiredService<AuthTokenService>();
-    ConfigureHttpClient(httpClient, authTokenService);
     return new RecipeServicePagination(httpClient);
 });
 
 builder.Services.AddScoped<IUserService, UserService>(sp =>
 {
-    var httpClient = sp.GetRequiredService<HttpClient>();
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("AuthorizedClient");
     var authTokenService = sp.GetRequiredService<AuthTokenService>();
-    ConfigureHttpClient(httpClient, authTokenService);
     return new UserService(httpClient);
 });
 builder.Services.AddScoped<IImageService, ImageService>(sp =>
 {
-    var httpClient = sp.GetRequiredService<HttpClient>();
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("AuthorizedClient");
     var authTokenService = sp.GetRequiredService<AuthTokenService>();
-    ConfigureHttpClient(httpClient, authTokenService);
     return new ImageService(httpClient, authTokenService);
 });
 
