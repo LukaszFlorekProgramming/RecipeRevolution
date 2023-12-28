@@ -4,8 +4,11 @@
 @inject IUserService UserService;
 @inject NavigationManager Navigation;
 
-<h3>Registration Form</h3>
 
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-12">
+            <h3>Registration</h3>
 <EditForm Model="@registerUserDto" OnValidSubmit="RegisterUser">
     <Blazored.FluentValidation.FluentValidationValidator/>
     <div class="form-group">
@@ -48,23 +51,16 @@
         <label for="DateOfBirth">DateOfBirth</label>
         <InputDate id="DateOfBirth" @bind-Value="registerUserDto.DateOfBirth" class="form-control" />
     </div>
-    <div>
-        <label for="numericDropdown">Select a number:</label>
-        <InputSelect id="numericDropdown" @bind-Value="registerUserDto.RoleId">
-            @for (int i = 1; i <= 3; i++)
-            {
-                <option value="@i">@i</option>
-            }
-        </InputSelect>
-        <p>Selected Number: @registerUserDto.RoleId</p>
-    </div>
 
     <ValidationSummary></ValidationSummary>
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Register</button>
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+    </EditForm>
+        </div>
     </div>
-</EditForm>
+</div>
 
 @code {
     private RegisterUserDto registerUserDto = new RegisterUserDto();
