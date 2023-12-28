@@ -42,8 +42,10 @@ Oczywiście użytkownicy mogą także filtrować wyniki, wpisując odpowiednią 
 
 ![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/2b9bce79-354b-49df-9264-33d3ae8e58b1)
 
-# Logowanie i Rejestracja 
+# Rejestracja i Logowanie
 Każdy użytkownik powinien stworzyć własne konto aby posiadać możliwość dodawania, modyfikowania i usuwania własnych przepisów, dodawania komentarzy i oceny dla innych przepisów. 
+
+![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/fffaa9be-aead-42a5-8e24-c1785fabf717)
 
 ![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/8b7fdf9e-2191-46bb-a3f3-76845cf352cc)
 
