@@ -43,7 +43,7 @@ Oczywiście użytkownicy mogą także filtrować wyniki, wpisując odpowiednią 
 ![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/2b9bce79-354b-49df-9264-33d3ae8e58b1)
 
 ## Szczegóły przepisu
-Jest to podstrona wyświetlająca szczegóły przepisu 
+Po kliknięciu w przepis jesteśmy przekierowani do podstrony wyświetlającej szczegóły przepisu 
 
 ![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/215cab3d-e082-4020-86d4-f56a0e55890d)
 
