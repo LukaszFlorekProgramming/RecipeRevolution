@@ -47,7 +47,8 @@ Każdy użytkownik powinien stworzyć własne konto aby posiadać możliwość d
 
 ![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/fffaa9be-aead-42a5-8e24-c1785fabf717)
 
-![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/8b7fdf9e-2191-46bb-a3f3-76845cf352cc)
+![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/5bb20f8a-dd97-4fd6-94dc-efaff17acc1d)
+
 
 ## Panel zarządzania przepisami dla zalogowanego użytkownika
 
