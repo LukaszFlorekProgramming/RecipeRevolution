@@ -27,7 +27,7 @@ Przykładowe scenariusze użycia aplikacji poniżej pozwolą lepiej zrozumieć j
 
 ![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/500d9fba-6c5c-46c9-93e1-e0fcf02a1afb)
 
-## Podstrona HoemRecipes wyświetlająca listę przepisów 
+## Podstrona HomeRecipes wyświetlająca listę przepisów 
 
 ![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/05340c27-baec-4a6b-906a-2f258f8e6150)
 ![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/75373aa7-dfa1-4684-83cf-c08409d3c18f)
@@ -41,6 +41,11 @@ Użytkowni oczywiście posiada możliwość wyszukiwania przepisów poprzez wybr
 Oczywiście użytkownicy mogą także filtrować wyniki, wpisując odpowiednią frazę w pole wyszukiwania, co umożliwia szybkie i celowane odnajdywanie przepisów spełniających ich kryteria.
 
 ![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/2b9bce79-354b-49df-9264-33d3ae8e58b1)
+
+## Szczegóły przepisu
+
+![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/215cab3d-e082-4020-86d4-f56a0e55890d)
+
 
 # Rejestracja i Logowanie
 Każdy użytkownik powinien stworzyć własne konto aby posiadać możliwość dodawania, modyfikowania i usuwania własnych przepisów, dodawania komentarzy i oceny dla innych przepisów. 
