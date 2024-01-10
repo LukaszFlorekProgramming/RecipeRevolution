@@ -82,7 +82,7 @@ else
 
     private async Task LoadUserRecipes()
     {
-        var response = await IRecipeService.GetUserRecipes(42);
+        var response = await IRecipeService.GetUserRecipes(NameIdentyfiker);
 
         if (response != null)
         {
