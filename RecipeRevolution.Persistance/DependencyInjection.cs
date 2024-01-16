@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using RecipeRevolution.Application.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace RecipeRevolution.Persistance
     {
         public static IServiceCollection AddPersistance(this IServiceCollection services)
         {
+            services.TryAddTransient<RecipeRevolutionSeeder>();
             services.AddScoped<IRecipeRevolutionDbContext, RecipeRevolutionDbContext>();
             return services;
         }

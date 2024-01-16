@@ -68,6 +68,16 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<RecipeRevolutionDbContext>();
+
+    // Initialize the database seeder
+    var seeder = new RecipeRevolutionSeeder(dbContext);
+    seeder.SeedMigration(); // Seed the database
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

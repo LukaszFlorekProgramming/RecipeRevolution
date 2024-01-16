@@ -17,7 +17,7 @@ namespace RecipeRevolution.Persistance.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -36,7 +36,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -124,7 +124,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Images", (string)null);
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("RecipeRevolution.Domain.Entities.Ingredient", b =>
@@ -155,7 +155,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Ingredients", (string)null);
+                    b.ToTable("Ingredients");
 
                     b.HasData(
                         new
@@ -204,7 +204,7 @@ namespace RecipeRevolution.Persistance.Migrations
                     b.HasIndex("RecipeId")
                         .IsUnique();
 
-                    b.ToTable("NutritionalValues", (string)null);
+                    b.ToTable("NutritionalValues");
 
                     b.HasData(
                         new
@@ -267,13 +267,16 @@ namespace RecipeRevolution.Persistance.Migrations
                     b.Property<int>("PreparationTime")
                         .HasColumnType("int");
 
+                    b.Property<int>("liczba")
+                        .HasColumnType("int");
+
                     b.HasKey("RecipeId");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Recipes", (string)null);
+                    b.ToTable("Recipes");
 
                     b.HasData(
                         new
@@ -285,7 +288,8 @@ namespace RecipeRevolution.Persistance.Migrations
                             Instructions = "Mleko, mąkę, cukier, cukier waniliowy, jajka, cynamon oraz oliwę ubijamy na jednolitą masę... ubijamy ją ok. 15 minut.\r\nSmażymy naleśniki porcjami.",
                             Name = "Cynamonowe naleśniki",
                             Portions = (short)6,
-                            PreparationTime = 20
+                            PreparationTime = 20,
+                            liczba = 0
                         },
                         new
                         {
@@ -296,7 +300,8 @@ namespace RecipeRevolution.Persistance.Migrations
                             Instructions = "Ciasto naleśnikowe: roztrzepujemy jajko w miseczce. Dolewamy mleko i wodę gazowaną",
                             Name = "Naleśniki z truskawkami",
                             Portions = (short)4,
-                            PreparationTime = 30
+                            PreparationTime = 30,
+                            liczba = 0
                         },
                         new
                         {
@@ -307,7 +312,8 @@ namespace RecipeRevolution.Persistance.Migrations
                             Instructions = "Miękkie masło ubić na puszysto, stopniowo dodawać po jednym żółtku na przemian z łyżką cukru pudru, cały czas dokładnie ubijając składniki.",
                             Name = "SERNIK TRADYCYJNY",
                             Portions = (short)6,
-                            PreparationTime = 40
+                            PreparationTime = 40,
+                            liczba = 0
                         },
                         new
                         {
@@ -318,7 +324,8 @@ namespace RecipeRevolution.Persistance.Migrations
                             Instructions = "Mango i awokado obrać, pokroić w kosteczkę i włożyć do salaterki lub szklanej miski. Polać sokiem wyciśniętym z całej limonki.\r\nDodać drobno posiekaną czerwoną cebulę, pokrojoną w kosteczkę czerwoną paprykę, odcedzoną na sitku kukurydzę i czerwoną fasolę.\r\nDodać listki kolendry, syrop klonowy, oliwę oraz chili. Wymieszać i podawać.",
                             Name = "SAŁATKA MEKSYKAŃSKA Z MANGO I AWOKADO",
                             Portions = (short)4,
-                            PreparationTime = 35
+                            PreparationTime = 35,
+                            liczba = 0
                         },
                         new
                         {
@@ -329,7 +336,8 @@ namespace RecipeRevolution.Persistance.Migrations
                             Instructions = "Sałatka z kaszą bulgur, z pomidorkami, ogórkiem, granatem i dużą ilością zieleniny: mięty, natki i szczypiorku. Z dodatkiem sera sałatkowego lub fety.",
                             Name = "SAŁATKA Z BULGUREM",
                             Portions = (short)5,
-                            PreparationTime = 12
+                            PreparationTime = 12,
+                            liczba = 0
                         });
                 });
 
@@ -348,7 +356,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
@@ -410,7 +418,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("RecipeRevolution.Domain.Entities.Image", b =>
