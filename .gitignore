@@ -63,6 +63,11 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 
+# Dodanie appsettings.Development.json do ignorowanych
+appsettings.Development.json
+appsettings.json
+
+
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
