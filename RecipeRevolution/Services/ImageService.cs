@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
@@ -11,14 +10,10 @@ namespace RecipeRevolution.Services
     {
         private readonly RecipeRevolutionDbContext _dbcontext;
         private readonly IMapper _mapper;
-        private readonly IAuthorizationService _authorizationService;
-        private readonly IUserContextService _userContextService;
-        public ImageService(RecipeRevolutionDbContext dbContext, IMapper mapper, IAuthorizationService authorizationService, IUserContextService userContextService)
+        public ImageService(RecipeRevolutionDbContext dbContext, IMapper mapper)
         {
             _dbcontext = dbContext;
             _mapper = mapper;
-            _authorizationService = authorizationService;
-            _userContextService = userContextService;
         }
 
         public ImageDto GetById(int id)

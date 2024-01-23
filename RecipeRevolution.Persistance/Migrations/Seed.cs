@@ -1,12 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using RecipeRevolution.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipeRevolution.Persistance.Migrations
 {
@@ -57,12 +50,14 @@ namespace RecipeRevolution.Persistance.Migrations
                     Name = "Dania wegańskie"
                 },
                 new Category()
-                {   CategoryId = 9,
+                {
+                    CategoryId = 9,
                     Name = "Dania kuchni świata"
                 },
 
                 new Category()
-                {   CategoryId = 10, 
+                {
+                    CategoryId = 10,
                     Name = "Dania na grillu"
                 },
                 new Category()
@@ -71,7 +66,7 @@ namespace RecipeRevolution.Persistance.Migrations
                     Name = "Pieczenie i cukiernictwo"
                 });
             });
-            modelBuilder.Entity<Recipe>(c =>
+            /*modelBuilder.Entity<Recipe>(c =>
             {
                 c.HasData(new Recipe()
                 {
@@ -127,7 +122,7 @@ namespace RecipeRevolution.Persistance.Migrations
                     CategoryId = 6,
                 });
             });
-            
+
             modelBuilder.Entity<NutritionalValues>(c =>
             {
                 c.HasData(new NutritionalValues()
@@ -154,7 +149,7 @@ namespace RecipeRevolution.Persistance.Migrations
                 c.HasData(new Ingredient()
                 {
                     IngredientId = 1,
-                    Name= "mąka",
+                    Name = "mąka",
                     Quantity = 300,
                     Unit = "gram",
                     RecipeId = 1
@@ -167,25 +162,8 @@ namespace RecipeRevolution.Persistance.Migrations
                     Unit = "mililitry",
                     RecipeId = 1
                 });
-            });
-            modelBuilder.Entity<Role>(r =>
-            {
-                r.HasData(new Role()
-                {
-                    Id = 1,
-                    Name = "User"
-                },
-                new Role()
-                {
-                    Id = 2,
-                    Name = "Manager"
-                },
-                new Role()
-                {
-                    Id= 3,
-                    Name = "Admin"
-                });
-            });
+            });*/
+
         }
 
     }

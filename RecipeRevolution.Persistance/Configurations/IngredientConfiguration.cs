@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RecipeRevolution.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipeRevolution.Persistance.Configurations
 {
@@ -22,7 +17,6 @@ namespace RecipeRevolution.Persistance.Configurations
             builder.Property(x => x.Quantity)
                .IsRequired()
                .HasMaxLength(14);
-
         }
     }
 }

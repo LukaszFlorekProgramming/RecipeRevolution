@@ -60,7 +60,7 @@ namespace RecipeRevolution.Controllers
         [HttpGet("user")]
         public ActionResult<IEnumerable<MyRecipeDto>> GetUserRecipes()
         {
-            var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var userId = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
             var recipes = _recipeService.GetUserRecipes(userId);
 
@@ -85,10 +85,10 @@ namespace RecipeRevolution.Controllers
         [HttpPost]
         public ActionResult CreateRecipe([FromBody] CreateRecipeDto recipeDto)
         {
-            var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            recipeDto.CreatedById = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var id = _recipeService.Create(recipeDto);
 
-            return Created($"/api/recipe/{id}", id);
+            return Created($"/api/recipe/{id}", recipeDto);
         }
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)

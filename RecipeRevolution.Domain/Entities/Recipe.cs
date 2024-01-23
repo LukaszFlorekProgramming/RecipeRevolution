@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RecipeRevolution.Domain.Entities
+﻿namespace RecipeRevolution.Domain.Entities
 {
     public class Recipe
     {
@@ -15,7 +9,7 @@ namespace RecipeRevolution.Domain.Entities
         public int PreparationTime { get; set; }
         public string DifficultyLevel { get; set; }
         public short Portions { get; set; }
-        public int? CreatedById { get; set; }
+        public string CreatedById { get; set; }
         public virtual User CreatedBy { get; set; }
 
         public int CategoryId { get; set; }
@@ -24,7 +18,5 @@ namespace RecipeRevolution.Domain.Entities
         public ICollection<Ingredient> Ingredients { get; set; }
         public ICollection<Image> Images { get; set; }
         public NutritionalValues NutritionalValues { get; set; }
-
-
     }
 }

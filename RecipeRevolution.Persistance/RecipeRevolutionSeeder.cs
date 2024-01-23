@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RecipeRevolution.Domain.Entities;
 
 namespace RecipeRevolution.Persistance
 {
@@ -23,7 +19,30 @@ namespace RecipeRevolution.Persistance
                 if (pendingMigration != null && pendingMigration.Any())
                 {
                     _dbContext.Database.Migrate();
-                }      
+                }   
+                SeedCategories();
+                
+            }
+        }
+        private void SeedCategories()
+        {
+            if (!_dbContext.Categories.Any()) 
+            {
+                
+                _dbContext.Categories.Add(new Category { Name = "Śniadania" });
+                _dbContext.Categories.Add(new Category { Name = "Przekąski" });
+                _dbContext.Categories.Add(new Category { Name = "Zupy i dania zupowe" });
+                _dbContext.Categories.Add(new Category { Name = "Sałatki" });
+                _dbContext.Categories.Add(new Category { Name = "Dania główne" });
+                _dbContext.Categories.Add(new Category { Name = "Desery" });
+                _dbContext.Categories.Add(new Category { Name = "Dania wegetariańskie" });
+                _dbContext.Categories.Add(new Category { Name = "Dania wegańskie" });
+                _dbContext.Categories.Add(new Category { Name = "Dania kuchni świata" });
+                _dbContext.Categories.Add(new Category { Name = "Dania na grillu" });
+                _dbContext.Categories.Add(new Category { Name = "Pieczenie i cukiernictwo" });
+
+
+                _dbContext.SaveChanges();
             }
         }
     }
