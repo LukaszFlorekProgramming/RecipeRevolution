@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Application.Interfaces;
-using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Models;
 using RecipeRevolution.Persistance;
+using RecipeRevolution.Domain.Entities;
+using RecipeRevolution.Services.Blob;
 
 namespace RecipeRevolution.Services
 {
@@ -12,10 +13,12 @@ namespace RecipeRevolution.Services
     {
         private readonly RecipeRevolutionDbContext _dbcontext;
         private readonly IMapper _mapper;
-        public RecipeService(RecipeRevolutionDbContext dbContext, IMapper mapper)
+        private readonly IBlobService _blobService;
+        public RecipeService(RecipeRevolutionDbContext dbContext, IMapper mapper, IBlobService blobService)
         {
             _dbcontext = dbContext;
             _mapper = mapper;
+            _blobService = blobService;
         }
         public RecipeDto GetById(int id)
         {
@@ -73,7 +76,7 @@ namespace RecipeRevolution.Services
         }
         public int Create(CreateRecipeDto recipeDto)
         {
-            var recipe = _mapper.Map<Recipe>(recipeDto);
+            var recipe = _mapper.Map<Domain.Entities.Recipe>(recipeDto);
             _dbcontext.Recipes.Add(recipe);
             _dbcontext.SaveChanges();
             return recipe.RecipeId;
@@ -148,6 +151,29 @@ namespace RecipeRevolution.Services
             var result = new PagedResult<RecipeWithPhotoDto>(recipesDtos, totalItemsCount, query.PageSize, query.PageNumber);
 
             return result;
+        }
+
+        public async Task<string> AddRecipePhoto(int recipeId, IFormFile photo)
+        {
+            var recipe = _dbcontext.Recipes.FirstOrDefault(r => r.RecipeId == recipeId);
+            if (recipe == null)
+            {
+                throw new InvalidOperationException("Recipe not found");
+            }
+
+            var fileName = $"{Guid.NewGuid()}-{photo.FileName}";
+            var filePath = await _blobService.UploadFileAsync(photo.OpenReadStream(), fileName);
+
+            if (!string.IsNullOrWhiteSpace(filePath))
+            {
+                recipe.MainImage = filePath;
+                _dbcontext.SaveChanges();
+                return filePath; 
+            }
+            else
+            {
+                throw new InvalidOperationException("Error uploading the photo to Azure Blob Storage.");
+            }
         }
     }
 }

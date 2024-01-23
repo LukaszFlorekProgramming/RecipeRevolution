@@ -7,6 +7,8 @@ using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Persistance;
 using RecipeRevolution.Services;
+using RecipeRevolution.Services.Blob;
+using RecipeRevolution.Services.Recipe;
 using RecipeRevolution.Validator;
 using System.Security.Claims;
 
@@ -50,6 +52,7 @@ builder.Services.AddScoped<IRecipesService, RecipesService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IValidator<RecipeQuery>, RecipeQueryValidator>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<IBlobService, BlobService>();
 
 var app = builder.Build();
 

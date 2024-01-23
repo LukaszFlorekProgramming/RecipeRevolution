@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Models;
+using RecipeRevolution.Services.Blob;
 using RecipeRevolution.Validator;
 using System.Security.Claims;
 
@@ -15,10 +17,35 @@ namespace RecipeRevolution.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
+        private readonly IBlobService _blobService;
 
-        public RecipeController(IRecipeService recipeService)
+        public RecipeController(IRecipeService recipeService, IBlobService blobService)
         {
             _recipeService = recipeService;
+            _blobService = blobService;
+        }
+        [HttpPost("{recipeId}/upload-image")]
+        public async Task<IActionResult> UploadRecipeImage(int recipeId, IFormFile file)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
+
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file provided or the file is empty.");
+            }
+
+            try
+            {
+                var imageUrl = await _recipeService.AddRecipePhoto(recipeId, file);
+                return Ok(new { ImageUrl = imageUrl });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet]
         [AllowAnonymous]

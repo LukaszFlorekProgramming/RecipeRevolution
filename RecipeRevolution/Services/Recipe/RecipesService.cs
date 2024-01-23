@@ -3,7 +3,7 @@ using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Models;
 using RecipeRevolution.Persistance;
 
-namespace RecipeRevolution.Services
+namespace RecipeRevolution.Services.Recipe
 {
     public class RecipesService : IRecipesService
     {
@@ -13,7 +13,7 @@ namespace RecipeRevolution.Services
         {
             _dbcontext = dbContext;
             _mapper = mapper;
-            
+
         }
         public IEnumerable<RecipeDto> GetAll()
         {

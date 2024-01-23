@@ -1,4 +1,5 @@
-﻿using RecipeRevolution.Domain.Models;
+﻿using Microsoft.AspNetCore.Http;
+using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Models;
 
 namespace RecipeRevolution.Application.Interfaces
@@ -14,6 +15,7 @@ namespace RecipeRevolution.Application.Interfaces
         int Create(CreateRecipeDto recipeDto);
         bool Delete(int id);
         bool Update(UpdateRecipeDto recipeDto, int id);
+        Task<string> AddRecipePhoto(int recipeId, IFormFile photo);
 
     }
 }

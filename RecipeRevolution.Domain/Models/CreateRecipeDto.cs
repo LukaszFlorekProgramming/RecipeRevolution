@@ -9,7 +9,7 @@
         public string DifficultyLevel { get; set; }
         public short Portions { get; set; }
         public string? CreatedById { get; set; }
-
+        public string? MainImage { get; set; }
         public int CategoryId { get; set; }
     }
 }
