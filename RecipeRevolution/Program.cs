@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Application;
 using RecipeRevolution.Application.Interfaces;
@@ -8,6 +9,7 @@ using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Persistance;
 using RecipeRevolution.Services;
 using RecipeRevolution.Services.Blob;
+using RecipeRevolution.Services.Email;
 using RecipeRevolution.Services.Recipe;
 using RecipeRevolution.Validator;
 using System.Security.Claims;
@@ -39,7 +41,7 @@ builder.Services.AddIdentityCore<User>()
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
-    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedEmail = true;
 });
 
 builder.Services.AddApplication();
@@ -53,6 +55,9 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IValidator<RecipeQuery>, RecipeQueryValidator>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IBlobService, BlobService>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration.GetSection("AuthMessageSenderOptions"));
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 
 var app = builder.Build();
 
