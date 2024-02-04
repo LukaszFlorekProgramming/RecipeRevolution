@@ -84,5 +84,30 @@ namespace RecipeRevolutionBlazorApp.Services.Recipes
 
             return await _httpClient.GetFromJsonAsync<PagedResult<NameAndIMGRecipeDto>>(endpoint);
         }
+        public async Task<bool> UploadProfilePictureAsync(Stream fileStream, string fileName,int id)
+        {
+            try
+            {
+                var content = new MultipartFormDataContent();
+                var fileContent = new StreamContent(fileStream);
+                fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                {
+                    Name = "file",
+                    FileName = fileName
+                };
+
+                content.Add(fileContent);
+
+                var response = await _httpClient.PostAsync($"api/recipe/{id}/upload-image", content);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as necessary
+                Console.WriteLine($"Error uploading profile picture: {ex.Message}");
+                return false;
+            }
+        }
     }
 }

@@ -16,5 +16,6 @@ namespace RecipeRevolutionBlazorApp.Services.Recipes
         Task<bool> DeleteRecipe(int recipeId);
 
         Task<IEnumerable<CategoryDto>> GetAllCategory();
+        Task<bool> UploadProfilePictureAsync(Stream fileStream, string fileName, int id);
     }
 }

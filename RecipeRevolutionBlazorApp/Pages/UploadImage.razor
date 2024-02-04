@@ -1,0 +1,44 @@
+﻿@page "/upload-image"
+@inject IRecipeService RecipeService
+@using System.Net.Http.Headers
+@using RecipeRevolutionBlazorApp.Services.Recipes
+@inject NavigationManager NavigationManager
+
+<EditForm Model="@this" OnValidSubmit="@UploadImagemetod">
+    <InputFile OnChange="@OnInputFileChange" />
+    <button type="submit">Upload Image</button>
+</EditForm>
+
+@code {
+    private Stream fileStream;
+    private string fileName;
+    private int recipeId = 23; // Przykładowe ID przepisu, można ustawić dynamicznie
+
+    private async Task UploadImagemetod()
+    {
+        // Tutaj wywołujemy naszą metodę UploadProfilePictureAsync
+        // Zakładając, że jest dostępna jako serwis
+        var success = await RecipeService.UploadProfilePictureAsync(fileStream, fileName, recipeId);
+        if (success)
+        {
+            Console.WriteLine("Image uploaded successfully");
+            NavigationManager.NavigateTo("/my-account", forceLoad: true);
+        }
+        else
+        {
+            Console.WriteLine("Failed to upload image");
+        }
+    }
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            fileName = file.Name;
+            fileStream = file.OpenReadStream();
+        }
+    }
+
+    
+}
