@@ -11,6 +11,7 @@ using RecipeRevolution.Services;
 using RecipeRevolution.Services.Blob;
 using RecipeRevolution.Services.Email;
 using RecipeRevolution.Services.Recipe;
+using RecipeRevolution.Services.User;
 using RecipeRevolution.Validator;
 using System.Security.Claims;
 
@@ -29,7 +30,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin", builder =>
     {
-        builder.WithOrigins("https://localhost:7251")
+        builder.WithOrigins("https://localhost:7251", "https://localhost:7239")
                .AllowAnyMethod()
                .AllowAnyHeader();
     });
@@ -52,6 +53,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<IRecipesService, RecipesService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IValidator<RecipeQuery>, RecipeQueryValidator>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IBlobService, BlobService>();

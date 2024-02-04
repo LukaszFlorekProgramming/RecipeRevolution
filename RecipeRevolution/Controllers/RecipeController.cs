@@ -114,7 +114,7 @@ namespace RecipeRevolution.Controllers
         {
             recipeDto.CreatedById = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var id = _recipeService.Create(recipeDto);
-
+            recipeDto.RecipeId = id;
             return Created($"/api/recipe/{id}", recipeDto);
         }
         [HttpDelete("{id}")]
@@ -136,6 +136,18 @@ namespace RecipeRevolution.Controllers
                 return NotFound();
             }
             return Ok();
+        }
+        [HttpGet("image")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<RecipeWithPhotoDto>> GetNameAndIMGRecipe([FromQuery] RecipeQuery query)
+        {
+            var validation = new RecipeQueryValidator().Validate(query);
+            if (!validation.IsValid)
+            {
+                return BadRequest(validation.Errors);
+            }
+            var recipes = _recipeService.GetNameAndIMGRecipe(query);
+            return Ok(recipes);
         }
 
 

@@ -175,5 +175,34 @@ namespace RecipeRevolution.Services
                 throw new InvalidOperationException("Error uploading the photo to Azure Blob Storage.");
             }
         }
+
+        public PagedResult<NameAndIMGRecipeDto> GetNameAndIMGRecipe(RecipeQuery query)
+        {
+            var baseQuery = _dbcontext.Recipes.Include(x => x.Images).AsQueryable();
+
+            if (query.SearchPhrase != "all")
+            {
+                baseQuery = baseQuery
+                    .Where(r => r.Name.ToLower().Contains(query.SearchPhrase.ToLower()) ||
+                                r.Description.ToLower().Contains(query.SearchPhrase.ToLower()));
+            }
+            else
+            {
+                baseQuery = baseQuery.Where(r => true);
+            }
+
+            var recipes = baseQuery
+                .Skip(query.PageSize * (query.PageNumber - 1))
+                .Take(query.PageSize)
+                .ToList();
+
+            var totalItemsCount = baseQuery.Count();
+
+            var recipesDtos = _mapper.Map<List<NameAndIMGRecipeDto>>(recipes);
+
+            var result = new PagedResult<NameAndIMGRecipeDto>(recipesDtos, totalItemsCount, query.PageSize, query.PageNumber);
+
+            return result;
+        }
     }
 }

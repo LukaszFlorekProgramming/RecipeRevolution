@@ -1,0 +1,104 @@
+﻿@page "/login"
+@using Blazored.LocalStorage
+@using RecipeRevolutionBlazorApp.Models
+@using RecipeRevolutionBlazorApp.Models.User
+@using RecipeRevolutionBlazorApp.Services.Token
+@using RecipeRevolutionBlazorApp.Services.Users
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@inject IUserService UserService
+@inject AuthTokenService AuthTokenService
+@inject ILocalStorageService localStorage
+@inject NavigationManager Navigation
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h3>Login</h3>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger">@errorMessage</div>
+            }
+
+            <EditForm Model="@loginDto" OnValidSubmit="LoginUser">
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    <InputText id="Email" @bind-Value="loginDto.Email" class="form-control" />
+                    <ValidationMessage For="@(() => loginDto.Email)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <InputText id="Password" type="password" @bind-Value="loginDto.Password" class="form-control" />
+                    <ValidationMessage For="@(() => loginDto.Password)" />
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <a href="reset-password">Forgot password?</a>
+                </div>
+
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+                <p class="small fw-bold mt-2 pt-1 mb-0">
+                    Don't have an account?
+                    <a href="register" class="link-danger">Register</a>
+                </p>
+            </EditForm>
+
+
+
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginDto loginDto = new LoginDto();
+
+    private string errorMessage;
+
+    private async Task LoginUser()
+    {
+        try
+        {
+            var response = await UserService.LoginUser(loginDto);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                var responseObject = JsonSerializer.Deserialize<LoginResponse>(response);
+                var accessToken = responseObject?.AccessToken;
+
+                if (!string.IsNullOrEmpty(accessToken))
+                {
+                    await AuthTokenService.SetRefreshToken(responseObject.RefreshToken);
+                    await AuthTokenService.SetToken(accessToken);
+                    await AuthTokenService.SetexpiresIn(responseObject.ExpiresIn);
+                    await localStorage.SetItemAsync("userEmail", loginDto.Email);
+
+                    Navigation.NavigateTo("/MyRecipes", forceLoad: true);
+                }
+            }
+            else
+            {
+                bool isActivated = await UserService.CheckAccountActivation(loginDto.Email);
+                if (!isActivated)
+                {
+                    errorMessage = "Account is not activated. Please check your email to activate your account.";
+                }
+                else
+                {
+                    errorMessage = "Incorrect username or password.";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+}
+

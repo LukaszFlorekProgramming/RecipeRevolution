@@ -1,0 +1,75 @@
+﻿@page "/my-account"
+@using RecipeRevolutionBlazorApp.Models.User
+@using RecipeRevolutionBlazorApp.Services.Users
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h3>Moje konto</h3>
+
+            @if (user == null)
+            {
+                <p><em>Ładowanie danych użytkownika...</em></p>
+            }
+            else
+            {
+                <EditForm Model="@user" OnValidSubmit="UpdateUser">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="form-group">
+                        <label for="FirstName">FirstName</label>
+                        <InputText id="FirstName" @bind-Value="user.FirstName" class="form-control" />
+                        <ValidationMessage For="@(() => user.FirstName)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="LastName">LastName</label>
+                        <InputText id="LastName" @bind-Value="user.LastName" class="form-control" />
+                        <ValidationMessage For="@(() => user.LastName)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Gender">Gender</label>
+                        <InputText id="Gender" @bind-Value="user.Gender" class="form-control" />
+                        <ValidationMessage For="@(() => user.Gender)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DateOfBirth">DateOfBirth</label>
+                        <InputDate id="DateOfBirth" @bind-Value="user.DateOfBirth" class="form-control" />
+                        <ValidationMessage For="@(() => user.DateOfBirth)" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Zaktualizuj</button>
+                </EditForm>
+            }
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private UpdateUserDto user = new UpdateUserDto();
+    private string profilePictureUrl;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await UserService.GetUserAsync();
+    }
+
+    private async Task UpdateUser()
+    {
+        bool success = await UserService.UpdateUserAsync(user);
+        if (success)
+        {
+            NavigationManager.NavigateTo("/my-account", forceLoad: true);
+        }
+        else
+        {
+            // Obsłuż błąd, pokaż komunikat o błędzie użytkownikowi
+        }
+    }
+}

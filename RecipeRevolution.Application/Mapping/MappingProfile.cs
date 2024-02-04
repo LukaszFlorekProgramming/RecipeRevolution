@@ -16,6 +16,8 @@ namespace RecipeRevolution.Application.Mapping
             CreateMap<Image, ImageDto>();
             CreateMap<ImageDto, Image>();
             CreateMap<Recipe,RecipeWithPhotoDto>().ForMember(dto => dto.Data, conf => conf.MapFrom(r => r.Images.FirstOrDefault().Data)); ;
+            CreateMap<User,UpdateUserDto>();
+            CreateMap<Recipe,NameAndIMGRecipeDto>();
         }
     }
 }
