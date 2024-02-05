@@ -66,11 +66,11 @@ namespace RecipeRevolution.Services
 
             return recipesDtos;
         }
-        public IEnumerable<RecipeWithPhotoDto> GetRecipesByCategory(string name)
+        public IEnumerable<NameAndIMGRecipeDto> GetRecipesByCategory(string name)
         {
             var recipes = _dbcontext.Recipes.Include(x => x.Images).Where(x => x.Category.Name == name).ToList();
 
-            var recipesDtos = _mapper.Map<List<RecipeWithPhotoDto>>(recipes);
+            var recipesDtos = _mapper.Map<List<NameAndIMGRecipeDto>>(recipes);
 
             return recipesDtos;
         }

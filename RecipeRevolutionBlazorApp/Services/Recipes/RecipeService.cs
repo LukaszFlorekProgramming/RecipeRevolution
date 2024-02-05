@@ -109,5 +109,11 @@ namespace RecipeRevolutionBlazorApp.Services.Recipes
                 return false;
             }
         }
+
+        public async Task<IEnumerable<NameAndIMGRecipeDto>> GetRecipesByCategory(string name)
+        {
+            var apiUrl = $"/api/recipe/category?name={name}";
+            return await _httpClient.GetFromJsonAsync<IEnumerable<NameAndIMGRecipeDto>>(apiUrl);
+        }
     }
 }

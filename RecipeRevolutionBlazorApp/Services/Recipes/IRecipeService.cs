@@ -17,5 +17,6 @@ namespace RecipeRevolutionBlazorApp.Services.Recipes
 
         Task<IEnumerable<CategoryDto>> GetAllCategory();
         Task<bool> UploadProfilePictureAsync(Stream fileStream, string fileName, int id);
+        Task<IEnumerable<NameAndIMGRecipeDto>> GetRecipesByCategory(string name);
     }
 }
