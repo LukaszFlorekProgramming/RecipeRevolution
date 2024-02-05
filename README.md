@@ -16,6 +16,7 @@ W projekcie wykorzystano szereg nowoczesnych technologii i narzędzi programisty
 - Bootstrap
 - API
 - Swagger
+- SendGrid
 
 ## Funkcje
 Główne funkcje aplikacji obejmują szybkie i efektywne przeszukiwanie baz danych przepisów kulinarnych oraz intuicyjne wyszukiwanie za pomocą tagów, ułatwiające odnalezienie idealnych przepisów.
@@ -51,9 +52,21 @@ Po kliknięciu w przepis jesteśmy przekierowani do podstrony wyświetlającej s
 # Rejestracja i Logowanie
 Każdy użytkownik powinien stworzyć własne konto aby posiadać możliwość dodawania, modyfikowania i usuwania własnych przepisów, dodawania komentarzy i oceny dla innych przepisów. 
 
-![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/fffaa9be-aead-42a5-8e24-c1785fabf717)
 
-![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/5bb20f8a-dd97-4fd6-94dc-efaff17acc1d)
+W ramach procesu rejestracji, aplikacja wykorzystuje technologię SendGrid do wysłania na podany adres email linku aktywacyjnego. Kliknięcie w ten link skutkuje aktywacją konta użytkownika. Procedura ta zapewnia bezpieczne i szybkie ukończenie procesu tworzenia konta.
+
+![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/09d7297b-45a2-4b66-8334-92e5ab37d014)
+
+
+
+![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/5606ee91-0bc0-40da-916a-f2f744d29d80)
+
+W Aplikacji posiadamy możliwość zmiany hasła po naciśnięciu przycisku Forgot password?  Po wprowadzeniu adresu email, system automatycznie wysyła link umożliwiający bezpieczną zmianę hasła. Ten link kieruje użytkownika do specjalnej strony, gdzie może ustalić nowe hasło. 
+
+![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/d585e530-df99-4568-8ed0-d702ba100dac)
+
+![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/f4c206ed-4751-4c9c-837d-ca4bdb9a8878)
+
 
 
 ## Panel zarządzania przepisami dla zalogowanego użytkownika
