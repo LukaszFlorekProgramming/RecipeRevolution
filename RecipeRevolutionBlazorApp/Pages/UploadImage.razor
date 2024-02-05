@@ -5,6 +5,12 @@
 @inject NavigationManager NavigationManager
 
 <EditForm Model="@this" OnValidSubmit="@UploadImagemetod">
+
+    <div class="form-group">
+        <label for="Description">Recipe ID:</label>
+        <InputNumber @bind-Value="@recipeId" class="form-control" />
+    </div>
+
     <InputFile OnChange="@OnInputFileChange" />
     <button type="submit">Upload Image</button>
 </EditForm>
@@ -12,14 +18,14 @@
 @code {
     private Stream fileStream;
     private string fileName;
-    private int recipeId = 23; // Przykładowe ID przepisu, można ustawić dynamicznie
+    private int recipeId = 1;
 
     private async Task UploadImagemetod()
     {
-        // Tutaj wywołujemy naszą metodę UploadProfilePictureAsync
-        // Zakładając, że jest dostępna jako serwis
-        var success = await RecipeService.UploadProfilePictureAsync(fileStream, fileName, recipeId);
-        if (success)
+        
+
+        var success = await RecipeService.UploadMainRecipePictureAsync(fileStream, fileName, recipeId);
+        if (success != string.Empty)
         {
             Console.WriteLine("Image uploaded successfully");
             NavigationManager.NavigateTo("/my-account", forceLoad: true);

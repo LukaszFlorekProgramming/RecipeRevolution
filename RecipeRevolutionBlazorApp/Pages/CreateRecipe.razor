@@ -115,8 +115,8 @@
 
     private async Task UploadImagemetod()
     {
-        var success = await RecipeService.UploadProfilePictureAsync(fileStream, fileName, recipeId);
-        if (success)
+        var success = await RecipeService.UploadMainRecipePictureAsync(fileStream, fileName, recipeId);
+        if (success != null)
         {
             Console.WriteLine("Image uploaded successfully");
         }

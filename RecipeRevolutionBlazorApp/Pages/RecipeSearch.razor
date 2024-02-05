@@ -1,0 +1,144 @@
+﻿@page "/RecipeSearch"
+@page "/RecipeSearch/{SearchQuery}"
+@using RecipeRevolutionBlazorApp.Models
+@using RecipeRevolutionBlazorApp.Models.Recipe
+@using RecipeRevolutionBlazorApp.Services.Recipes
+
+@inject IRecipeService IRecipeService
+@inject NavigationManager NavigationManager
+
+<h3>RecipesHome</h3>
+
+@if (recipesPagedResult != null && recipesPagedResult.Items.Any())
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var recipe in recipesPagedResult.Items)
+            {
+                <div class="col-md-3 mb-4 card-no-border">
+                    <div class="card h-100" @onclick="() => RedirectToDetailsPage(recipe.RecipeId)">
+                        <img src="@recipe.MainImage" class="card-img-top" alt="@recipe.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@recipe.Name</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <nav class="d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item @(PageNumber == 1 ? "disabled" : "")">
+                <span class="page-link" @onclick="PreviousPage" style="cursor:pointer;">Previous</span>
+            </li>
+            @for (int i = Math.Max(1, PageNumber - 2); i <= Math.Min(PageNumber + 2, TotalPages); i++)
+            {
+                <li class="page-item @(i == PageNumber ? "active" : "")">
+                    <span class="page-link" @onclick="() => ShowPage(i)" style="cursor:pointer;">@i</span>
+                </li>
+            }
+            <li class="page-item @(PageNumber == TotalPages ? "disabled" : "")">
+                <span class="page-link" @onclick="NextPage" style="cursor:pointer;">Next</span>
+            </li>
+        </ul>
+    </nav>
+}
+else
+{
+    <p>Loading recipes...</p>
+}
+
+@code {
+
+    private PagedResult<NameAndIMGRecipeDto> recipesPagedResult;
+    [Parameter] public string SearchQuery { get; set; }
+    private int PageNumber { get; set; } = 1;
+    private int PageSize { get; set; } = 16;
+    private int TotalPages => (int)Math.Ceiling((double)recipesPagedResult.TotalItemsCount / PageSize);
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadRecipes();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadRecipes();
+    }
+
+    protected async Task NextPage()
+    {
+        if (PageNumber < TotalPages)
+        {
+            PageNumber++;
+            await LoadRecipes();
+        }
+    }
+
+    protected async Task PreviousPage()
+    {
+        if (PageNumber > 1)
+        {
+            PageNumber--;
+            await LoadRecipes();
+        }
+    }
+
+    protected async Task ShowPage(int i)
+    {
+        if (i >= 1 && i <= TotalPages)
+        {
+            PageNumber = i;
+            await LoadRecipes();
+        }
+    }
+
+    private async Task LoadRecipes()
+    {
+        RecipeQuery query = new RecipeQuery
+            {
+                SearchPhrase = SearchQuery,
+                PageNumber = PageNumber,
+                PageSize = PageSize
+            };
+        recipesPagedResult = await IRecipeService.GetAllWithPhoto(query);
+    }
+    private void RedirectToDetailsPage(int id)
+    {
+        NavigationManager.NavigateTo($"/recipe/{id}");
+    }
+
+
+}
+
+<style>
+    .card-no-border .card {
+        border: none;
+        background: none;
+        box-shadow: none;
+    }
+
+    .card-no-border .card-img-top {
+        border-radius: 0;
+    }
+
+    .card-fixed-height .card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-fixed-height .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .card-fixed-height .card-body > img {
+            flex-grow: 0;
+        }
+
+        .card-fixed-height .card-body > h5 {
+            flex-grow: 0;
+        }
+</style>

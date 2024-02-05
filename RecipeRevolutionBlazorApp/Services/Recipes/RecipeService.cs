@@ -84,7 +84,7 @@ namespace RecipeRevolutionBlazorApp.Services.Recipes
 
             return await _httpClient.GetFromJsonAsync<PagedResult<NameAndIMGRecipeDto>>(endpoint);
         }
-        public async Task<bool> UploadProfilePictureAsync(Stream fileStream, string fileName,int id)
+        public async Task<string> UploadMainRecipePictureAsync(Stream fileStream, string fileName,int id)
         {
             try
             {
@@ -100,13 +100,25 @@ namespace RecipeRevolutionBlazorApp.Services.Recipes
 
                 var response = await _httpClient.PostAsync($"api/recipe/{id}/upload-image", content);
 
-                return response.IsSuccessStatusCode;
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                   
+                    return responseContent;
+                }
+                else
+                {
+                    // Logowanie błędu lub zwracanie null, wskazuje na niepowodzenie
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Failed to upload image: {errorResponse}");
+                    return null;
+                }
             }
             catch (Exception ex)
             {
                 // Log the exception or handle it as necessary
                 Console.WriteLine($"Error uploading profile picture: {ex.Message}");
-                return false;
+                return string.Empty;
             }
         }
 
