@@ -59,7 +59,7 @@
                 <div class="d-flex justify-content-end">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" @onclick="ToggleDropdown">
-                            @* Welcome, @userProfile.FirstName @userProfile.LastName *@
+                            Welcome, @userProfile.FirstName @userProfile.LastName
                         </button>
                         <div class="@dropdownMenuClass" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="Myrecipes">My Recipes</a>
@@ -115,10 +115,10 @@
     {
         var token = await TokenService.GetToken();
         await CheckLoginStatus();
-        //if (isUserLoggedIn)
-        //{
-        //    userProfile = await UserService.GetUserProfile();
-        //}
+        if (isUserLoggedIn)
+        {
+            userProfile = await UserService.GetUserProfile();
+        }
         isUserLoggedIn = !string.IsNullOrEmpty(token);
         _userToken = await TokenService.GetToken();
         categories = await IRecipeService.GetAllCategory();

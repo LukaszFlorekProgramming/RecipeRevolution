@@ -84,20 +84,22 @@
             }
             else
             {
-                bool isActivated = await UserService.CheckAccountActivation(loginDto.Email);
-                if (!isActivated)
+                var checkActivation = await UserService.CheckAccountActivation(loginDto.Email);
+                if (checkActivation == false)
                 {
-                    errorMessage = "Account is not activated. Please check your email to activate your account.";
+                    errorMessage = "Inactive account. Please try again.";
                 }
                 else
                 {
-                    errorMessage = "Incorrect username or password.";
+                    errorMessage = "Incorrect email or password. Please try again.";
                 }
+                
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            errorMessage = $"An error occurred: {ex.Message}";
+            Console.WriteLine(errorMessage);
         }
     }
 }

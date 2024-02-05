@@ -9,69 +9,80 @@
 @inject IRecipeService RecipeService
 @inject IImageService ImageService
 @inject NavigationManager NavigationManager
-<EditForm Model="@recipeDto" OnValidSubmit="CreateRecipeMetod">
-    <DataAnnotationsValidator />
 
-    <div class="form-group">
-        <label for="Name">Name:</label>
-        <InputText id="Name" @bind-Value="@recipeDto.Name" class="form-control" />
-        <ValidationMessage For="@(() => recipeDto.Name)" />
-    </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h3>Create Recipe</h3>
 
-    <div class="form-group">
-        <label for="Description">Description:</label>
-        <InputText id="Description" @bind-Value="@recipeDto.Description" class="form-control" />
-        <ValidationMessage For="@(() => recipeDto.Description)" />
-    </div>
+            <EditForm Model="@recipeDto" OnValidSubmit="CreateRecipeMetod">
+                <DataAnnotationsValidator />
 
-    <div class="form-group">
-        <label for="Name">Instructions:</label>
-        <InputText id="Instructions" @bind-Value="@recipeDto.Instructions" class="form-control" />
-        <ValidationMessage For="@(() => recipeDto.Instructions)" />
-    </div>
+                <div class="form-group">
+                    <label for="Name">Name:</label>
+                    <InputText id="Name" @bind-Value="@recipeDto.Name" class="form-control" />
+                    <ValidationMessage For="@(() => recipeDto.Name)" />
+                </div>
 
-    <div class="form-group">
-        <label for="Name">PreparationTime:</label>
-        <InputNumber id="PreparationTime" @bind-Value="@recipeDto.PreparationTime" class="form-control" />
-        <ValidationMessage For="@(() => recipeDto.PreparationTime)" />
-    </div>
+                <div class="form-group">
+                    <label for="Description">Description:</label>
+                    <InputText id="Description" @bind-Value="@recipeDto.Description" class="form-control" />
+                    <ValidationMessage For="@(() => recipeDto.Description)" />
+                </div>
 
-    <div class="form-group">
-        <label for="Name">DifficultyLevel:</label>
-        <InputText id="DifficultyLevel" @bind-Value="@recipeDto.DifficultyLevel" class="form-control" />
-        <ValidationMessage For="@(() => recipeDto.DifficultyLevel)" />
-    </div>
+                <div class="form-group">
+                    <label for="Name">Instructions:</label>
+                    <InputText id="Instructions" @bind-Value="@recipeDto.Instructions" class="form-control" />
+                    <ValidationMessage For="@(() => recipeDto.Instructions)" />
+                </div>
 
-    <div class="form-group">
-        <label for="Name">Portions:</label>
-        <InputNumber id="Portions" @bind-Value="@recipeDto.Portions" class="form-control" />
-        <ValidationMessage For="@(() => recipeDto.Portions)" />
-    </div>
+                <div class="form-group">
+                    <label for="Name">Preparation Time:</label>
+                    <InputNumber id="PreparationTime" @bind-Value="@recipeDto.PreparationTime" class="form-control" />
+                    <ValidationMessage For="@(() => recipeDto.PreparationTime)" />
+                </div>
 
-    @if (categories != null)
-    {
-        <div>
-            <label for="numericDropdown">Select a category:</label>
-            <InputSelect id="categoryDropdown" @bind-Value="recipeDto.CategoryId">
-                @foreach (var category in categories)
+                <div class="form-group">
+                    <label for="Name">Difficulty Level:</label>
+                    <InputText id="DifficultyLevel" @bind-Value="@recipeDto.DifficultyLevel" class="form-control" />
+                    <ValidationMessage For="@(() => recipeDto.DifficultyLevel)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="Name">Portions:</label>
+                    <InputNumber id="Portions" @bind-Value="@recipeDto.Portions" class="form-control" />
+                    <ValidationMessage For="@(() => recipeDto.Portions)" />
+                </div>
+
+
+                <div class="form-group">
+                    <label for="image">Image:</label>
+                    <InputFile OnChange="@OnInputFileChange" class="form-control" />
+                </div>
+
+                @if (categories != null)
                 {
-                    <option value="@category.CategoryId">@category.Name</option>
+                    <div class="form-group mt-3">
+                        <label for="numericDropdown">Select a category:</label>
+                        <InputSelect id="categoryDropdown" @bind-Value="recipeDto.CategoryId">
+                            @foreach (var category in categories)
+                            {
+                                <option value="@category.CategoryId">@category.Name</option>
+                            }
+                        </InputSelect>
+                    </div>
                 }
-            </InputSelect>
+
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <button type="submit" class="btn btn-primary mt-3">Create</button>
+                <a href="/Myrecipes" class="btn btn-secondary  mt-3">Anuluj</a>
+            </EditForm>
+
         </div>
-    }
-
-    <div class="form-group">
-        <label for="image">Image:</label>
-        <InputFile OnChange="@OnInputFileChange" class="form-control" />
     </div>
-
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <button type="submit" class="btn btn-primary mt-3">Create</button>
-    <a href="/Myrecipes" class="btn btn-secondary">Anuluj</a>
-</EditForm>
+</div>
 
 
 @code {

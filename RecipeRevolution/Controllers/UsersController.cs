@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Services.User;
 using System.Security.Claims;
@@ -12,10 +14,12 @@ namespace RecipeRevolution.Controllers
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
+        private readonly UserManager<User> _userManager;
 
-        public UsersController( IUserService userService)
+        public UsersController( IUserService userService, UserManager<User> userManager)
         {
             _userService = userService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -72,6 +76,18 @@ namespace RecipeRevolution.Controllers
             await _userService.UpdateUserAsync(user, userUpdateDto);
 
             return NoContent();
+        }
+        [AllowAnonymous]
+        [HttpGet("CheckActivation")]
+        public IActionResult CheckAccountActivation(string email)
+        {
+            var account = _userManager.Users.FirstOrDefault(x => x.Email == email);
+
+            if (account != null)
+            {
+                return Ok(account.EmailConfirmed);
+            }
+            return NotFound("Account not found.");
         }
     }
 }
