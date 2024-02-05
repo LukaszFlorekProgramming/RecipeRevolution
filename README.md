@@ -7,7 +7,7 @@ W projekcie wykorzystano szereg nowoczesnych technologii i narzędzi programisty
 
 - Visual Studio 2022
 - C# 12
-- .NET Core 7,8
+- .NET Core 8
 - Blazor
 - Entity Framework Core(Code First)
 - MS SQL Server
@@ -75,7 +75,9 @@ W Aplikacji posiadamy możliwość zmiany hasła po naciśnięciu przycisku Forg
 
 ## Dodawanie przepisu 
 
-![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/bb26e574-455f-4423-82ab-7d97e4fcd768)
+![image](https://github.com/LukaszFlorekProgramming/RecipeRevolution/assets/56117955/79341880-0672-48e3-a738-d02107240bd7)
+
+
 
 ## Główny cel
 Ten projekt został stworzony w celu demonstracji moich umiejętności programistycznych oraz jako platforma do dalszego rozwoju. W obecnej fazie zaimplementowałem tylko podstawowe funkcjonalności, które planuję rozbudowywać i udoskonalać.
