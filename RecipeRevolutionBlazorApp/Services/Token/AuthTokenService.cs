@@ -5,7 +5,6 @@ namespace RecipeRevolutionBlazorApp.Services.Token
     public class AuthTokenService
     {
         private readonly ILocalStorageService _localStorage;
-
         public AuthTokenService(ILocalStorageService localStorage)
         {
             _localStorage = localStorage;
@@ -33,5 +32,18 @@ namespace RecipeRevolutionBlazorApp.Services.Token
         {
             await _localStorage.RemoveItemAsync("authToken");
         }
+
+
+
+        public async Task<bool> IsTokenValid()
+        {
+            var token = await GetToken();
+            if (string.IsNullOrEmpty(token))
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }

@@ -114,16 +114,21 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var token = await TokenService.GetToken();
-        await CheckLoginStatus();
-        if (isUserLoggedIn)
-        {
-            userProfile = await UserService.GetUserProfile();
-        }
-        isUserLoggedIn = !string.IsNullOrEmpty(token);
         _userToken = await TokenService.GetToken();
+        isUserLoggedIn = await TokenService.IsTokenValid();
+
+    if (!isUserLoggedIn)
+    {
+        // Token wygasł lub jest nieprawidłowy - przekieruj do strony logowania.
+        NavigationManager.NavigateTo("/login");
+    }
+    else
+    {
+        userProfile = await UserService.GetUserProfile();
         categories = await IRecipeService.GetAllCategory();
     }
+    }
+
     private async Task CheckLoginStatus()
     {
         var token = await TokenService.GetToken();
