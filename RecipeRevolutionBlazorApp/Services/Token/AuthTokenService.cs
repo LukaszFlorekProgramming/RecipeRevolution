@@ -42,7 +42,9 @@ namespace RecipeRevolutionBlazorApp.Services.Token
             {
                 return false;
             }
-            return true;
+            var expiresIn = await _localStorage.GetItemAsync<int>("expiresIn");
+            var expirationDate = DateTime.UtcNow.AddSeconds(expiresIn);
+            return expirationDate > DateTime.UtcNow;
         }
 
     }

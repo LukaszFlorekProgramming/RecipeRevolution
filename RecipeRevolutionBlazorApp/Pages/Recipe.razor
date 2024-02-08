@@ -12,24 +12,49 @@
 {
     <div class="recipe-container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-8">
                 <div class="recipe-header">
                     <h2>@recipe.Name</h2>
-                </div>
-                <div class="recipe-details">
                     <p><strong>Description:</strong> @recipe.Description</p>
                     <p><strong>Instructions:</strong> @recipe.Instructions</p>
-                    <p><strong>Preparation Time:</strong> @recipe.PreparationTime</p>
-                    <p><strong>Difficulty Level:</strong> @recipe.DifficultyLevel</p>
-                    <p><strong>Portions:</strong> @recipe.Portions</p>
                     <button class="btn btn-secondary" @onclick="GoBack">Powrót</button>
                 </div>
             </div>
-            <div class="col-md-6">
-                <img src="@($"data:image/png;base64,{Convert.ToBase64String(@image.Data)}")" alt="Recipe Image" class="recipe-image" />
+            <div class="col-lg-4">
+                <div class="recipe-info">
+                    <div class="recipe-attribute">
+                        <i class="bi bi-people-fill"></i>
+                        <span class="attribute-title">Ilość porcji</span>
+                        <span class="attribute-value">@recipe.Portions</span>
+                    </div>
+                    <div class="recipe-attribute">
+                        <i class="bi bi-graph-up"></i>
+                        <span class="attribute-title">Poziom trudności</span>
+                        <span class="attribute-value">@recipe.DifficultyLevel</span>
+                    </div>
+                    <div class="recipe-attribute">
+                        <i class="bi bi-clock-fill"></i>
+                        <span class="attribute-title">Czas przygotowania</span>
+                        <span class="attribute-value">@recipe.PreparationTime min</span>
+                    </div>
+                </div>
+                <img src="@recipe.MainImage" class="card-img-top" alt="@recipe.Name" style="width: 100%; height: auto; object-fit: cover;">
+                <div class="button-group" style="text-align: center; padding-top: 20px;">
+                    <button class="btn btn-outline-secondary">
+                        <i class="bi bi-heart icon-small"></i> Zapisz
+                    </button>
+                    <button class="btn btn-outline-secondary">
+                        <i class="bi bi-chat icon-small"></i> Skomentuj
+                    </button>
+                    <button class="btn btn-outline-secondary">
+                        <i class="bi bi-download icon-small"></i> Pobierz
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
+
 }
 else
 {
@@ -39,14 +64,55 @@ else
 @code {
     [Parameter] public int Id { get; set; }
     private RecipeDto recipe;
-    private ImageDto image;
     protected override async Task OnInitializedAsync()
     {
         recipe = await IRecipeService.GetRecipe(Id);
-        image = await ImageService.GetByRecipeId(Id);
     }
     private void GoBack()
     {
         NavigationManager.NavigateTo("/HomeRecipes");
     }
 }
+<style>
+    .recipe-info {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .recipe-attribute {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .attribute-title {
+        font-size: 0.85em;
+        color: #6c757d; /* Szary kolor tekstu */
+        margin-top: 0.5em;
+    }
+
+    .attribute-value {
+        font-size: 1em; /* Dostosuj według potrzeb */
+        color: #000; /* Czarny kolor tekstu */
+    }
+
+    .bi {
+        font-size: 2em; /* Dostosuj wielkość ikony według potrzeb */
+        color: #dc3545; /* Kolor ikon, dostosuj według swojej palety */
+    }
+
+    .button-group .btn {
+        margin: 5px; /* Odstępy pomiędzy przyciskami */
+    }
+
+        /* Ikony w przyciskach */
+        .button-group .btn i {
+            margin-right: 5px; /* Odstęp między ikoną a tekstem */
+        }
+
+    .icon-small {
+        font-size: 0.75rem; /* Dostosuj rozmiar do swoich potrzeb */
+    }
+</style>

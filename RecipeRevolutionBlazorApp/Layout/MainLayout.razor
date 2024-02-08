@@ -119,7 +119,6 @@
 
     if (!isUserLoggedIn)
     {
-        // Token wygasł lub jest nieprawidłowy - przekieruj do strony logowania.
         NavigationManager.NavigateTo("/login");
     }
     else
@@ -143,7 +142,7 @@
     private async void Logout()
     {
         await TokenService.ClearToken();
-        NavigationManager.NavigateTo("/HomeRecipes", forceLoad: true);
+        NavigationManager.NavigateTo("/", forceLoad: true);
     }
 
     private void RedirectToSearchPage()
