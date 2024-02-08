@@ -30,7 +30,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin", builder =>
     {
-        builder.WithOrigins("https://localhost:7251", "https://localhost:7239")
+        builder.WithOrigins("https://localhost:7251", "https://localhost:7239", "https://reciperevolutionui.azurewebsites.net")
                .AllowAnyMethod()
                .AllowAnyHeader();
     });
@@ -72,11 +72,11 @@ using (var scope = app.Services.CreateScope())
     seeder.SeedMigration(); 
 }
 
-if (app.Environment.IsDevelopment())
-{
+/*if (app.Environment.IsDevelopment())
+{*/
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 app.UseCors("AllowAnyOrigin");
 
 

@@ -18,7 +18,12 @@ builder.Services.AddScoped<AuthTokenService>();
 
 builder.Services.AddHttpClient("AuthorizedClient", client =>
 {
+#if DEBUG
     client.BaseAddress = new Uri("https://localhost:7052/");
+#else
+client.BaseAddress = new Uri("https://reciperevolution.azurewebsites.net/");
+#endif
+    //client.BaseAddress = new Uri("https://localhost:7052/");
 }).AddHttpMessageHandler<AuthTokenHandler>();
 
 builder.Services.AddScoped<IUserService, UserService>(sp =>
