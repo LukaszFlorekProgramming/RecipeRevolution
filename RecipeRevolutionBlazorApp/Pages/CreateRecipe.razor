@@ -43,16 +43,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="DifficultyLevel">Difficulty Level:</label>
-                    <InputSelect id="DifficultyLevel" @bind-Value="recipeDto.DifficultyLevel" class="form-control">
-                        <option value="">Select Difficulty Level</option>
-                        <option value="1">Łatwy</option>
-                        <option value="2">Średni</option>
-                        <option value="3">Trudny</option>
-                    </InputSelect>
+                    <label for="Name">Difficulty Level:</label>
+                    <InputText id="DifficultyLevel" @bind-Value="@recipeDto.DifficultyLevel" class="form-control" />
                     <ValidationMessage For="@(() => recipeDto.DifficultyLevel)" />
                 </div>
-
 
                 <div class="form-group">
                     <label for="Name">Portions:</label>

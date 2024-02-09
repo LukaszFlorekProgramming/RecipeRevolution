@@ -1,0 +1,55 @@
+﻿@page "/image"
+@inject IImageService ImageService
+@using RecipeRevolutionBlazor.Models
+@using RecipeRevolutionBlazor.Services.Images
+@using SixLabors.ImageSharp;
+@using SixLabors.ImageSharp.Processing;
+<h3>ImageTest</h3>
+
+<EditForm Model="@imageModel" OnValidSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="fileInput">Wybierz zdjęcie:</label>
+    <InputFile id="fileInput" OnChange="@HandleFileChange" />
+
+    <button type="submit">Prześlij zdjęcie</button>
+</EditForm>
+
+@code {
+    private ImageDto imageModel = new ImageDto();
+
+    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    {
+        var imageFile = e.File;
+
+        using (var stream = imageFile.OpenReadStream())
+        {
+            using (var image = await Image.LoadAsync(stream))
+            {
+                // Resize to a 4:3 aspect ratio
+                image.Mutate(x => x.Resize(new ResizeOptions
+                    {
+                        Mode = ResizeMode.Pad,
+                        Size = new Size(4, 3)
+                    }));
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await image.SaveAsJpegAsync(memoryStream);
+                    imageModel.Data = memoryStream.ToArray();
+                }
+            }
+        }
+
+        imageModel.FileName = imageFile.Name;
+        imageModel.ContentType = imageFile.ContentType;
+        imageModel.RecipeId = 5;
+    }
+
+    private async void HandleSubmit()
+    {
+        await ImageService.Create(imageModel);
+        
+    }
+}

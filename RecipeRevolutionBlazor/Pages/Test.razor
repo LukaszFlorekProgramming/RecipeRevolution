@@ -1,0 +1,37 @@
+﻿@page "/test"
+@using RecipeRevolutionBlazor.Services.Users
+
+@if (AuthTokenService.Token != null)
+{
+    <div>
+        <p>Użytkownik jest zalogowany.</p>
+    </div>
+}
+else
+{
+    <div>
+        <p>Użytkownik nie jest zalogowany.</p>
+    </div>
+}
+
+<p>Current Token: @AuthTokenService.Token</p>
+@code {
+    [Inject] private AuthTokenService AuthTokenService { get; set; }
+    private string zmiennastring;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        zmiennastring = "Brak dostępu do usługi tokena.";
+    }
+
+    private void Login()
+    {
+        if (AuthTokenService != null)
+        {
+            // Jeżeli chcesz, aby kliknięcie przycisku również aktualizowało token
+            zmiennastring = AuthTokenService.Token?.ToString();
+        }
+        
+    }
+}

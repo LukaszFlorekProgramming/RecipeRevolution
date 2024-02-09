@@ -33,9 +33,7 @@
                     <td>@item.Description</td>
                     <td>@item.Instructions</td>
                     <td>@item.PreparationTime</td>
-                    <td>
-                        @item.DifficultyLevel
-                    </td>
+                    <td>@item.DifficultyLevel</td>
                     <td>@item.Portions</td>
                     <td>
                         <button class="btn btn-secondary btn-sm" @onclick="() => NavigateToEditRecipe(item.RecipeId)" @onclick:stopPropagation="true">Modify</button>

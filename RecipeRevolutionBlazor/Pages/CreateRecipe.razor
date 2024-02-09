@@ -1,0 +1,120 @@
+﻿@page "/createRecipe"
+@using RecipeRevolutionBlazor.Models
+@using RecipeRevolutionBlazor.Services.Images
+@using RecipeRevolutionBlazor.Services.Recipes
+@inject IRecipeService RecipeService
+@inject IImageService ImageService
+@inject NavigationManager NavigationManager
+
+<h3>Create Recipe</h3>
+
+<EditForm Model="@recipeDto" OnValidSubmit="CreateRecipeMetod">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="Name">Name:</label>
+        <InputText id="Name" @bind-Value="@recipeDto.Name" class="form-control" />
+        <ValidationMessage For="@(() => recipeDto.Name)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description:</label>
+        <InputText id="Description" @bind-Value="@recipeDto.Description" class="form-control" />
+        <ValidationMessage For="@(() => recipeDto.Description)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Instructions:</label>
+        <InputText id="Instructions" @bind-Value="@recipeDto.Instructions" class="form-control" />
+        <ValidationMessage For="@(() => recipeDto.Instructions)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Name">PreparationTime:</label>
+        <InputNumber id="PreparationTime" @bind-Value="@recipeDto.PreparationTime" class="form-control" />
+        <ValidationMessage For="@(() => recipeDto.PreparationTime)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Name">DifficultyLevel:</label>
+        <InputText id="DifficultyLevel" @bind-Value="@recipeDto.DifficultyLevel" class="form-control" />
+        <ValidationMessage For="@(() => recipeDto.DifficultyLevel)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Portions:</label>
+        <InputNumber id="Portions" @bind-Value="@recipeDto.Portions" class="form-control" />
+        <ValidationMessage For="@(() => recipeDto.Portions)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Portions:</label>
+        <InputNumber id="Portions" @bind-Value="@recipeDto.Portions" class="form-control" />
+        <ValidationMessage For="@(() => recipeDto.Portions)" />
+    </div>
+    @if (categories != null)
+    {
+        <div>
+            <label for="numericDropdown">Select a category:</label>
+            <InputSelect id="categoryDropdown" @bind-Value="recipeDto.CategoryId">
+                @foreach (var category in categories)
+                {
+                    <option value="@category.CategoryId">@category.Name</option>
+                }
+            </InputSelect>
+        </div>
+    }
+
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <label for="fileInput">Wybierz zdjęcie:</label>
+        <InputFile id="fileInput" OnChange="@HandleFileChange" />
+
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a href="/Myrecipes" class="btn btn-secondary">Anuluj</a>
+</EditForm>
+
+@code {
+    private CreateRecipeDto recipeDto = new CreateRecipeDto();
+    private ImageDto imageModel = new ImageDto();
+    private IEnumerable<CategoryDto> categories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await RecipeService.GetAllCategory();
+    }
+
+    private async Task CreateRecipeMetod()
+    {
+        try
+        {
+            var idCreatedRecipe = await RecipeService.Create(recipeDto);
+            imageModel.RecipeId = idCreatedRecipe;
+            await ImageService.Create(imageModel);
+            NavigationManager.NavigateTo("/Myrecipes");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating recipe: {ex.Message}");
+        }
+    }
+
+    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    {
+        var imageFile = e.File;
+
+        using (var stream = imageFile.OpenReadStream())
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await stream.CopyToAsync(memoryStream);
+                imageModel.Data = memoryStream.ToArray();
+            }
+        }
+        imageModel.FileName = imageFile.Name;
+        imageModel.ContentType = imageFile.ContentType;
+        imageModel.RecipeId = 5;
+    }
+}

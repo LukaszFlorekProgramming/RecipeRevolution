@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public string Instructions { get; set; }
         public int PreparationTime { get; set; }
-        public DifficultyLevel DifficultyLevel { get; set; }
+        public string DifficultyLevel { get; set; }
         public short Portions { get; set; }
         public string CreatedById { get; set; }
         public string? MainImage { get; set; }

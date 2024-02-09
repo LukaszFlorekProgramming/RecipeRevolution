@@ -1,18 +1,10 @@
-﻿@page "/update-recipe/{id:int}"
-@using RecipeRevolutionBlazorApp.Models.Category
-@using RecipeRevolutionBlazorApp.Models.Recipe
-@using RecipeRevolutionBlazorApp.Services.Recipes
-@inject IRecipeService RecipeService
+﻿@page "/ModifyRecipe/{id:int}"
+@using RecipeRevolutionBlazor.Models
+@using RecipeRevolutionBlazor.Services.Recipes
 @inject NavigationManager NavigationManager
+@inject IRecipeService IRecipeService
 
-<h3>Modify Recipe</h3>
-
-@if (!string.IsNullOrWhiteSpace(updateMessage))
-{
-    <div class="alert alert-success" role="alert">
-        @updateMessage
-    </div>
-}
+<h3>Modyfikuj Przepis</h3>
 
 <EditForm Model="@recipeDto" OnValidSubmit="UpdateRecipe">
     <DataAnnotationsValidator />
@@ -58,46 +50,27 @@
         <InputNumber id="Portions" @bind-Value="@recipeDto.Portions" class="form-control" />
         <ValidationMessage For="@(() => recipeDto.Portions)" />
     </div>
-    @if (!string.IsNullOrEmpty(recipeDto.MainImage))
-    {
-        <div class="form-group">
-            <label for="ProfilePicture">Main Picture</label>
-            <img src="@recipeDto.MainImage" alt="Recipe Picture" class="img-thumbnail" />
-        </div>
-    }
 
-    <div class="form-group">
-        <label for="fileUpload">Update Main Picture</label>
-        <InputFile id="fileUpload" OnChange="UploadMainRecipePicture" class="form-control" />
+    <div>
+        <label for="numericDropdown">Select a number:</label>
+        <InputSelect id="numericDropdown" @bind-Value="recipeDto.CategoryId">
+            @for (int i = 1; i <= 3; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </InputSelect>
+        <p>Selected Number: @recipeDto.CategoryId</p>
     </div>
-
-    @if (categories != null)
-    {
-        <div class="form-group mt-3">
-            <label for="numericDropdown">Select a category:</label>
-            <InputSelect id="categoryDropdown" @bind-Value="recipeDto.CategoryId">
-                @foreach (var category in categories)
-                {
-                    <option value="@category.CategoryId">@category.Name</option>
-                }
-            </InputSelect>
-        </div>
-    }
-
-    <DataAnnotationsValidator />
-    <ValidationSummary />
 
 </EditForm>
 
-<button class="btn btn-primary mt-3" @onclick="UpdateRecipe">Zapisz</button>
-<a href="/Myrecipes" class="btn btn-secondary mt-3">Powrót</a>
+<button class="btn btn-primary" @onclick="UpdateRecipe">Zapisz</button>
+<a href="/Myrecipes" class="btn btn-secondary">Anuluj</a>
 
 @code {
     [Parameter]
     public int Id { get; set; }
     private UpdateRecipeDto recipeDto = new UpdateRecipeDto();
-    private string updateMessage;
-    private IEnumerable<CategoryDto> categories;
 
     protected override async Task OnInitializedAsync()
     {
@@ -106,7 +79,7 @@
 
     private async Task LoadRecipe()
     {
-        var response = await RecipeService.GetRecipe(Id);
+        var response = await IRecipeService.GetById(Id);
 
         if (response != null)
         {
@@ -118,38 +91,14 @@
                     PreparationTime = response.PreparationTime,
                     DifficultyLevel = response.DifficultyLevel,
                     Portions = response.Portions,
-                    CategoryId = response.CategoryId,
-                    MainImage = response.MainImage
+                    CategoryId = response.CategoryId
                 };
         }
     }
 
     private async Task UpdateRecipe()
     {
-        await RecipeService.UpdateRecipe(Id, recipeDto);
-        updateMessage = "Przepis został pomyślnie zaktualizowany.";
-        StateHasChanged();
-    }
-
-
-    private async Task UploadMainRecipePicture(InputFileChangeEventArgs e)
-    {
-        var file = e.File;
-        if (file != null)
-        {
-            using (var stream = file.OpenReadStream())
-            {
-                // Przy założeniu, że UserService ma metodę do przesyłania zdjęć
-                var success = await RecipeService.UploadMainRecipePictureAsync(stream, file.Name,Id);
-                if (success != null)
-                {
-                    
-                }
-                else
-                {
-                    // Obsłuż błąd, pokaż komunikat o błędzie użytkownikowi
-                }
-            }
-        }
+        var zmienna = Id;
+        await IRecipeService.Update(recipeDto,Id);
     }
 }

@@ -1,0 +1,54 @@
+﻿@page "/RecipeByCategory/{Name}"
+@using RecipeRevolutionBlazor.Models
+@using RecipeRevolutionBlazor.Services.Recipes
+@inject IRecipeService IRecipeService
+@inject NavigationManager NavigationManager
+<h3>RecipeByCategory</h3>
+
+
+@if (recipesPagedResult != null && recipesPagedResult.Any())
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var recipe in recipesPagedResult)
+            {
+                <div class="col-md-3 mb-4 card-no-border">
+                    <div class="card h-100" @onclick="() => RedirectToDetailsPage(recipe.RecipeId)">
+                        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(recipe.Data))" class="card-img-top" alt="@recipe.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@recipe.Name</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>Loading recipes...</p>
+}
+
+@code {
+    private IEnumerable<RecipeWithPhotoDto> recipesPagedResult;
+    [Parameter] public string Name { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadRecipes();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadRecipes();
+    }
+
+    private async Task LoadRecipes()
+    {
+        recipesPagedResult = await IRecipeService.GetRecipesByCategory(Name);
+    }
+
+    private void RedirectToDetailsPage(int id)
+    {
+        NavigationManager.NavigateTo($"/recipe/{id}");
+    }
+}
