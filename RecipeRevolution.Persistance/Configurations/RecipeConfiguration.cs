@@ -14,10 +14,10 @@ namespace RecipeRevolution.Persistance.Configurations
                 .HasMaxLength(60);
             builder.Property(x => x.Description)
                 .IsRequired()
-                .HasMaxLength(150);
+                .HasMaxLength(300);
             builder.Property(x => x.Instructions)
                 .IsRequired()
-                .HasMaxLength(450);
+                .HasMaxLength(1000);
             builder.Property(x => x.PreparationTime)
                 .IsRequired();
             builder.Property(x => x.DifficultyLevel)

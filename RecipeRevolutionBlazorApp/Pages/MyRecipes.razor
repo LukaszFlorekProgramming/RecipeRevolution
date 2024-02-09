@@ -5,9 +5,9 @@
 @inject NavigationManager NavigationManager
 
 
-<button class="btn btn-primary mb-4" @onclick="NavigateToAddRecipe">Dodaj Event</button>
+<button class="btn btn-primary mb-4" @onclick="NavigateToAddRecipe">Dodaj Przepis</button>
 
-<h3>My Recipes</h3>
+<h3>Moje Przepisy</h3>
 
 @if (RecipesResult != null && RecipesResult.Any())
 {
@@ -33,7 +33,23 @@
                     <td>@item.Description</td>
                     <td>@item.Instructions</td>
                     <td>@item.PreparationTime</td>
-                    <td>@item.DifficultyLevel</td>
+                    <td>
+                        @switch (item.DifficultyLevel)
+                        {
+                            case 1:
+                                @:Łatwy
+                                break;
+                            case 2:
+                                @:Średni
+                                break;
+                            case 3:
+                                @:Trudny
+                                break;
+                            default:
+                                @:Nieznany
+                                break;
+                        }
+                    </td>
                     <td>@item.Portions</td>
                     <td>
                         <button class="btn btn-secondary btn-sm" @onclick="() => NavigateToEditRecipe(item.RecipeId)" @onclick:stopPropagation="true">Modyfikuj</button>
