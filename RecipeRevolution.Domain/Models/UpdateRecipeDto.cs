@@ -1,4 +1,6 @@
-﻿namespace RecipeRevolution.Domain.Models
+﻿using RecipeRevolution.Domain.Entities;
+
+namespace RecipeRevolution.Domain.Models
 {
     public class UpdateRecipeDto
     {
@@ -6,7 +8,7 @@
         public string Description { get; set; }
         public string Instructions { get; set; }
         public int PreparationTime { get; set; }
-        public string DifficultyLevel { get; set; }
+        public DifficultyLevel DifficultyLevel { get; set; }
         public short Portions { get; set; }
         public string? MainImage { get; set; }
 

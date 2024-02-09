@@ -42,8 +42,12 @@
     </div>
 
     <div class="form-group">
-        <label for="Name">DifficultyLevel:</label>
-        <InputText id="DifficultyLevel" @bind-Value="@recipeDto.DifficultyLevel" class="form-control" />
+        <label for="DifficultyLevel">Difficulty Level:</label>
+        <InputSelect id="DifficultyLevel" @bind-Value="recipeDto.DifficultyLevel" class="form-control">
+            <option value="1">Łatwy</option>
+            <option value="2">Średni</option>
+            <option value="3">Trudny</option>
+        </InputSelect>
         <ValidationMessage For="@(() => recipeDto.DifficultyLevel)" />
     </div>
 
@@ -53,11 +57,6 @@
         <ValidationMessage For="@(() => recipeDto.Portions)" />
     </div>
 
-    <div class="form-group">
-        <label for="Name">Portions:</label>
-        <InputNumber id="Portions" @bind-Value="@recipeDto.Portions" class="form-control" />
-        <ValidationMessage For="@(() => recipeDto.Portions)" />
-    </div>
     @if (!string.IsNullOrEmpty(recipeDto.MainImage))
     {
         <div class="form-group">
