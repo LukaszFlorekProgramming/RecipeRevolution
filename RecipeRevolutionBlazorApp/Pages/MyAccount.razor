@@ -20,25 +20,25 @@
                     <ValidationSummary />
 
                     <div class="form-group">
-                        <label for="FirstName">FirstName</label>
+                        <label for="FirstName">Imię</label>
                         <InputText id="FirstName" @bind-Value="user.FirstName" class="form-control" />
                         <ValidationMessage For="@(() => user.FirstName)" />
                     </div>
 
                     <div class="form-group">
-                        <label for="LastName">LastName</label>
+                        <label for="LastName">Nazwisko</label>
                         <InputText id="LastName" @bind-Value="user.LastName" class="form-control" />
                         <ValidationMessage For="@(() => user.LastName)" />
                     </div>
 
                     <div class="form-group">
-                        <label for="Gender">Gender</label>
+                        <label for="Gender">Płeć</label>
                         <InputText id="Gender" @bind-Value="user.Gender" class="form-control" />
                         <ValidationMessage For="@(() => user.Gender)" />
                     </div>
 
                     <div class="form-group">
-                        <label for="DateOfBirth">DateOfBirth</label>
+                        <label for="DateOfBirth">Data urodzenia</label>
                         <InputDate id="DateOfBirth" @bind-Value="user.DateOfBirth" class="form-control" />
                         <ValidationMessage For="@(() => user.DateOfBirth)" />
                     </div>

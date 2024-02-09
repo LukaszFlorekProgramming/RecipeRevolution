@@ -15,7 +15,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h3>Login</h3>
+            <h3>Panel logowwania</h3>
 
             @if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -32,21 +32,21 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Password">Password</label>
+                    <label for="Password">Hasło</label>
                     <InputText id="Password" type="password" @bind-Value="loginDto.Password" class="form-control" />
                     <ValidationMessage For="@(() => loginDto.Password)" />
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <a href="reset-password">Forgot password?</a>
+                    <a href="reset-password">Zapomniałeś hasła?</a>
                 </div>
 
                 <div class="form-group d-flex justify-content-center mt-3">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary">Zaloguj</button>
                 </div>
                 <p class="small fw-bold mt-2 pt-1 mb-0">
-                    Don't have an account?
-                    <a href="register" class="link-danger">Register</a>
+                    Nie masz konta?
+                    <a href="register" class="link-danger">Zarejestruj</a>
                 </p>
             </EditForm>
 
@@ -87,11 +87,11 @@
                 var checkActivation = await UserService.CheckAccountActivation(loginDto.Email);
                 if (checkActivation == false)
                 {
-                    errorMessage = "Inactive account. Please try again.";
+                    errorMessage = "Konto nieaktywne. Proszę spróbuj ponownie.";
                 }
                 else
                 {
-                    errorMessage = "Incorrect email or password. Please try again.";
+                    errorMessage = "Nieprawidłowy email lub hasło. Proszę spróbuj ponownie.";
                 }
                 
             }

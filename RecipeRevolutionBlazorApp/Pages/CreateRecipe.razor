@@ -13,57 +13,62 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h3>Create Recipe</h3>
+            <h3>Stwórz przepis</h3>
 
             <EditForm Model="@recipeDto" OnValidSubmit="CreateRecipeMetod">
                 <DataAnnotationsValidator />
 
                 <div class="form-group">
-                    <label for="Name">Name:</label>
+                    <label for="Name">Tytuł:</label>
                     <InputText id="Name" @bind-Value="@recipeDto.Name" class="form-control" />
                     <ValidationMessage For="@(() => recipeDto.Name)" />
                 </div>
 
                 <div class="form-group">
-                    <label for="Description">Description:</label>
+                    <label for="Description">Opis:</label>
                     <InputText id="Description" @bind-Value="@recipeDto.Description" class="form-control" />
                     <ValidationMessage For="@(() => recipeDto.Description)" />
                 </div>
 
                 <div class="form-group">
-                    <label for="Name">Instructions:</label>
+                    <label for="Name">Instrukcje:</label>
                     <InputText id="Instructions" @bind-Value="@recipeDto.Instructions" class="form-control" />
                     <ValidationMessage For="@(() => recipeDto.Instructions)" />
                 </div>
 
                 <div class="form-group">
-                    <label for="Name">Preparation Time:</label>
+                    <label for="Name">Czas przygotowania w minutach:</label>
                     <InputNumber id="PreparationTime" @bind-Value="@recipeDto.PreparationTime" class="form-control" />
                     <ValidationMessage For="@(() => recipeDto.PreparationTime)" />
                 </div>
 
                 <div class="form-group">
-                    <label for="Name">Difficulty Level:</label>
-                    <InputText id="DifficultyLevel" @bind-Value="@recipeDto.DifficultyLevel" class="form-control" />
+                    <label for="DifficultyLevel">Poziom trudności:</label>
+                    <select id="DifficultyLevel" class="form-control" @bind="@recipeDto.DifficultyLevel">
+                        <option value="0">Wybierz poziom trudności</option>
+                        <option value="1">Łatwy</option>
+                        <option value="2">Średni</option>
+                        <option value="3">Trudny</option>
+                    </select>
                     <ValidationMessage For="@(() => recipeDto.DifficultyLevel)" />
                 </div>
 
                 <div class="form-group">
-                    <label for="Name">Portions:</label>
+                    <label for="Name">Liczba porcji:</label>
                     <InputNumber id="Portions" @bind-Value="@recipeDto.Portions" class="form-control" />
                     <ValidationMessage For="@(() => recipeDto.Portions)" />
                 </div>
 
 
                 <div class="form-group">
-                    <label for="image">Image:</label>
+                    <label for="image">Główne zdjęcie przepisu:</label>
                     <InputFile OnChange="@OnInputFileChange" class="form-control" />
                 </div>
 
                 @if (categories != null)
                 {
                     <div class="form-group mt-3">
-                        <label for="numericDropdown">Select a category:</label>
+                        <label for="numericDropdown">Wybierz kategorie:</label>
                         <InputSelect id="categoryDropdown" @bind-Value="recipeDto.CategoryId">
                             @foreach (var category in categories)
                             {
@@ -76,7 +81,7 @@
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
-                <button type="submit" class="btn btn-primary mt-3">Create</button>
+                <button type="submit" class="btn btn-primary mt-3">Dodaj przepis</button>
                 <a href="/Myrecipes" class="btn btn-secondary  mt-3">Anuluj</a>
             </EditForm>
 

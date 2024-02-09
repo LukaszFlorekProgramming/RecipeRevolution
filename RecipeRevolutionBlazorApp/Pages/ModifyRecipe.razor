@@ -5,7 +5,7 @@
 @inject IRecipeService RecipeService
 @inject NavigationManager NavigationManager
 
-<h3>Modify Recipe</h3>
+<h3>Zmodyfikuj przepis</h3>
 
 @if (!string.IsNullOrWhiteSpace(updateMessage))
 {
@@ -18,63 +18,62 @@
     <DataAnnotationsValidator />
 
     <div class="form-group">
-        <label for="Name">Name:</label>
+        <label for="Name">Tytuł:</label>
         <InputText id="Name" @bind-Value="@recipeDto.Name" class="form-control" />
         <ValidationMessage For="@(() => recipeDto.Name)" />
     </div>
 
     <div class="form-group">
-        <label for="Description">Description:</label>
+        <label for="Description">Opis:</label>
         <InputText id="Description" @bind-Value="@recipeDto.Description" class="form-control" />
         <ValidationMessage For="@(() => recipeDto.Description)" />
     </div>
 
     <div class="form-group">
-        <label for="Name">Instructions:</label>
+        <label for="Name">Instrukcje:</label>
         <InputText id="Instructions" @bind-Value="@recipeDto.Instructions" class="form-control" />
         <ValidationMessage For="@(() => recipeDto.Instructions)" />
     </div>
 
     <div class="form-group">
-        <label for="Name">PreparationTime:</label>
+        <label for="Name">Czas przygotowania w minutach:</label>
         <InputNumber id="PreparationTime" @bind-Value="@recipeDto.PreparationTime" class="form-control" />
         <ValidationMessage For="@(() => recipeDto.PreparationTime)" />
     </div>
 
     <div class="form-group">
-        <label for="Name">DifficultyLevel:</label>
-        <InputText id="DifficultyLevel" @bind-Value="@recipeDto.DifficultyLevel" class="form-control" />
+        <label for="DifficultyLevel">Poziom trudności:</label>
+        <select id="DifficultyLevel" class="form-control" @bind="@recipeDto.DifficultyLevel">
+            <option value="1">Łatwy</option>
+            <option value="2">Średni</option>
+            <option value="3">Trudny</option>
+        </select>
         <ValidationMessage For="@(() => recipeDto.DifficultyLevel)" />
     </div>
 
     <div class="form-group">
-        <label for="Name">Portions:</label>
+        <label for="Name">Liczba porcji:</label>
         <InputNumber id="Portions" @bind-Value="@recipeDto.Portions" class="form-control" />
         <ValidationMessage For="@(() => recipeDto.Portions)" />
     </div>
 
-    <div class="form-group">
-        <label for="Name">Portions:</label>
-        <InputNumber id="Portions" @bind-Value="@recipeDto.Portions" class="form-control" />
-        <ValidationMessage For="@(() => recipeDto.Portions)" />
-    </div>
     @if (!string.IsNullOrEmpty(recipeDto.MainImage))
     {
         <div class="form-group">
-            <label for="ProfilePicture">Main Picture</label>
+            <label for="ProfilePicture">Główne zdjęcie przepisu:</label>
             <img src="@recipeDto.MainImage" alt="Recipe Picture" class="img-thumbnail" />
         </div>
     }
 
     <div class="form-group">
-        <label for="fileUpload">Update Main Picture</label>
+        <label for="fileUpload">Zaktualizuj zdjęcie główne</label>
         <InputFile id="fileUpload" OnChange="UploadMainRecipePicture" class="form-control" />
     </div>
 
     @if (categories != null)
     {
         <div class="form-group mt-3">
-            <label for="numericDropdown">Select a category:</label>
+            <label for="numericDropdown">Wybierz kategorie:</label>
             <InputSelect id="categoryDropdown" @bind-Value="recipeDto.CategoryId">
                 @foreach (var category in categories)
                 {
@@ -89,7 +88,7 @@
 
 </EditForm>
 
-<button class="btn btn-primary mt-3" @onclick="UpdateRecipe">Zapisz</button>
+<button class="btn btn-primary mt-3" @onclick="UpdateRecipe">Zapisz zmiany</button>
 <a href="/Myrecipes" class="btn btn-secondary mt-3">Powrót</a>
 
 @code {

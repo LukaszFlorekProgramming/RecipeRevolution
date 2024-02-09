@@ -14,14 +14,14 @@
     <table class="table table-striped table-bordered bg-light">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Instructions</th>
-                <th>PreparationTime</th>
-                <th>DifficultyLevel</th>
-                <th>Portions</th>
-                <th>Modify</th>
-                <th>Delete</th>
+                <th>Tytuł</th>
+                <th>Opis</th>
+                <th>Instrukcje</th>
+                <th>Czas przygotowania w minutach:</th>
+                <th>Poziom trudności:</th>
+                <th>Liczba porcji:</th>
+                <th>Modyfikuj</th>
+                <th>Usuń</th>
             </tr>
         </thead>
         <tbody>
@@ -36,11 +36,11 @@
                     <td>@item.DifficultyLevel</td>
                     <td>@item.Portions</td>
                     <td>
-                        <button class="btn btn-secondary btn-sm" @onclick="() => NavigateToEditRecipe(item.RecipeId)" @onclick:stopPropagation="true">Modify</button>
+                        <button class="btn btn-secondary btn-sm" @onclick="() => NavigateToEditRecipe(item.RecipeId)" @onclick:stopPropagation="true">Modyfikuj</button>
 
                     </td>
                     <td>
-                        <button class="btn btn-danger" @onclick="() => DeleteRecipe(item.RecipeId)" @onclick:stopPropagation="true">Delete</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteRecipe(item.RecipeId)" @onclick:stopPropagation="true">Usuń</button>
                     </td>
                 </tr>
             }
@@ -50,7 +50,7 @@
 }
 else
 {
-    <p>Loading Events</p>
+    <p>Ładowanie przepisów</p>
 }
 
 @code {

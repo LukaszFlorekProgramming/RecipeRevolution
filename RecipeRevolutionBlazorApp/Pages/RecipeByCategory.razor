@@ -4,7 +4,7 @@
 
 @inject IRecipeService IRecipeService
 @inject NavigationManager NavigationManager
-<h3>RecipeByCategory</h3>
+<h3>@Name</h3>
 
 
 @if (recipesPagedResult != null && recipesPagedResult.Any())
@@ -27,7 +27,7 @@
 }
 else
 {
-    <p>Loading recipes...</p>
+    <p>Ładowanie przepisów...</p>
 }
 
 @code {

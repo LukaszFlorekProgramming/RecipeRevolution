@@ -6,7 +6,7 @@
 @inject IRecipeService IRecipeService;
 @inject NavigationManager NavigationManager
 
-<h3>RecipesHome</h3>
+<h3>Przepisy</h3>
 
 @if (recipesPagedResult != null && recipesPagedResult.Items.Any())
 {
@@ -30,7 +30,7 @@
     <nav class="d-flex justify-content-center">
         <ul class="pagination">
             <li class="page-item @(PageNumber == 1 ? "disabled" : "")">
-                <span class="page-link" @onclick="PreviousPage" style="cursor:pointer;">Previous</span>
+                <span class="page-link" @onclick="PreviousPage" style="cursor:pointer;">Poprzednia</span>
             </li>
             @for (int i = Math.Max(1, PageNumber - 2); i <= Math.Min(PageNumber + 2, TotalPages); i++)
             {
@@ -39,14 +39,14 @@
                 </li>
             }
             <li class="page-item @(PageNumber == TotalPages ? "disabled" : "")">
-                <span class="page-link" @onclick="NextPage" style="cursor:pointer;">Next</span>
+                <span class="page-link" @onclick="NextPage" style="cursor:pointer;">Następna</span>
             </li>
         </ul>
     </nav>
 }
 else
 {
-    <p>Loading recipes...</p>
+    <p>Ładowanie przepisu...</p>
 }
 
 @code {
