@@ -75,8 +75,7 @@
                 if (!string.IsNullOrEmpty(accessToken))
                 {
                     await AuthTokenService.SetRefreshToken(responseObject.RefreshToken);
-                    await AuthTokenService.SetToken(accessToken);
-                    await AuthTokenService.SetExpiresIn(responseObject.ExpiresIn);
+                    await AuthTokenService.SetTokenWithExpiry(accessToken, responseObject.ExpiresIn);
                     await localStorage.SetItemAsync("userEmail", loginDto.Email);
 
                     Navigation.NavigateTo("/MyRecipes", forceLoad: true);

@@ -22,6 +22,19 @@ namespace RecipeRevolutionBlazorApp.Services.Token
         {
             await _localStorage.SetItemAsync("authToken", token);
         }
+        public async Task SetTokenWithExpiry(string token, int expiresIn)
+        {
+            await SetToken(token);
+            await SetExpiresIn(expiresIn);
+
+            var issuedAt = DateTime.UtcNow;
+            await SetIssuedAt(issuedAt);
+        }
+        public async Task SetIssuedAt(DateTime issuedAt)
+        {
+            await _localStorage.SetItemAsync("issuedAt", issuedAt.ToString("o"));
+        }
+
 
         public async Task<string> GetToken()
         {
@@ -40,15 +53,10 @@ namespace RecipeRevolutionBlazorApp.Services.Token
         {
             await _localStorage.RemoveItemAsync("refreshToken");
         }
-        public async Task<int> GetExpiresIn()
-        {
-            return await _localStorage.GetItemAsync<int>("expiresIn");
-        }
         public async Task ClearExpiresIn()
         {
             await _localStorage.RemoveItemAsync("expiresIn");
         }
-
 
         public async Task<bool> IsTokenValid()
         {
@@ -58,21 +66,11 @@ namespace RecipeRevolutionBlazorApp.Services.Token
                 return false;
             }
 
-            return true;
-        }
+            var issuedAt = await _localStorage.GetItemAsync<DateTime>("issuedAt");
+            var expiresIn = await _localStorage.GetItemAsync<int>("expiresIn");
+            var expiresAt = issuedAt.AddSeconds(expiresIn);
 
-        public async Task SetIssuedAt(DateTime issuedAt)
-        {
-            await _localStorage.SetItemAsync("issuedAt", issuedAt);
+            return DateTime.UtcNow < expiresAt;
         }
-
-        public async Task ClearAllTokens()
-        {
-            await ClearToken();
-            await ClearRefreshToken();
-            await ClearExpiresIn();
-            await _localStorage.RemoveItemAsync("issuedAt");
-        }
-
     }
 }
