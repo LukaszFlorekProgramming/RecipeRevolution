@@ -114,18 +114,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _userToken = await TokenService.GetToken();
+        //_userToken = await TokenService.GetToken();
         isUserLoggedIn = await TokenService.IsTokenValid();
 
-    if (!isUserLoggedIn)
-    {
-        NavigationManager.NavigateTo("/login");
-    }
-    else
-    {
-        userProfile = await UserService.GetUserProfile();
-        categories = await IRecipeService.GetAllCategory();
-    }
+        if (!isUserLoggedIn)
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            userProfile = await UserService.GetUserProfile();
+            categories = await IRecipeService.GetAllCategory();
+        }
     }
 
     private async Task CheckLoginStatus()
@@ -171,7 +171,7 @@
         if (dropdownMenuClass.Contains("show"))
         {
             dropdownMenuClass = "dropdown-menu";
-            StateHasChanged(); // Notify Blazor the state has changed to re-render
+            StateHasChanged(); 
         }
 
         return Task.CompletedTask;
@@ -179,7 +179,6 @@
 
     public async ValueTask DisposeAsync()
     {
-        // Clean up the event listener when the component is disposed
         await JSRuntime.InvokeVoidAsync("window.removeEventListener", "click", DotNetObjectReference.Create(this), "CloseDropdown");
     }
     private string mealsDropdownClass = "dropdown-menu";

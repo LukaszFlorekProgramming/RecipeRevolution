@@ -1,5 +1,6 @@
 ﻿using RecipeRevolutionBlazorApp.Models.User;
 using RecipeRevolutionBlazorApp.Services.Token;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
@@ -145,8 +146,52 @@ namespace RecipeRevolutionBlazorApp.Services.Users
                 var userProfile = await response.Content.ReadFromJsonAsync<UserProfile>();
                 return userProfile;
             }
+            else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                var isRefreshed = await RefreshToken();
+                if (isRefreshed)
+                {
+                    token = await _authTokenService.GetToken();
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    response = await _httpClient.GetAsync("api/user/profile");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var userProfile = await response.Content.ReadFromJsonAsync<UserProfile>();
+                        return userProfile;
+                    }
+                }
+            }
+
 
             return null;
+        }
+
+        private async Task<bool> RefreshToken()
+        {
+            var refreshToken = await _authTokenService.GetRefreshToken();
+            var refreshResponse = await _httpClient.PostAsJsonAsync("refresh", new { refreshToken = refreshToken });
+
+            if (refreshResponse.IsSuccessStatusCode)
+            {
+                var newTokens = await refreshResponse.Content.ReadFromJsonAsync<TokenResponse>();
+                await _authTokenService.SetToken(newTokens.AccessToken);
+                await _authTokenService.SetRefreshToken(newTokens.RefreshToken);
+                await _authTokenService.SetExpiresIn(newTokens.ExpiresIn);
+                var currentTime = DateTime.UtcNow;
+                await _authTokenService.SetIssuedAt(currentTime);
+                return true;
+            }
+
+            return false;
+        }
+
+        public class TokenResponse
+        {
+            public string TokenType { get; set; }
+            public string AccessToken { get; set; }
+            public int ExpiresIn { get; set; }
+            public string RefreshToken { get; set; }
         }
     }
 }

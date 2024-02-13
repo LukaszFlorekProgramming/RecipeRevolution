@@ -33,7 +33,11 @@
 
                     <div class="form-group">
                         <label for="Gender">Płeć</label>
-                        <InputText id="Gender" @bind-Value="user.Gender" class="form-control" />
+                        <InputSelect id="Gender" @bind-Value="user.Gender" class="form-control">
+                            <option value="">Wybierz płeć...</option>
+                            <option value="Mężczyzna">Mężczyzna</option>
+                            <option value="Kobieta">Kobieta</option>
+                        </InputSelect>
                         <ValidationMessage For="@(() => user.Gender)" />
                     </div>
 
@@ -60,7 +64,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        user = await UserService.GetUserAsync();
+        user = await UserService.GetUserAsync() ?? new UpdateUserDto();
+
+        if (user.DateOfBirth == default(DateTime))
+        {
+            user.DateOfBirth = new DateTime(1990, 1, 1);
+        }
     }
 
     private async Task UpdateUser()
@@ -75,4 +84,5 @@
             // Obsłuż błąd, pokaż komunikat o błędzie użytkownikowi
         }
     }
+
 }
