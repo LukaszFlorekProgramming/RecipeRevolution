@@ -19,5 +19,6 @@
         public ICollection<Ingredient> Ingredients { get; set; }
         public ICollection<Image> Images { get; set; }
         public NutritionalValues NutritionalValues { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }
