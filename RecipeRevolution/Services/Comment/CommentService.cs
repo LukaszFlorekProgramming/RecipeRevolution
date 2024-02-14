@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Persistance;
@@ -69,12 +70,20 @@ namespace RecipeRevolution.Services.Comment
             return result;
         }
 
-        public IEnumerable<CommentDto> GetRecipeComments([FromQuery]int id)
+        public IEnumerable<DisplayCommentDto> GetRecipeComments([FromQuery]int id)
         {
             var comments = _dbcontext
                .Comments.Where(x => x.RecipeId == id)
+               .Include(c => c.CreatedBy)
+               .Select(c => new DisplayCommentDto
+               {
+                   Text = c.Text,
+                   CreatedAt = c.CreatedAt,
+                   FirstName = c.CreatedBy.FirstName,
+                   LastName = c.CreatedBy.LastName
+               })
                .ToList();
-            var commentsDtos = _mapper.Map<List<CommentDto>>(comments);
+            var commentsDtos = _mapper.Map<List<DisplayCommentDto>>(comments);
 
             return commentsDtos;
         }

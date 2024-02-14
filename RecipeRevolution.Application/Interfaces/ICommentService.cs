@@ -7,7 +7,7 @@ namespace RecipeRevolution.Application.Interfaces
         CommentDto GetById(int id);
         IEnumerable<CommentDto> GetAll();
         IEnumerable<CommentDto> GetUserComments(string id);
-        IEnumerable<CommentDto> GetRecipeComments(int id);
+        IEnumerable<DisplayCommentDto> GetRecipeComments(int id);
         int Create(CreateCommentDto commentDto);
         bool Delete(int id);
         bool Update(UpdateCommentDto updateCommentDto, int id);

@@ -1,10 +1,13 @@
 ﻿@page "/recipe/{id:int}"
+@using RecipeRevolutionBlazorApp.Models.Comment
 @using RecipeRevolutionBlazorApp.Models.Image
 @using RecipeRevolutionBlazorApp.Models.Recipe
-@using RecipeRevolutionBlazorApp.Services.Images
+@using RecipeRevolutionBlazorApp.Services.Comments
 @using RecipeRevolutionBlazorApp.Services.Recipes
 @inject IRecipeService IRecipeService
-@inject IImageService ImageService
+@inject ICommentService CommentService
+
+
 @inject NavigationManager NavigationManager
 
 
@@ -50,7 +53,32 @@
                         <i class="bi bi-download icon-small"></i> Pobierz
                     </button>
                 </div>
+                
+
             </div>
+            @if (comments != null && comments.Any())
+            {
+                <div class="comments-section">
+                    <h3>Komentarze</h3>
+                    @foreach (var comment in comments)
+                    {
+                        <div class="comment">
+                            <div class="comment-header">
+                                <strong>@comment.FirstName @comment.LastName</strong>
+                            </div>
+                            <div class="comment-body">
+                                @comment.Text
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <h3>Komentarze</h3>
+                <p>Brak komentarzy do tego przepisu.</p>
+            }
+
         </div>
     </div>
 
@@ -64,11 +92,15 @@ else
 @code {
     [Parameter] public int Id { get; set; }
     private RecipeDto recipe;
+    private List<DisplayCommentDto> comments = new List<DisplayCommentDto>();
+
     protected override async Task OnInitializedAsync()
     {
         recipe = await IRecipeService.GetRecipe(Id);
+        comments = await CommentService.GetRecipeComments(Id);
+
     }
-    private void GoBack()
+    private  void GoBack()
     {
         NavigationManager.NavigateTo("/HomeRecipes");
     }
@@ -114,4 +146,28 @@ else
     .icon-small {
         font-size: 0.75rem;
     }
+
+    .comments-section {
+        margin-top: 20px;
+    }
+
+    .comment {
+        background-color: #f9f9f9;
+        border: 1px solid #e1e1e1;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        padding: 10px;
+    }
+
+    .comment-header {
+        border-bottom: 1px solid #e1e1e1;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .comment-body {
+        color: #666;
+    }
+
 </style>

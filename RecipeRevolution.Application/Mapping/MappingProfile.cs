@@ -20,6 +20,7 @@ namespace RecipeRevolution.Application.Mapping
             CreateMap<Recipe,NameAndIMGRecipeDto>();
             CreateMap<Comment,CommentDto>();
             CreateMap<CreateCommentDto, Comment>();
+            CreateMap<DisplayCommentDto, Comment>();
 
         }
     }

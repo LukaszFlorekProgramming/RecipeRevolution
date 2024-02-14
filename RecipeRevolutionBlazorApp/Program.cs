@@ -2,6 +2,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RecipeRevolutionBlazorApp;
+using RecipeRevolutionBlazorApp.Services.Comments;
 using RecipeRevolutionBlazorApp.Services.Images;
 using RecipeRevolutionBlazorApp.Services.Recipes;
 using RecipeRevolutionBlazorApp.Services.Token;
@@ -39,6 +40,13 @@ builder.Services.AddScoped<IRecipeService, RecipeService>(sp =>
     var httpClient = httpClientFactory.CreateClient("AuthorizedClient");
     var authTokenService = sp.GetRequiredService<AuthTokenService>();
     return new RecipeService(httpClient, authTokenService);
+});
+builder.Services.AddScoped<ICommentService, CommentService>(sp =>
+{
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var httpClient = httpClientFactory.CreateClient("AuthorizedClient");
+    var authTokenService = sp.GetRequiredService<AuthTokenService>();
+    return new CommentService(httpClient, authTokenService);
 });
 builder.Services.AddScoped<IImageService, ImageService>(sp =>
 {
