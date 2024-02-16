@@ -1,0 +1,64 @@
+﻿@page "/edit-comment/{CommentId:int}"
+@using RecipeRevolutionBlazorApp.Models.Comment
+@using RecipeRevolutionBlazorApp.Services.Comments
+@inject ICommentService CommentService
+@inject NavigationManager NavigationManager
+
+<h3>Edytuj komentarz</h3>
+
+@if (updateCommentDto == null)
+{
+    <p><em>Ładowanie danych komentarza...</em></p>
+}
+else
+{
+    <EditForm Model="updateCommentDto" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="text">Treść komentarza:</label>
+            <InputTextArea id="text" class="form-control" @bind-Value="updateCommentDto.Text" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+        <button class="btn btn-secondary" @onclick="GoBack">Anuluj</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter] public int CommentId { get; set; }
+    private UpdateCommentDto updateCommentDto;
+    private CommentDto CommentDto;
+
+    protected override async Task OnInitializedAsync()
+    {
+        CommentDto = await CommentService.GetComment(CommentId);
+        if (CommentDto != null)
+        {
+            updateCommentDto = new UpdateCommentDto
+                {
+                    Text = CommentDto.Text
+                };
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        var success = await CommentService.UpdateComment(updateCommentDto, CommentId);
+        if (success)
+        {
+            NavigationManager.NavigateTo("/manage-comments");
+        }
+        else
+        {
+            // Obsługa błędów
+        }
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/manage-comments");
+    }
+}
+

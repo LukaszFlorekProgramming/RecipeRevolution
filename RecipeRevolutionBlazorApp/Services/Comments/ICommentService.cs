@@ -5,7 +5,7 @@ namespace RecipeRevolutionBlazorApp.Services.Comments
     public interface ICommentService
     {
         Task<List<CommentDto>> GetComments();
-        Task<List<CommentDto>> GetUserComments();
+        Task<List<CommentUserDto>> GetUserComments();
         Task<List<DisplayCommentDto>> GetRecipeComments(int id);
         Task<CommentDto> GetComment(int commentId);
         Task<CommentDto> CreateComment(CommentDto commentDto);

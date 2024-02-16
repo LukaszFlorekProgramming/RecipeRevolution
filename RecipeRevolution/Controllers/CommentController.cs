@@ -47,6 +47,7 @@ namespace RecipeRevolution.Controllers
         }
 
         [HttpGet("recipe")]
+        [AllowAnonymous]
         public ActionResult<IEnumerable<CommentDto>> GetRecipeComments(int id)
         {
             var comments = _commentService.GetRecipeComments(id);
@@ -54,10 +55,10 @@ namespace RecipeRevolution.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateComment([FromBody] CreateCommentDto commentDto)//[FromRoute] int recipeId)
+        public ActionResult CreateComment([FromBody] CreateCommentDto commentDto)
         {
             commentDto.CreatedById = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            //commentDto.RecipeId = recipeId;
+            commentDto.CreatedAt = DateTime.UtcNow;
             var id = _commentService.Create(commentDto);
             commentDto.CommentId = id;
             return Created($"/api/comment/{id}", commentDto);
@@ -76,6 +77,7 @@ namespace RecipeRevolution.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateComment([FromBody] UpdateCommentDto updateCommentDto, [FromRoute] int id)
         {
+            updateCommentDto.CreatedAt = DateTime.UtcNow;
             var isUpdated = _commentService.Update(updateCommentDto, id);
             if (!isUpdated)
             {

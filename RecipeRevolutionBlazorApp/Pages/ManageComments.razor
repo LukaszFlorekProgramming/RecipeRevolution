@@ -1,0 +1,84 @@
+﻿@page "/manage-comments"
+@using RecipeRevolutionBlazorApp.Models.Comment
+@using RecipeRevolutionBlazorApp.Services.Comments
+@inject ICommentService CommentService
+@inject NavigationManager NavigationManager
+
+
+<h3 style="text-align: center;">Moje Komentarze</h3>
+@if (userComments == null)
+{
+    <p><em>Ładowanie komentarzy...</em></p>
+}
+else
+{
+    if (userComments.Any())
+    {
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>Id komentarza</th>
+                    <th>Id przepisu</th>
+                    <th>Nazwa przpisu</th>
+                    <th>Opis</th>
+                    <th>Data utworzenia</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var comment in userComments)
+                {
+                    <tr>
+                        <td>@comment.CommentId</td>
+                        <td>@comment.RecipeId</td>
+                        <td>@comment.RecipeName</td>
+                        <td>@comment.Text</td>
+                        <td>@comment.CreatedAt</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" @onclick="() => EditComment(comment.CommentId)">Edytuj</button>
+                            <button class="btn btn-danger btn-sm" @onclick="() => ConfirmDelete(comment.CommentId)">Usuń</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Nie masz jeszcze żadnych komentarzy.</p>
+    }
+}
+
+
+@code {
+    private List<CommentUserDto> userComments;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userComments = await CommentService.GetUserComments();
+    }
+
+    private void EditComment(int commentId)
+    {
+        NavigationManager.NavigateTo($"/edit-comment/{commentId}");
+    }
+
+    private async Task ConfirmDelete(int commentId)
+    {
+        var confirmed = true;
+
+        if (confirmed)
+        {
+            var success = await CommentService.DeleteComment(commentId);
+            if (success)
+            {
+                userComments = userComments.Where(c => c.CommentId != commentId).ToList();
+                StateHasChanged();
+            }
+            else
+            {
+            }
+        }
+    }
+}
+

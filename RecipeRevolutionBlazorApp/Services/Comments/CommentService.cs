@@ -49,15 +49,17 @@ namespace RecipeRevolutionBlazorApp.Services.Comments
             return await _httpClient.GetFromJsonAsync<List<DisplayCommentDto>>(apiUrl);
         }
 
-        public async Task<List<CommentDto>> GetUserComments()
+        public async Task<List<CommentUserDto>> GetUserComments()
         {
             var apiUrl = "api/comment/user";
-            return await _httpClient.GetFromJsonAsync<List<CommentDto>>(apiUrl);
+            return await _httpClient.GetFromJsonAsync<List<CommentUserDto>>(apiUrl);
         }
 
         public async Task<bool> UpdateComment(UpdateCommentDto updateCommentDto, int commentId)
         {
-            throw new NotImplementedException();
+            var apiUrl = $"api/comment/{commentId}";
+            var response = await _httpClient.PutAsJsonAsync(apiUrl, updateCommentDto);
+            return response.IsSuccessStatusCode;
         }
     }
 }

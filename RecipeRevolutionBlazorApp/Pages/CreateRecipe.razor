@@ -17,6 +17,7 @@
 
             <EditForm Model="@recipeDto" OnValidSubmit="CreateRecipeMetod">
                 <DataAnnotationsValidator />
+                <ValidationSummary />
 
                 <div class="form-group">
                     <label for="Name">Tytuł:</label>
@@ -77,9 +78,6 @@
                         </InputSelect>
                     </div>
                 }
-
-                <DataAnnotationsValidator />
-                <ValidationSummary />
 
                 <button type="submit" class="btn btn-primary mt-3">Dodaj przepis</button>
                 <a href="/Myrecipes" class="btn btn-secondary  mt-3">Anuluj</a>

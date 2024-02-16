@@ -24,12 +24,12 @@
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-                        <li class="nav-item"><a href="HomeRecipes" class="nav-link px-2 link-dark">Recipes</a></li>
+                        <li class="nav-item"><a href="HomeRecipes" class="nav-link px-2 link-dark">Przepisy</a></li>
                     </ul>
                 </div>
                 <div class="nav-item dropdown">
                     <a @onclick="ToggleMealsDropdown" class="nav-link dropdown-toggle px-2 link-dark" href="javascript:void(0)" role="button">
-                        Meals
+                        Kategorie
                     </a>
                     <ul class="@mealsDropdownClass" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" href="RecipeByCategory/Śniadania">Śniadania</a></li>
@@ -49,8 +49,8 @@
         </nav>
 
         <form class="d-flex" @onsubmit="HandleSearch">
-            <input class="form-control me-2" type="search" placeholder="Search recipe" aria-label="Search" @bind="@searchQuery">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <input class="form-control me-2" type="search" placeholder="Wyszukaj przepis" aria-label="Search" @bind="@searchQuery">
+            <button class="btn btn-outline-success" type="submit">Szukaj</button>
         </form>
 
         <div class="d-flex justify-content-end">
@@ -59,20 +59,21 @@
                 <div class="d-flex justify-content-end">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" @onclick="ToggleDropdown">
-                            Welcome, @userProfile.FirstName @userProfile.LastName
+                            Witaj, @userProfile.FirstName @userProfile.LastName
                         </button>
                         <div class="@dropdownMenuClass" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="Myrecipes">My Recipes</a>
-                            <a class="dropdown-item" href="my-account">My Account</a>
-                            <button class="dropdown-item" @onclick="Logout">Logout</button>
+                            <a class="dropdown-item" href="Myrecipes">Moje Przepisy</a>
+                            <a class="dropdown-item" href="manage-comments">Moje Komentarze</a>
+                            <a class="dropdown-item" href="my-account">Konto</a>
+                            <button class="dropdown-item" @onclick="Logout">Wyloguj</button>
                         </div>
                     </div>
                 </div>
             }
             else
             {
-                <button type="button" class="btn btn-outline-primary me-2" @onclick="() => RedirectToLoginPage()">Login</button>
-                <button type="button" class="btn btn-primary" @onclick="() => RedirectToRegisterPage()">Sign-up</button>
+                <button type="button" class="btn btn-outline-primary me-2" @onclick="() => RedirectToLoginPage()">Zaloguj</button>
+                <button type="button" class="btn btn-primary" @onclick="() => RedirectToRegisterPage()">Zarejestruj się</button>
             }
         </div>
 
@@ -86,7 +87,7 @@
     <footer class="py-3 my-4">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
             <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-            <li class="nav-item"><a href="HomeRecipes" class="nav-link px-2 text-muted">Recipes</a></li>
+            <li class="nav-item"><a href="HomeRecipes" class="nav-link px-2 text-muted">Przepisy</a></li>
         </ul>
         <p class="text-center text-muted">© 2024 Łukasz Florek. All rights reserved.</p>
     </footer>

@@ -75,6 +75,7 @@ namespace RecipeRevolution.Services.Comment
             var comments = _dbcontext
                .Comments.Where(x => x.RecipeId == id)
                .Include(c => c.CreatedBy)
+               .OrderByDescending(c => c.CreatedAt)
                .Select(c => new DisplayCommentDto
                {
                    Text = c.Text,
@@ -88,12 +89,13 @@ namespace RecipeRevolution.Services.Comment
             return commentsDtos;
         }
 
-        public IEnumerable<CommentDto> GetUserComments(string id)
+        public IEnumerable<CommentUserDto> GetUserComments(string id)
         {
             var comments = _dbcontext
                 .Comments.Where(x => x.CreatedById == id)
+                .Include(x => x.Recipe)
                 .ToList();
-            var commentsDtos = _mapper.Map<List<CommentDto>>(comments);
+            var commentsDtos = _mapper.Map<List<CommentUserDto>>(comments);
 
             return commentsDtos;
         }

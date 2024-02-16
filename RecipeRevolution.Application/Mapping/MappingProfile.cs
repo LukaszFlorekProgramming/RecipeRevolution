@@ -15,12 +15,15 @@ namespace RecipeRevolution.Application.Mapping
             CreateMap<Category, CategoryDto>();
             CreateMap<Image, ImageDto>();
             CreateMap<ImageDto, Image>();
-            CreateMap<Recipe,RecipeWithPhotoDto>().ForMember(dto => dto.Data, conf => conf.MapFrom(r => r.Images.FirstOrDefault().Data)); ;
+            CreateMap<Recipe,RecipeWithPhotoDto>()
+                    .ForMember(dto => dto.Data, conf => conf.MapFrom(r => r.Images.FirstOrDefault().Data));
             CreateMap<User,UpdateUserDto>();
             CreateMap<Recipe,NameAndIMGRecipeDto>();
             CreateMap<Comment,CommentDto>();
             CreateMap<CreateCommentDto, Comment>();
             CreateMap<DisplayCommentDto, Comment>();
+            CreateMap<Comment, CommentUserDto>()
+                    .ForMember(dest => dest.RecipeName, opt => opt.MapFrom(src => src.Recipe.Name));
 
         }
     }
