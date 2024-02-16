@@ -1,5 +1,4 @@
 ﻿using RecipeRevolutionBlazorApp.Models.User;
-using System.Net.Http;
 
 namespace RecipeRevolutionBlazorApp.Services.Users
 {

@@ -69,6 +69,12 @@
         <label for="fileUpload">Zaktualizuj zdjęcie główne</label>
         <InputFile id="fileUpload" OnChange="UploadMainRecipePicture" class="form-control" />
     </div>
+    @if (!string.IsNullOrEmpty(uploadErrorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @uploadErrorMessage
+        </div>
+    }
 
     @if (categories != null)
     {
@@ -96,6 +102,7 @@
     public int Id { get; set; }
     private UpdateRecipeDto recipeDto = new UpdateRecipeDto();
     private string updateMessage;
+    private string uploadErrorMessage;
     private IEnumerable<CategoryDto> categories;
 
     protected override async Task OnInitializedAsync()
@@ -138,15 +145,15 @@
         {
             using (var stream = file.OpenReadStream())
             {
-                // Przy założeniu, że UserService ma metodę do przesyłania zdjęć
                 var success = await RecipeService.UploadMainRecipePictureAsync(stream, file.Name,Id);
                 if (success != null)
                 {
-                    
+                    recipeDto.MainImage = success; 
+                    uploadErrorMessage = "";
                 }
                 else
                 {
-                    // Obsłuż błąd, pokaż komunikat o błędzie użytkownikowi
+                    uploadErrorMessage = "Nie udało się załadować obrazu. Proszę spróbuj ponownie.";
                 }
             }
         }

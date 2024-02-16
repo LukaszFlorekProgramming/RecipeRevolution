@@ -108,7 +108,6 @@ namespace RecipeRevolutionBlazorApp.Services.Recipes
                 }
                 else
                 {
-                    // Logowanie błędu lub zwracanie null, wskazuje na niepowodzenie
                     var errorResponse = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"Failed to upload image: {errorResponse}");
                     return null;
@@ -116,7 +115,6 @@ namespace RecipeRevolutionBlazorApp.Services.Recipes
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as necessary
                 Console.WriteLine($"Error uploading profile picture: {ex.Message}");
                 return string.Empty;
             }

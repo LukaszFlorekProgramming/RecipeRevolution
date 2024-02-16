@@ -115,7 +115,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //_userToken = await TokenService.GetToken();
         isUserLoggedIn = await TokenService.IsTokenValid();
 
         if (!isUserLoggedIn)

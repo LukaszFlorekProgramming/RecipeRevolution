@@ -61,6 +61,7 @@
 @code {
     private UpdateUserDto user = new UpdateUserDto();
     private string profilePictureUrl;
+    private string updateErrorMessage;
 
     protected override async Task OnInitializedAsync()
     {
@@ -74,14 +75,21 @@
 
     private async Task UpdateUser()
     {
-        bool success = await UserService.UpdateUserAsync(user);
-        if (success)
+        try
         {
-            NavigationManager.NavigateTo("/my-account", forceLoad: true);
+            bool success = await UserService.UpdateUserAsync(user);
+            if (success)
+            {
+                NavigationManager.NavigateTo("/my-account", forceLoad: true);
+            }
+            else
+            {
+                updateErrorMessage = "Aktualizacja profilu nie powiodła się. Proszę spróbować ponownie.";
+            }
         }
-        else
+        catch (Exception ex)
         {
-            // Obsłuż błąd, pokaż komunikat o błędzie użytkownikowi
+            updateErrorMessage = $"Wystąpił błąd: {ex.Message}";
         }
     }
 
