@@ -84,11 +84,13 @@ namespace RecipeRevolution.Services
 
         public bool Delete(int id)
         {
-            var recipe = _dbcontext
-                .Recipes
-                .FirstOrDefault(r => r.RecipeId == id);
-            if(recipe is null) return false;
+            var recipe = _dbcontext.Recipes
+            .Include(r => r.Comments)
+            .FirstOrDefault(r => r.RecipeId == id);
 
+            if (recipe == null) return false;
+
+            _dbcontext.Comments.RemoveRange(recipe.Comments);
             _dbcontext.Recipes.Remove(recipe);
             _dbcontext.SaveChanges();
             return true;

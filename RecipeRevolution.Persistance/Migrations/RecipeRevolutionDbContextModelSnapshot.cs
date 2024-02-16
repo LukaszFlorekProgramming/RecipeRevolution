@@ -169,7 +169,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("RecipeRevolution.Domain.Entities.Comment", b =>
@@ -201,7 +201,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("RecipeRevolution.Domain.Entities.Image", b =>
@@ -232,7 +232,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("RecipeRevolution.Domain.Entities.Ingredient", b =>
@@ -263,7 +263,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredients", (string)null);
                 });
 
             modelBuilder.Entity("RecipeRevolution.Domain.Entities.NutritionalValues", b =>
@@ -294,7 +294,7 @@ namespace RecipeRevolution.Persistance.Migrations
                     b.HasIndex("RecipeId")
                         .IsUnique();
 
-                    b.ToTable("NutritionalValues");
+                    b.ToTable("NutritionalValues", (string)null);
                 });
 
             modelBuilder.Entity("RecipeRevolution.Domain.Entities.Recipe", b =>
@@ -346,7 +346,7 @@ namespace RecipeRevolution.Persistance.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
                 });
 
             modelBuilder.Entity("RecipeRevolution.Domain.Entities.User", b =>
