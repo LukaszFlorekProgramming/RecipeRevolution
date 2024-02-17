@@ -72,6 +72,14 @@ namespace RecipeRevolution.Controllers
             {
                 return NotFound();
             }
+            if (!string.IsNullOrWhiteSpace(user.FirstName) && !string.IsNullOrWhiteSpace(user.LastName))
+            {
+                user.IsProfileComplete = true;
+            }
+            else
+            {
+                user.IsProfileComplete = false;
+            }
 
             await _userService.UpdateUserAsync(user, userUpdateDto);
 
@@ -88,6 +96,20 @@ namespace RecipeRevolution.Controllers
                 return Ok(account.EmailConfirmed);
             }
             return NotFound("Account not found.");
+        }
+        [HttpGet("IsProfileComplete")]
+        public async Task<IActionResult> IsProfileComplete()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
+
+            var isComplete = await _userService.IsUserProfileCompleteAsync(userId);
+
+            return Ok(isComplete);
         }
     }
 }

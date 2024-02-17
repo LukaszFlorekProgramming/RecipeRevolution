@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Persistance;
 
@@ -47,6 +46,12 @@ namespace RecipeRevolution.Services.User
                 FirstName = user.FirstName,
                 LastName = user.LastName
             };
+        }
+        public async Task<bool> IsUserProfileCompleteAsync(string userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            var isNameFieldsNotEmpty = !string.IsNullOrWhiteSpace(user.FirstName) && !string.IsNullOrWhiteSpace(user.LastName);
+            return user.IsProfileComplete && isNameFieldsNotEmpty;
         }
     }
 }

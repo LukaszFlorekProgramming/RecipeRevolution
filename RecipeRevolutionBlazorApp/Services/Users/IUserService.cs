@@ -12,5 +12,6 @@ namespace RecipeRevolutionBlazorApp.Services.Users
         Task<bool> CheckAccountActivation(string email);
         Task<bool> UpdateUserAsync(UpdateUserDto updateUserDto);
         Task<UserProfile> GetUserProfile();
+        Task<bool> IsUserProfileComplete();
     }
 }

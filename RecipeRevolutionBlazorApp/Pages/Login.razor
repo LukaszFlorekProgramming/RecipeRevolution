@@ -78,7 +78,15 @@
                     await AuthTokenService.SetTokenWithExpiry(accessToken, responseObject.ExpiresIn);
                     await localStorage.SetItemAsync("userEmail", loginDto.Email);
 
-                    Navigation.NavigateTo("/MyRecipes", forceLoad: true);
+                    var isProfileComplete = await CheckUserProfileCompletion();
+                    if (isProfileComplete)
+                    {
+                        Navigation.NavigateTo("/MyRecipes", forceLoad: true);
+                    }
+                    else
+                    {
+                        Navigation.NavigateTo("/my-account", forceLoad: true);
+                    }
                 }
             }
             else
@@ -92,13 +100,17 @@
                 {
                     errorMessage = "Nieprawidłowy email lub hasło. Proszę spróbuj ponownie.";
                 }
-                
+
             }
         }
         catch (Exception ex)
         {
             errorMessage = $"Nieprawidłowy email lub hasło. Proszę spróbuj ponownie.";
         }
+    }
+    private async Task<bool> CheckUserProfileCompletion()
+    {
+        return await UserService.IsUserProfileComplete();
     }
 }
 

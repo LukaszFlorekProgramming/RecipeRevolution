@@ -186,6 +186,13 @@ namespace RecipeRevolutionBlazorApp.Services.Users
             return false;
         }
 
+        public async Task<bool> IsUserProfileComplete()
+        {
+            var apiUrl = $"api/user/IsProfileComplete";
+            var isProfileComplete = await _httpClient.GetFromJsonAsync<bool>(apiUrl);
+            return isProfileComplete;
+        }
+
         public class TokenResponse
         {
             public string TokenType { get; set; }

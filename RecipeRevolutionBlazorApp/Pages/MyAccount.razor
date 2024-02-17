@@ -15,6 +15,12 @@
             }
             else
             {
+                @if (showUpdateSuccessMessage)
+                {
+                    <div class="alert alert-success" role="alert">
+                        @updateSuccessMessage
+                    </div>
+                }
                 <EditForm Model="@user" OnValidSubmit="UpdateUser">
                     <DataAnnotationsValidator />
                     <ValidationSummary />
@@ -35,8 +41,9 @@
                         <label for="Gender">Płeć</label>
                         <InputSelect id="Gender" @bind-Value="user.Gender" class="form-control">
                             <option value="">Wybierz płeć...</option>
-                            <option value="Mężczyzna">Mężczyzna</option>
-                            <option value="Kobieta">Kobieta</option>
+                            <option value="Male">Mężczyzna</option>
+                            <option value="Female">Kobieta</option>
+                            <option value="Other">Inna</option>
                         </InputSelect>
                         <ValidationMessage For="@(() => user.Gender)" />
                     </div>
@@ -62,6 +69,8 @@
     private UpdateUserDto user = new UpdateUserDto();
     private string profilePictureUrl;
     private string updateErrorMessage;
+    private string updateSuccessMessage = "";
+    private bool showUpdateSuccessMessage = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -80,7 +89,13 @@
             bool success = await UserService.UpdateUserAsync(user);
             if (success)
             {
-                NavigationManager.NavigateTo("/my-account", forceLoad: true);
+                user = await UserService.GetUserAsync() ?? new UpdateUserDto();
+                updateSuccessMessage = "Profil został pomyślnie zaktualizowany.";
+                showUpdateSuccessMessage = true;
+                StateHasChanged();
+                await Task.Delay(5000);
+                showUpdateSuccessMessage = false;
+                StateHasChanged();
             }
             else
             {

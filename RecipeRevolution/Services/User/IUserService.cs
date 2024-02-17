@@ -8,5 +8,6 @@ namespace RecipeRevolution.Services.User
         Task<Domain.Entities.User> FindUserByIdAsync(string id);
         Task<UpdateUserDto> GetUserByIdAsync(string id);
         Task<UserProfileDto> GetUserProfileByIdAsync(string userId);
+        Task<bool> IsUserProfileCompleteAsync(string userId);
     }
 }

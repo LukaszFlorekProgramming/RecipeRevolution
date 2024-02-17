@@ -9,5 +9,6 @@ namespace RecipeRevolution.Domain.Entities
         public string? Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string? Nationality { get; set; }
+        public bool IsProfileComplete { get; set; } = false;
     }
 }

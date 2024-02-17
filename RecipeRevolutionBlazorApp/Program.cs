@@ -55,5 +55,4 @@ builder.Services.AddScoped<IImageService, ImageService>(sp =>
     var authTokenService = sp.GetRequiredService<AuthTokenService>();
     return new ImageService(httpClient, authTokenService);
 });
-
 await builder.Build().RunAsync();
