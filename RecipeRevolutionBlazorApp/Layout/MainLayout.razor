@@ -124,6 +124,10 @@
         else
         {
             userProfile = await UserService.GetUserProfile();
+            if (string.IsNullOrWhiteSpace(userProfile.FirstName))
+            {
+                userProfile.FirstName = "Użytkowniku";
+            }
             categories = await IRecipeService.GetAllCategory();
         }
     }

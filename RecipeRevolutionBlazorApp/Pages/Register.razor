@@ -30,19 +30,26 @@
                     <button type="submit" class="btn btn-primary">Zarejestruj</button>
                 </div>
             </EditForm>
+            @if (registrationSuccessful)
+            {
+                <div class="alert alert-success mt-3" role="alert">
+                    Rejestracja przebiegła pomyślnie! Na Twój adres e-mail została wysłana wiadomość z linkiem aktywacyjnym.
+                </div>
+            }
         </div>
     </div>
 </div>
 
 @code {
     private RegisterUserDto registerUserDto = new RegisterUserDto();
+    private bool registrationSuccessful = false;
 
     private async Task RegisterUser()
     {
         var response = await UserService.RegisterUser(registerUserDto);
         if (response == true)
         {
-            Navigation.NavigateTo("/login");
+            registrationSuccessful = true;
         }
 
     }
