@@ -8,10 +8,9 @@
 @inject IRecipeService IRecipeService
 @inject ICommentService CommentService
 @inject AuthTokenService AuthTokenService
-
-
 @inject NavigationManager NavigationManager
 
+<PageTitle>@recipe.Name</PageTitle>
 
 @if (recipe != null)
 {
