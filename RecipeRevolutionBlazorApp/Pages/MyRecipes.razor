@@ -9,60 +9,68 @@
 
 <h3 style="text-align: center;">Moje Przepisy</h3>
 
-@if (RecipesResult != null && RecipesResult.Any())
+@if (RecipesResult == null)
 {
-    <table class="table wrap-text">
-        <thead class="table-dark">
-            <tr>
-                <th>Tytuł</th>
-                <th>Opis</th>
-                <th>Instrukcje</th>
-                <th>Czas przygotowania(min)</th>
-                <th>Poziom trudności:</th>
-                <th>Liczba porcji:</th>
-                <th>Akcje</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach (var item in RecipesResult)
-            {
-                <tr @onclick="() => NavigateToRecipeDetails(item.RecipeId)">
-                    <td>@item.Name</td>
-                    <td>@item.Description</td>
-                    <td style="max-width: 300px;">@item.Instructions</td>
-                    <td>@item.PreparationTime</td>
-                    <td>
-                        @switch (item.DifficultyLevel)
-                        {
-                            case 1:
-                                @:Łatwy
-                                break;
-                            case 2:
-                                @:Średni
-                                break;
-                            case 3:
-                                @:Trudny
-                                break;
-                            default:
-                                @:Nieznany
-                                break;
-                        }
-                    </td>
-                    <td>@item.Portions</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" @onclick="() => NavigateToEditRecipe(item.RecipeId)" @onclick:stopPropagation="true">Edytuj</button>
-                        <button class="btn btn-danger btn-sm" @onclick="() => DeleteRecipe(item.RecipeId)" @onclick:stopPropagation="true">Usuń</button>
-                    </td>
-                </tr>
-            }
-
-        </tbody>
-    </table>
+    <p><em>Ładowanie przepisów...</em></p>
 }
 else
 {
-    <p>Ładowanie przepisów</p>
+
+    @if (RecipesResult.Any())
+    {
+        <table class="table wrap-text">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tytuł</th>
+                    <th>Opis</th>
+                    <th>Instrukcje</th>
+                    <th>Czas przygotowania(min)</th>
+                    <th>Poziom trudności:</th>
+                    <th>Liczba porcji:</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in RecipesResult)
+                {
+                    <tr @onclick="() => NavigateToRecipeDetails(item.RecipeId)">
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td style="max-width: 300px;">@item.Instructions</td>
+                        <td>@item.PreparationTime</td>
+                        <td>
+                            @switch (item.DifficultyLevel)
+                            {
+                                case 1:
+                                    @:Łatwy
+                                    break;
+                                case 2:
+                                    @:Średni
+                                    break;
+                                case 3:
+                                    @:Trudny
+                                    break;
+                                default:
+                                    @:Nieznany
+                                    break;
+                            }
+                        </td>
+                        <td>@item.Portions</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" @onclick="() => NavigateToEditRecipe(item.RecipeId)" @onclick:stopPropagation="true">Edytuj</button>
+                            <button class="btn btn-danger btn-sm" @onclick="() => DeleteRecipe(item.RecipeId)" @onclick:stopPropagation="true">Usuń</button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Nie masz jeszcze żadnych przepisów.</p>
+    }
 }
 
 @code {

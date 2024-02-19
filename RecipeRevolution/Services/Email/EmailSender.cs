@@ -32,7 +32,7 @@ namespace RecipeRevolution.Services.Email
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("partyapitest@gmail.com", "Email confirmation"),
+                From = new EmailAddress("freshreciperevolution@gmail.com", "Recipe Revolution"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
