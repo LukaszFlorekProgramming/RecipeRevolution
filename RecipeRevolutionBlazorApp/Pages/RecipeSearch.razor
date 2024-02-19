@@ -7,7 +7,7 @@
 @inject IRecipeService IRecipeService
 @inject NavigationManager NavigationManager
 
-<h3>Wyszukane przepisy</h3>
+<h3 style="text-align: center;">Wyszukane przepisy</h3>
 
 @if (recipesPagedResult != null && recipesPagedResult.Items.Any())
 {
@@ -17,7 +17,7 @@
             {
                 <div class="col-md-3 mb-4 card-no-border">
                     <div class="card h-100" @onclick="() => RedirectToDetailsPage(recipe.RecipeId)">
-                        <img src="@recipe.MainImage" class="card-img-top" alt="@recipe.Name">
+                        <img src="@recipe.MainImage" class="card-img-top fixed-size-image" alt="@recipe.Name">
                         <div class="card-body">
                             <h5 class="card-title">@recipe.Name</h5>
                         </div>
@@ -141,4 +141,10 @@ else
         .card-fixed-height .card-body > h5 {
             flex-grow: 0;
         }
+
+    .fixed-size-image {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+    }
 </style>
