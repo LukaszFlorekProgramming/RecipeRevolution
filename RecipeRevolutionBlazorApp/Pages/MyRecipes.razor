@@ -18,7 +18,7 @@ else
 
     @if (RecipesResult.Any())
     {
-        <table class="table wrap-text">
+        <table class="table">
             <thead class="table-dark">
                 <tr>
                     <th>Tytuł</th>
@@ -36,8 +36,8 @@ else
                 {
                     <tr @onclick="() => NavigateToRecipeDetails(item.RecipeId)">
                         <td>@item.Name</td>
-                        <td>@item.Description</td>
-                        <td style="max-width: 300px;">@item.Instructions</td>
+                        <td class="tdStyle">@item.Description</td>
+                        <td class="tdStyle">@TruncateText(item.Instructions, 20)</td>
                         <td>@item.PreparationTime</td>
                         <td>
                             @switch (item.DifficultyLevel)
@@ -102,15 +102,22 @@ else
         RecipesResult = await RecipeService.GetUserRecipes();
         StateHasChanged();
     }
+    private string TruncateText(string text, int wordCount)
+    {
+        var words = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        if (words.Length <= wordCount) return text;
+        return string.Join(" ", words.Take(wordCount)) + "...";
+    }
 
 }
 
 
 <style>
-    .table .wrap-text td {
-        word-wrap: break-word;
-        white-space: normal;
-        max-width: 100px;
-        max-height: 100px;
+    
+    .tdStyle
+    {
+        max-width: 200px;
     }
+
+
 </style>
