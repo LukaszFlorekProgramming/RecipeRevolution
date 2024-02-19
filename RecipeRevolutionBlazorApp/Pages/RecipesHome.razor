@@ -6,11 +6,11 @@
 @inject IRecipeService IRecipeService;
 @inject NavigationManager NavigationManager
 
-<h3>Przepisy</h3>
+<h3 style="text-align: center;">Przepisy dla Każdego</h3>
 
 @if (recipesPagedResult != null && recipesPagedResult.Items.Any())
 {
-    <div class="container">
+    <div class="container mt-3">
         <div class="row">
             @foreach (var recipe in recipesPagedResult.Items)
             {
