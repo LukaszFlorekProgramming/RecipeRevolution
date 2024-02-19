@@ -1,16 +1,16 @@
 ﻿@page "/register"
 @using RecipeRevolutionBlazorApp.Models.User
 @using RecipeRevolutionBlazorApp.Services.Users
-
 @inject IUserService UserService
 @inject NavigationManager Navigation;
+<PageTitle>Rejestracja</PageTitle>
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-12">
             <h3>Rejestracja</h3>
             <EditForm Model="@registerUserDto" OnValidSubmit="RegisterUser">
-
+                <DataAnnotationsValidator />
 
                 <div class="form-group">
                     <label for="Email">Email</label>
@@ -24,8 +24,6 @@
                     <ValidationMessage For="@(() => registerUserDto.Password)" />
                 </div>
 
-                <ValidationSummary></ValidationSummary>
-
                 <div class="form-group d-flex justify-content-center mt-3">
                     <button type="submit" class="btn btn-primary">Zarejestruj</button>
                 </div>
@@ -36,6 +34,18 @@
                     Rejestracja przebiegła pomyślnie! Na Twój adres e-mail została wysłana wiadomość z linkiem aktywacyjnym.
                 </div>
             }
+            @if (!registrationSuccessful && registrationErrors.Any())
+            {
+                <div class="alert alert-danger mt-3" role="alert">
+                    <ul>
+                        @foreach (var error in registrationErrors)
+                        {
+                            <li>@error</li>
+                        }
+                    </ul>
+                </div>
+            }
+
         </div>
     </div>
 </div>
@@ -43,13 +53,20 @@
 @code {
     private RegisterUserDto registerUserDto = new RegisterUserDto();
     private bool registrationSuccessful = false;
+    private List<string> registrationErrors = new List<string>();
 
     private async Task RegisterUser()
     {
-        var response = await UserService.RegisterUser(registerUserDto);
-        if (response == true)
+        var result = await UserService.RegisterUser(registerUserDto);
+        if (result.Success)
         {
             registrationSuccessful = true;
+            registrationErrors.Clear();
+        }
+        else
+        {
+            registrationSuccessful = false;
+            registrationErrors = result.Errors.ToList();
         }
 
     }

@@ -16,17 +16,45 @@ namespace RecipeRevolutionBlazorApp.Services.Users
             _httpClient = httpClient;
             _authTokenService = authTokenService;
         }
-        public async Task<bool> RegisterUser(RegisterUserDto registerUserDto)
+        public async Task<RegistrationResult> RegisterUser(RegisterUserDto registerUserDto)
         {
             var response = await _httpClient.PostAsJsonAsync("/register", registerUserDto);
 
             if (response.IsSuccessStatusCode)
             {
-                return true;
+                return new RegistrationResult { Success = true };
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                var errorResponse = await response.Content.ReadFromJsonAsync<ValidationErrorResponse>();
+                if (errorResponse != null && errorResponse.Errors != null)
+                {
+                    var errorMessages = errorResponse.Errors
+                        .SelectMany(err => err.Value)
+                        .ToList();
+
+                    return new RegistrationResult
+                    {
+                        Success = false,
+                        Errors = errorMessages
+                    };
+                }
+                else
+                {
+                    return new RegistrationResult
+                    {
+                        Success = false,
+                        Errors = new List<string> { "Unknown validation error occurred." }
+                    };
+                }
             }
             else
             {
-                return false;
+                return new RegistrationResult
+                {
+                    Success = false,
+                    Errors = new List<string> { $"Unexpected error occurred. Status code: {response.StatusCode}" }
+                };
             }
 
         }
@@ -199,6 +227,14 @@ namespace RecipeRevolutionBlazorApp.Services.Users
             public string AccessToken { get; set; }
             public int ExpiresIn { get; set; }
             public string RefreshToken { get; set; }
+        }
+
+        public class ValidationErrorResponse
+        {
+            public string Type { get; set; }
+            public string Title { get; set; }
+            public int Status { get; set; }
+            public Dictionary<string, string[]> Errors { get; set; }
         }
     }
 }
