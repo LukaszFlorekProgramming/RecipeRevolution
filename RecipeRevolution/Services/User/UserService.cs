@@ -50,8 +50,21 @@ namespace RecipeRevolution.Services.User
         public async Task<bool> IsUserProfileCompleteAsync(string userId)
         {
             var user = await _context.Users.FindAsync(userId);
-            var isNameFieldsNotEmpty = !string.IsNullOrWhiteSpace(user.FirstName) && !string.IsNullOrWhiteSpace(user.LastName);
-            return user.IsProfileComplete && isNameFieldsNotEmpty;
+            if (user.IsProfileComplete)
+            {
+                return true;
+            }
+            else
+            {
+                var isNameFieldsEmpty = string.IsNullOrWhiteSpace(user.FirstName) && string.IsNullOrWhiteSpace(user.LastName);
+                if (!isNameFieldsEmpty)
+                {
+                    user.IsProfileComplete = true;
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

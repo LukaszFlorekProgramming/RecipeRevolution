@@ -1,4 +1,5 @@
 ﻿@page "/recipe/{id:int}"
+@using Blazored.LocalStorage
 @using RecipeRevolutionBlazorApp.Models.Comment
 @using RecipeRevolutionBlazorApp.Models.Image
 @using RecipeRevolutionBlazorApp.Models.Recipe
@@ -8,6 +9,7 @@
 @inject IRecipeService IRecipeService
 @inject ICommentService CommentService
 @inject AuthTokenService AuthTokenService
+@inject ILocalStorageService localStorage
 @inject NavigationManager NavigationManager
 
 <PageTitle>Recipe Revolution</PageTitle>
@@ -97,11 +99,19 @@
             <EditForm Model="@newComment" OnValidSubmit="AddComment">
                 <DataAnnotationsValidator />
 
-                <h4>Dodaj komentarz</h4>
+                    <h4>Dodaj komentarz</h4>
                     <InputText id="Comment" @bind-Value="@newComment.Text" class="form-control" />
                     <ValidationMessage For="@(() => newComment.Text)" />
-                <button type="submit" class="btn btn-primary mt-2">Dodaj komentarz</button>
+                    <div class="form-group d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary mt-2">Dodaj</button>
+                    </div>
             </EditForm>
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger mt-2 text-center" role="alert">
+                        @errorMessage
+                    </div>
+                }
         </div>
 
 
@@ -139,6 +149,12 @@ else
         if (!isTokenValid)
         {
             errorMessage = "Musisz być zalogowany, aby dodać komentarz.";
+            return;
+        }
+        var isProfileComplete = await localStorage.GetItemAsync<bool>("isProfileComplete");
+        if (!isProfileComplete)
+        {
+            errorMessage = "Musisz uzupełnić swój profil, aby dodać komentarz.";
             return;
         }
 

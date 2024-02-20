@@ -79,6 +79,7 @@
                     await localStorage.SetItemAsync("userEmail", loginDto.Email);
 
                     var isProfileComplete = await CheckUserProfileCompletion();
+                    await localStorage.SetItemAsync("isProfileComplete", isProfileComplete);
                     if (isProfileComplete)
                     {
                         Navigation.NavigateTo("/MyRecipes", forceLoad: true);
