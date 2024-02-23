@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
-using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Domain.Models.Image;
 
 namespace RecipeRevolution.Controllers
 {

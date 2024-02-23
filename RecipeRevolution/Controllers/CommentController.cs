@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
-using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Domain.Models.Comment;
 using System.Security.Claims;
 
 namespace RecipeRevolution.Controllers

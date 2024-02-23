@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Domain.Models.Comment;
 using RecipeRevolution.Persistance;
 
 namespace RecipeRevolution.Services.Comment

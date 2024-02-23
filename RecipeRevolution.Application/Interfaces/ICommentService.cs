@@ -1,4 +1,5 @@
 ﻿using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Domain.Models.Comment;
 
 namespace RecipeRevolution.Application.Interfaces
 {

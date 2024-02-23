@@ -1,4 +1,4 @@
-﻿namespace RecipeRevolution.Domain.Models
+﻿namespace RecipeRevolution.Domain.Models.Comment
 {
     public class CreateCommentDto
     {

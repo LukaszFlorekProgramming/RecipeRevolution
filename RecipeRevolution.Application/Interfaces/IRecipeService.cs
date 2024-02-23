@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Domain.Models.Category;
+using RecipeRevolution.Domain.Models.Recipe;
 using RecipeRevolution.Models;
 
 namespace RecipeRevolution.Application.Interfaces

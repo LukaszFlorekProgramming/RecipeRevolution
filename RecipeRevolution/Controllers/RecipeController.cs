@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Domain.Models.Recipe;
 using RecipeRevolution.Models;
 using RecipeRevolution.Services.Blob;
 using RecipeRevolution.Validator;

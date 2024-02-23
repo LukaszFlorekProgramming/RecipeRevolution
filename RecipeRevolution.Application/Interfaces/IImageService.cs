@@ -1,4 +1,4 @@
-﻿using RecipeRevolution.Domain.Models;
+﻿using RecipeRevolution.Domain.Models.Image;
 
 namespace RecipeRevolution.Application.Interfaces
 {

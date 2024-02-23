@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Domain.Models.User;
 using RecipeRevolution.Services.User;
 using System.Security.Claims;
 

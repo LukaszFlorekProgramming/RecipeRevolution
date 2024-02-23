@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Domain.Models.Category;
+using RecipeRevolution.Domain.Models.Comment;
+using RecipeRevolution.Domain.Models.Image;
+using RecipeRevolution.Domain.Models.Recipe;
 using RecipeRevolution.Models;
 
 namespace RecipeRevolution.Application.Mapping

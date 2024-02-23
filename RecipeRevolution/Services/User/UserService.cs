@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Domain.Models.User;
 using RecipeRevolution.Persistance;
 
 namespace RecipeRevolution.Services.User

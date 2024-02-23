@@ -1,6 +1,6 @@
-﻿namespace RecipeRevolution.Domain.Models
+﻿namespace RecipeRevolution.Domain.Models.Recipe
 {
-    public class CreateRecipeDto
+    public class MyRecipeDto
     {
         public int RecipeId { get; set; }
         public string Name { get; set; }
@@ -9,8 +9,5 @@
         public int PreparationTime { get; set; }
         public short DifficultyLevel { get; set; }
         public short Portions { get; set; }
-        public string? CreatedById { get; set; }
-        public string? MainImage { get; set; }
-        public int CategoryId { get; set; }
     }
 }

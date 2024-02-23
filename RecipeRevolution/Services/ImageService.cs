@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
-using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Domain.Models.Image;
 using RecipeRevolution.Persistance;
 
 namespace RecipeRevolution.Services

@@ -4,8 +4,9 @@ using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Models;
 using RecipeRevolution.Persistance;
-using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Services.Blob;
+using RecipeRevolution.Domain.Models.Category;
+using RecipeRevolution.Domain.Models.Recipe;
 
 namespace RecipeRevolution.Services
 {
