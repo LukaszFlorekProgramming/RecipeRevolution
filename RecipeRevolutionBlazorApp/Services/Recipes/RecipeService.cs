@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using RecipeRevolutionBlazorApp.Models;
+﻿using RecipeRevolutionBlazorApp.Models;
 using RecipeRevolutionBlazorApp.Models.Category;
 using RecipeRevolutionBlazorApp.Models.Recipe;
-using RecipeRevolutionBlazorApp.Models.User;
 using RecipeRevolutionBlazorApp.Services.Token;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -13,11 +10,9 @@ namespace RecipeRevolutionBlazorApp.Services.Recipes
     public class RecipeService : IRecipeService
     {
         private readonly HttpClient _httpClient;
-        private readonly AuthTokenService _authTokenService;
         public RecipeService(HttpClient httpClient, AuthTokenService authTokenService)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-            _authTokenService = authTokenService ?? throw new ArgumentNullException(nameof(authTokenService));
         }
 
         public async Task<RecipeDto> CreateRecipe(CreateRecipeDto recipeDto)

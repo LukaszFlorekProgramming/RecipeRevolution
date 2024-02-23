@@ -7,11 +7,9 @@ namespace RecipeRevolutionBlazorApp.Services.Comments
     public class CommentService : ICommentService
     {
         private readonly HttpClient _httpClient;
-        private readonly AuthTokenService _authTokenService;
         public CommentService(HttpClient httpClient, AuthTokenService authTokenService)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-            _authTokenService = authTokenService ?? throw new ArgumentNullException(nameof(authTokenService));
         }
         public async Task<CommentDto> GetComment(int commentId)
         {
