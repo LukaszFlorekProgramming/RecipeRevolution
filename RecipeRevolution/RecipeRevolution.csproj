@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RecipeRevolution.Infrastructure\RecipeRevolution.Infrastructure.csproj" />
     <ProjectReference Include="..\RecipeRevolution.Persistance\RecipeRevolution.Persistance.csproj" />
   </ItemGroup>
 

@@ -2,10 +2,12 @@ using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using RecipeRevolution.Application;
 using RecipeRevolution.Application.Interfaces;
 using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
+using RecipeRevolution.Infrastructure;
 using RecipeRevolution.Persistance;
 using RecipeRevolution.Services;
 using RecipeRevolution.Services.Blob;
@@ -48,9 +50,25 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 builder.Services.AddApplication();
 builder.Services.AddPersistance();
+builder.Services.AddInfrastructure();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Recipe Revolution",
+        Version = "v1",
+        Description = "This is an application for information exchange in our RecipeRevolution project.",
+        Contact = new OpenApiContact
+        {
+            Name = "£ukasz ",
+            Email = "lukaszflorek2@gmail.com",
+            Url = new Uri("https://github.com/LukaszFlorekProgramming/RecipeRevolution")
+        }
+    });
+});
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<IRecipesService, RecipesService>();
 builder.Services.AddScoped<IImageService, ImageService>();

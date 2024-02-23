@@ -13,9 +13,11 @@ namespace RecipeRevolution.Controllers
     public class CommentController : Controller
     {
         private readonly ICommentService _commentService;
-        public CommentController(ICommentService commentService)
+        private readonly IDateTimeService _dateTimeService;
+        public CommentController(ICommentService commentService, IDateTimeService dateTimeService)
         {
             _commentService = commentService;
+            _dateTimeService = dateTimeService;
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
@@ -57,7 +59,7 @@ namespace RecipeRevolution.Controllers
         public ActionResult CreateComment([FromBody] CreateCommentDto commentDto)
         {
             commentDto.CreatedById = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            commentDto.CreatedAt = DateTime.UtcNow;
+            commentDto.CreatedAt = _dateTimeService.Now;
             var id = _commentService.Create(commentDto);
             commentDto.CommentId = id;
             return Created($"/api/comment/{id}", commentDto);
@@ -76,7 +78,7 @@ namespace RecipeRevolution.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateComment([FromBody] UpdateCommentDto updateCommentDto, [FromRoute] int id)
         {
-            updateCommentDto.CreatedAt = DateTime.UtcNow;
+            updateCommentDto.CreatedAt = _dateTimeService.Now;
             var isUpdated = _commentService.Update(updateCommentDto, id);
             if (!isUpdated)
             {

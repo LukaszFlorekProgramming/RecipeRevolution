@@ -5,7 +5,6 @@ using RecipeRevolution.Domain.Entities;
 using RecipeRevolution.Domain.Models;
 using RecipeRevolution.Domain.Models.Recipe;
 using RecipeRevolution.Models;
-using RecipeRevolution.Services.Blob;
 using RecipeRevolution.Validator;
 using System.Security.Claims;
 
@@ -17,12 +16,10 @@ namespace RecipeRevolution.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
-        private readonly IBlobService _blobService;
 
-        public RecipeController(IRecipeService recipeService, IBlobService blobService)
+        public RecipeController(IRecipeService recipeService)
         {
             _recipeService = recipeService;
-            _blobService = blobService;
         }
         [HttpPost("{recipeId}/upload-image")]
         public async Task<IActionResult> UploadRecipeImage(int recipeId, IFormFile file)
