@@ -99,6 +99,7 @@ using (var scope = app.Services.CreateScope())
 //}
 app.UseCors("AllowAnyOrigin");
 
+// test 2
 
 app.UseHttpsRedirection();
 app.MapIdentityApi<User>();
